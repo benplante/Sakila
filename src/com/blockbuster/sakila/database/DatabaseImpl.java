@@ -1,10 +1,15 @@
 package com.blockbuster.sakila.database;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.List;
 
 import com.blockbuster.sakila.viewmodels.ActorViewModel;
 
 public class DatabaseImpl implements Database {
+	private static final String CONNECTION_STRING = "jdbc:mysql://localhost:3306/sakila?useSSL=false&allowPublicKeyRetrieval=true";
 	
 	private static Database instance;
 	
@@ -21,8 +26,14 @@ public class DatabaseImpl implements Database {
 
 	@Override
 	public void insertActor(ActorViewModel actor) {
-		// TODO Auto-generated method stub
-
+		try (Connection conn = DriverManager.getConnection(CONNECTION_STRING, "sakila", "alikas")){
+			PreparedStatement stmt = conn.prepareStatement("INSERT INTO actor(first_name, last_name) VALUES(?, ?)");
+			stmt.setString(1, actor.getFirstName());
+			stmt.setNString(2,  actor.getLastName());
+			stmt.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println(e.toString());
+		}
 	}
 
 	@Override
