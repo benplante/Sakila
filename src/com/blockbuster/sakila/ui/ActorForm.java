@@ -22,9 +22,14 @@ public class ActorForm extends JFrame {
 	
 	private JTextField txtFirstName, txtLastName;
 	private JButton btnConfirm, btnCancel;
+	
+	private ActorViewModel actor;
 
 	public ActorForm(ActorController controller) {
 		super();
+		
+		actor = new ActorViewModel();
+		
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		JPanel wrapper = new JPanel();
 		txtFirstName = new JTextField();
@@ -63,16 +68,20 @@ public class ActorForm extends JFrame {
 	}
 	
 	public ActorViewModel getActor() {
-		ActorViewModel vm = new ActorViewModel();
-		vm.firstName = txtFirstName.getText();
-		vm.lastName = txtLastName.getText();
-		return vm;
+		actor.firstName = txtFirstName.getText();
+		actor.lastName = txtLastName.getText();
+		return actor;
 	}
 	
-	public void setActor(ActorViewModel vm) {
-		if (vm != null) {
-			txtFirstName.setText(vm.firstName);
-			txtLastName.setText(vm.lastName);
+	public void setActor(ActorViewModel actor) {
+		this.actor = actor;
+		if (actor != null) {
+			txtFirstName.setText(actor.firstName);
+			txtLastName.setText(actor.lastName);
+		}
+		else {
+			txtFirstName.setText("");
+			txtLastName.setText("");
 		}
 	}
 }
