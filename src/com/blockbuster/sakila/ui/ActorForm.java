@@ -72,7 +72,7 @@ public class ActorForm extends JFrame {
 		actor.lastName = txtLastName.getText();
 		return actor;
 	}
-	
+
 	public void setActor(ActorViewModel actor) {
 		this.actor = actor;
 		if (actor != null) {

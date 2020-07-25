@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.blockbuster.sakila.viewmodels.ActorViewModel;
+import com.blockbuster.sakila.viewmodels.CustomerViewModel;
 
 /**
  * @author Ben Plante
@@ -72,7 +73,7 @@ public class MySqlSakilaDatabase implements SakilaDatabase {
 	@Override
 	public List<ActorViewModel> selectActors() {
 		ArrayList<ActorViewModel> li = new ArrayList<>();
-		try (Connection conn = DriverManager.getConnection(CONNECTION_STRING, "root", "password")){
+		try (Connection conn = DriverManager.getConnection(CONNECTION_STRING, "root", "password")) {
 			Statement stmt = conn.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT actor_id, first_name, last_name FROM actor ORDER BY actor_id");
 			
@@ -83,12 +84,36 @@ public class MySqlSakilaDatabase implements SakilaDatabase {
 				vm.lastName = rs.getString(3);
 				li.add(vm);
 			}
+			rs.close();
 			return li;
 		} catch (SQLException e) {
 			System.out.println(e.toString());
 		}
 		return li;
 	}
-	
-	
+
+	@Override
+	public void insertCustomer(CustomerViewModel customer) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void updateCustomer(CustomerViewModel customer) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void deleteCustomer(CustomerViewModel customer) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public List<CustomerViewModel> selectCustomers() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
