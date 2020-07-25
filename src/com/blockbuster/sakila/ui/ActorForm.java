@@ -4,6 +4,7 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
@@ -11,6 +12,12 @@ import javax.swing.border.EmptyBorder;
 import com.blockbuster.sakila.controllers.ActorController;
 import com.blockbuster.sakila.viewmodels.ActorViewModel;
 
+/**
+ * @author Ben Plante
+ *
+ * Actor Add/Update form in a JFrame
+ * contains text fields for an actors first and last name
+ */
 public class ActorForm extends JFrame {
 	
 	private JTextField txtFirstName, txtLastName;
@@ -32,8 +39,10 @@ public class ActorForm extends JFrame {
 		JPanel txtPanel = new JPanel();
 		txtPanel.setBorder(new EmptyBorder(10, 5, 10, 5));
 		txtPanel.setLayout(new BoxLayout(txtPanel, BoxLayout.PAGE_AXIS));
+		txtPanel.add(new JLabel("First Name:"));
 		txtPanel.add(txtFirstName);
 		txtPanel.add(Box.createVerticalStrut(10));
+		txtPanel.add(new JLabel("Last Name"));
 		txtPanel.add(txtLastName);
 		
 		JPanel btnPanel = new JPanel();

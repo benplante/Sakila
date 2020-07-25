@@ -11,18 +11,24 @@ import java.util.List;
 
 import com.blockbuster.sakila.viewmodels.ActorViewModel;
 
-public class DatabaseImpl implements Database {
+/**
+ * @author Ben Plante
+ *
+ * Sakila Database implentation using JDBC and MySql.
+ * Uses the singleton pattern to avoid instancing problems
+ */
+public class MySqlSakilaDatabase implements SakilaDatabase {
 	private static final String CONNECTION_STRING = "jdbc:mysql://localhost:3306/sakila?useSSL=false&allowPublicKeyRetrieval=true";
 	
-	private static Database instance;
+	private static SakilaDatabase instance;
 	
-	public DatabaseImpl() {
+	public MySqlSakilaDatabase() {
 		
 	}
 	
-	public static Database getInstance() {
+	public static SakilaDatabase getInstance() {
 		if (instance == null) {
-			instance = new DatabaseImpl();
+			instance = new MySqlSakilaDatabase();
 		}
 		return instance;
 	}

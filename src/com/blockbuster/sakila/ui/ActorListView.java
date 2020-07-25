@@ -14,6 +14,13 @@ import com.blockbuster.sakila.controllers.ActorController;
 import com.blockbuster.sakila.database.TableViewModel;
 import com.blockbuster.sakila.viewmodels.ActorViewModel;
 
+/**
+ * @author Ben Plante
+ *
+ * Panel for viewing a list of all Actors in the database
+ * Displays actors in a JTable and contains buttons 
+ * to add, update and delete an actor
+ */
 public class ActorListView extends JPanel {
 	private JTable tblActors;
 	private JButton btnAdd;
