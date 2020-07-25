@@ -2,19 +2,19 @@ package com.blockbuster.sakila.controllers;
 
 import javax.swing.JPanel;
 
-import com.blockbuster.sakila.database.Database;
+import com.blockbuster.sakila.database.SakilaDatabase;
 import com.blockbuster.sakila.database.TableViewModel;
 import com.blockbuster.sakila.ui.ActorForm;
 import com.blockbuster.sakila.ui.ActorListView;
 import com.blockbuster.sakila.viewmodels.ActorViewModel;
 
 public class ActorController {
-	private Database db;
+	private SakilaDatabase db;
 	private ActorListView actorListViewPanel;
 	private ActorForm actorFormFrame;
 		
 	private TableViewModel<ActorViewModel> model;
-	public ActorController(Database db) {
+	public ActorController(SakilaDatabase db) {
 		this.db = db;
 		actorListViewPanel = new ActorListView(this);
 		actorFormFrame = new ActorForm(this);
