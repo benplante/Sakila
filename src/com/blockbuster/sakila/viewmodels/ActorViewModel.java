@@ -1,22 +1,18 @@
 package com.blockbuster.sakila.viewmodels;
 
+import com.blockbuster.sakila.database.ColumnName;
+
 public class ActorViewModel {
-	private String firstName;
-	private String lastName;
+	@ColumnName(columnName = "Actor #")
+	public int actorId;
 	
-	public String getFirstName() {
-		return firstName;
-	}
+	@ColumnName(columnName = "First Name")
+	public String firstName;
 	
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-	public String getLastName() {
-		return lastName;
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
+	@ColumnName(columnName = "Last Name")
+	public String lastName;
+	
+	public ActorViewModel() {
+		actorId = -1;
 	}
 }

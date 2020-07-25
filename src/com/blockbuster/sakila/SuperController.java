@@ -5,7 +5,6 @@ import javax.swing.JTabbedPane;
 
 import com.blockbuster.sakila.controllers.ActorController;
 import com.blockbuster.sakila.database.DatabaseImpl;
-import com.blockbuster.sakila.ui.ActorForm;
 
 public class SuperController extends JFrame {
 
@@ -16,7 +15,7 @@ public class SuperController extends JFrame {
 	
 	public SuperController() {
 		super("Sakila Store Management");
-		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setLocationRelativeTo(null);
 		
 		JTabbedPane container = new JTabbedPane();

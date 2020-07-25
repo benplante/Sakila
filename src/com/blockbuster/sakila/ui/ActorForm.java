@@ -1,34 +1,33 @@
 package com.blockbuster.sakila.ui;
 
-import java.awt.FlowLayout;
-
-import javax.swing.*;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import com.blockbuster.sakila.controllers.ActorController;
 import com.blockbuster.sakila.viewmodels.ActorViewModel;
 
-public class ActorForm extends JPanel {
-	
-	public static final String BTN_CONFIRM = "confirm";
-	public static final String BTN_CANCEL = "cancel";
+public class ActorForm extends JFrame {
 	
 	private JTextField txtFirstName, txtLastName;
 	private JButton btnConfirm, btnCancel;
 
 	public ActorForm(ActorController controller) {
 		super();
+		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		JPanel wrapper = new JPanel();
 		txtFirstName = new JTextField();
 		txtLastName = new JTextField();
 		
 		btnConfirm = new JButton("Confirm");
+		btnConfirm.addActionListener(e -> controller.confirmAddActor());
+		
 		btnCancel = new JButton("Cancel");
-		
-		btnConfirm.setActionCommand(BTN_CONFIRM);
-		btnConfirm.addActionListener(controller);
-		
-		btnCancel.setActionCommand(BTN_CANCEL);
-		btnCancel.addActionListener(controller);
+		btnCancel.addActionListener(e -> controller.closeActorForm());
 		
 		JPanel txtPanel = new JPanel();
 		txtPanel.setBorder(new EmptyBorder(10, 5, 10, 5));
@@ -45,15 +44,26 @@ public class ActorForm extends JPanel {
 		btnPanel.add(btnCancel);
 		
 		
-		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
-		this.add(txtPanel);
-		this.add(btnPanel);
+		wrapper.setLayout(new BoxLayout(wrapper, BoxLayout.PAGE_AXIS));
+		wrapper.add(txtPanel);
+		wrapper.add(btnPanel);
+		this.setContentPane(wrapper);
+		this.pack();
+		this.setResizable(false);
+		this.setLocationRelativeTo(null);
 	}
 	
 	public ActorViewModel getActor() {
 		ActorViewModel vm = new ActorViewModel();
-		vm.setFirstName(txtFirstName.getText());
-		vm.setLastName(txtLastName.getText());
+		vm.firstName = txtFirstName.getText();
+		vm.lastName = txtLastName.getText();
 		return vm;
+	}
+	
+	public void setActor(ActorViewModel vm) {
+		if (vm != null) {
+			txtFirstName.setText(vm.firstName);
+			txtLastName.setText(vm.lastName);
+		}
 	}
 }
