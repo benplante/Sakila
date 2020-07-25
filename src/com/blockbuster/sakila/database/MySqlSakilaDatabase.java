@@ -35,7 +35,7 @@ public class MySqlSakilaDatabase implements SakilaDatabase {
 
 	@Override
 	public void insertActor(ActorViewModel actor) {
-		try (Connection conn = DriverManager.getConnection(CONNECTION_STRING, "sakila", "alikas")){
+		try (Connection conn = DriverManager.getConnection(CONNECTION_STRING, "root", "password")){
 			PreparedStatement stmt = conn.prepareStatement("INSERT INTO actor(first_name, last_name) VALUES(?, ?)");
 			stmt.setString(1, actor.firstName);
 			stmt.setString(2,  actor.lastName);
@@ -47,7 +47,7 @@ public class MySqlSakilaDatabase implements SakilaDatabase {
 
 	@Override
 	public void updateActor(ActorViewModel actor) {
-		try (Connection conn = DriverManager.getConnection(CONNECTION_STRING, "sakila", "alikas")){
+		try (Connection conn = DriverManager.getConnection(CONNECTION_STRING, "root", "password")){
 			PreparedStatement stmt = conn.prepareStatement("UPDATE actor SET first_name = ?, last_name = ? WHERE actor_id = ?");
 			stmt.setString(1, actor.firstName);
 			stmt.setString(2,  actor.lastName);
@@ -60,7 +60,7 @@ public class MySqlSakilaDatabase implements SakilaDatabase {
 
 	@Override
 	public void deleteActor(ActorViewModel actor) {
-		try (Connection conn = DriverManager.getConnection(CONNECTION_STRING, "sakila", "alikas")){
+		try (Connection conn = DriverManager.getConnection(CONNECTION_STRING, "root", "password")){
 			PreparedStatement stmt = conn.prepareStatement("DELETE FROM actor WHERE actor_id = ?");
 			stmt.setInt(1, actor.actorId);
 			stmt.executeUpdate();
@@ -72,7 +72,7 @@ public class MySqlSakilaDatabase implements SakilaDatabase {
 	@Override
 	public List<ActorViewModel> selectActors() {
 		ArrayList<ActorViewModel> li = new ArrayList<>();
-		try (Connection conn = DriverManager.getConnection(CONNECTION_STRING, "sakila", "alikas")){
+		try (Connection conn = DriverManager.getConnection(CONNECTION_STRING, "root", "password")){
 			Statement stmt = conn.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT actor_id, first_name, last_name FROM actor ORDER BY actor_id");
 			
