@@ -3,7 +3,7 @@ package com.blockbuster.sakila;
 /**
  * @author Ben Plante
  *
- * Main method to create controller JFrame
+ *         Main method to create controller JFrame
  */
 public class Main {
 

@@ -17,9 +17,9 @@ import com.blockbuster.sakila.viewmodels.ActorViewModel;
 /**
  * @author Ben Plante
  *
- * Panel for viewing a list of all Actors in the database
- * Displays actors in a JTable and contains buttons 
- * to add, update and delete an actor
+ *         Panel for viewing a list of all Actors in the database Displays
+ *         actors in a JTable and contains buttons to add, update and delete an
+ *         actor
  */
 public class ActorListView extends JPanel {
 	private JTable tblActors;
@@ -28,13 +28,14 @@ public class ActorListView extends JPanel {
 	private JButton btnDelete;
 
 	private TableViewModel<ActorViewModel> model;
+
 	public ActorListView(ActorController controller) {
 		super();
-		
+
 		tblActors = new JTable();
 		tblActors.setMaximumSize(new Dimension(500, 500));
 		JScrollPane scrollPane = new JScrollPane(tblActors);
-		
+
 		btnAdd = new JButton("Add");
 		btnAdd.addActionListener(e -> controller.openAddActorForm());
 		btnUpdate = new JButton("Update");
@@ -43,7 +44,7 @@ public class ActorListView extends JPanel {
 		btnDelete.addActionListener(e -> controller.deleteActor());
 
 		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
-		
+
 		JPanel btnPanel = new JPanel();
 		btnPanel.setLayout(new BoxLayout(btnPanel, BoxLayout.LINE_AXIS));
 		btnPanel.add(btnAdd);
@@ -51,19 +52,19 @@ public class ActorListView extends JPanel {
 		btnPanel.add(btnUpdate);
 		btnPanel.add(Box.createHorizontalStrut(10));
 		btnPanel.add(btnDelete);
-		
+
 		this.add(scrollPane);
 		this.add(Box.createVerticalStrut(10));
 		this.add(btnPanel);
 		this.setBorder(new EmptyBorder(10, 10, 10, 10));
 	}
-	
+
 	public void setActorList(TableViewModel<ActorViewModel> model) {
 		this.model = model;
 		tblActors.setModel(model);
 	}
-	
+
 	public ActorViewModel getSelectedActor() {
-		 return model.getAtRow(tblActors.getSelectedRow());
+		return model.getAtRow(tblActors.getSelectedRow());
 	}
 }

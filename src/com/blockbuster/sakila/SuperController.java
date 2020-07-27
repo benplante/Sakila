@@ -12,35 +12,31 @@ public class SuperController extends JFrame {
 	/**
 	 * @author Ben Plante
 	 * 
-	 * Main controller for all UI elements.
-	 * Holds all functionality in a tabbed panel
+	 *         Main controller for all UI elements. Holds all functionality in a
+	 *         tabbed panel
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	public SuperController() {
 		super("Sakila Store Management");
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setLocationRelativeTo(null);
-		
+
 		JTabbedPane container = new JTabbedPane();
 		ActorController actorController = new ActorController(MySqlSakilaDatabase.getInstance());
 		container.addTab("Actor Maintenance", actorController.getPanel());
-		
-		
-		//Customer part
-        CustomerController customerController = new CustomerController(MySqlSakilaDatabase.getInstance());
-        container.addTab("Add Customer", customerController.getPanel());
-        
-        this.add(container);
+
+		// Customer part
+		CustomerController customerController = new CustomerController(MySqlSakilaDatabase.getInstance());
+		container.addTab("Add Customer", customerController.getPanel());
+
+		this.add(container);
 
 		this.pack();
 		this.setResizable(false);
-		
+
 		this.setVisible(true);
-		
-		
-	
-     
+
 	}
 
 }
