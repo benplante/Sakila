@@ -27,9 +27,7 @@ public class ActorForm extends JFrame {
 
 	public ActorForm(ActorController controller) {
 		super();
-		
-		actor = new ActorViewModel();
-		
+				
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		JPanel wrapper = new JPanel();
 		txtFirstName = new JTextField();
@@ -74,12 +72,13 @@ public class ActorForm extends JFrame {
 	}
 
 	public void setActor(ActorViewModel actor) {
-		this.actor = actor;
 		if (actor != null) {
+			this.actor = actor;
 			txtFirstName.setText(actor.firstName);
 			txtLastName.setText(actor.lastName);
 		}
 		else {
+			this.actor = new ActorViewModel();
 			txtFirstName.setText("");
 			txtLastName.setText("");
 		}
