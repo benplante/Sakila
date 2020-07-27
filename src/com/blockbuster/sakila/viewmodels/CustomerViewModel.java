@@ -40,7 +40,7 @@ public class CustomerViewModel {
 	public String phone;
 	
 	private int cityId;
-		
+
 	public int getCityId() {
 		return cityId;
 	}
@@ -48,4 +48,13 @@ public class CustomerViewModel {
 	public void setCityId(int cityId) {
 		this.cityId = cityId;
 	}
+	
+	 private int addressId;
+       
+	 public void setAddressId(int addressId) {
+	      this.addressId = addressId;
+	 }
+	public CustomerViewModel() {
+	  this.customerId = -1;
+  }
 }

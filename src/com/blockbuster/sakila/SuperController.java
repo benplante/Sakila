@@ -4,6 +4,7 @@ import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
 
 import com.blockbuster.sakila.controllers.ActorController;
+import com.blockbuster.sakila.controllers.CustomerController;
 import com.blockbuster.sakila.database.MySqlSakilaDatabase;
 
 public class SuperController extends JFrame {
@@ -25,11 +26,21 @@ public class SuperController extends JFrame {
 		ActorController actorController = new ActorController(MySqlSakilaDatabase.getInstance());
 		container.addTab("Actor Maintenance", actorController.getPanel());
 		
-		this.add(container);
+		
+		//Customer part
+        CustomerController customerController = new CustomerController(MySqlSakilaDatabase.getInstance());
+        container.addTab("Add Customer", customerController.getPanel());
+        
+        this.add(container);
+
 		this.pack();
 		this.setResizable(false);
 		
 		this.setVisible(true);
+		
+		
+	
+     
 	}
 
 }

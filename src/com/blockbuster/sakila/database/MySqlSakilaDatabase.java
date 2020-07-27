@@ -95,7 +95,20 @@ public class MySqlSakilaDatabase implements SakilaDatabase {
 	@Override
 	public void insertCustomer(CustomerViewModel customer) {
 		// TODO Auto-generated method stub
-		
+	  //insert into customer(store_id,first_name,last_name,email,address_id)
+	  //values(1,"Maroon","Adam","adam@yahoo.com",9);
+  	  try (Connection conn = DriverManager.getConnection(CONNECTION_STRING, "root", "password")){
+          PreparedStatement stmt = conn.prepareStatement
+              ("INSERT INTO customer(store_id,first_name,last_name,email) VALUES(?,?,?,?)");
+          stmt.setString(1,"1");
+          stmt.setString(2, customer.firstName);
+          stmt.setString(3,  customer.lastName);
+          stmt.setString(4, customer.email);
+         // stmt.setString(5, customer.setAddressId(9));
+          stmt.executeUpdate();
+      } catch (SQLException e) {
+          System.out.println(e.toString());
+      }
 	}
 
 	@Override
@@ -113,7 +126,27 @@ public class MySqlSakilaDatabase implements SakilaDatabase {
 	@Override
 	public List<CustomerViewModel> selectCustomers() {
 		// TODO Auto-generated method stub
-		return null;
+	  ArrayList<CustomerViewModel> li = new ArrayList<>();
+      try (Connection conn = DriverManager.getConnection(CONNECTION_STRING, "root", "password")) {
+          Statement stmt = conn.createStatement();
+          ResultSet rs = stmt.executeQuery("SELECT customer_id, first_name, last_name,email,address_id FROM customer ORDER BY customer_id");
+          
+          while (rs.next()) {
+            CustomerViewModel vm = new CustomerViewModel();
+              vm.customerId = rs.getInt(1);
+              vm.firstName = rs.getString(2);
+              vm.lastName = rs.getString(3);
+              vm.email = rs.getString(4);
+             vm.addressLine1=rs.getString(5);
+
+              li.add(vm);
+          }
+          rs.close();
+          return li;
+      } catch (SQLException e) {
+          System.out.println(e.toString());
+      }
+      return li;
 	}
 
 }
