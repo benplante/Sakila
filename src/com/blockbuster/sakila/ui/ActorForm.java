@@ -66,12 +66,12 @@ public class ActorForm extends JFrame {
 
 	public ActorViewModel getActor() {
 		if(txtFirstName.getText().equals("")) {
-			JOptionPane.showMessageDialog(new JFrame(), "Please enter first name.");
+			JOptionPane.showMessageDialog(new JFrame(), "Please enter first name.", "Alter", JOptionPane.WARNING_MESSAGE);
 			txtFirstName.requestFocus();
 			return null;
 		}
 		else if(txtLastName.getText().equals("")) {
-			JOptionPane.showMessageDialog(new JFrame(), "Please enter last name.");
+			JOptionPane.showMessageDialog(new JFrame(), "Please enter last name.", "Alter", JOptionPane.WARNING_MESSAGE);
 			txtFirstName.requestFocus();
 			return null;
 		}
