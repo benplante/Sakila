@@ -44,8 +44,7 @@ public class ActorForm extends JFrame {
 		txtPanel.setLayout(new BoxLayout(txtPanel, BoxLayout.PAGE_AXIS));
 		txtPanel.add(new JLabel("First Name:"));
 		txtPanel.add(txtFirstName);
-		txtPanel.add(Box.createVerticalStrut(10));
-		txtPanel.add(new JLabel("Last Name"));
+		txtPanel.add(new JLabel("Last Name:"));
 		txtPanel.add(txtLastName);
 
 		JPanel btnPanel = new JPanel();

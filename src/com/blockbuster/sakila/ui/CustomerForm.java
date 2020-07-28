@@ -20,7 +20,7 @@ import com.blockbuster.sakila.viewmodels.CustomerViewModel;
  */
 public class CustomerForm extends JFrame {
 
-	private JTextField txtFirstName, txtLastName, txtEmail;
+	private JTextField txtFirstName, txtLastName, txtEmail, txtAddress, txtDistrict, txtPostalCode, txtPhone;
 	private JButton btnConfirm, btnCancel;
 
 	private CustomerViewModel customer;
@@ -35,6 +35,12 @@ public class CustomerForm extends JFrame {
 		txtFirstName = new JTextField();
 		txtLastName = new JTextField();
 		txtEmail = new JTextField();
+		txtAddress = new JTextField();
+		txtDistrict = new JTextField();
+		txtPostalCode = new JTextField();
+		txtPhone = new JTextField();
+
+		
 
 		btnConfirm = new JButton("Confirm");
 		btnConfirm.addActionListener(e -> controller.confirmAddCustomer());
@@ -47,11 +53,20 @@ public class CustomerForm extends JFrame {
 		txtPanel.setLayout(new BoxLayout(txtPanel, BoxLayout.PAGE_AXIS));
 		txtPanel.add(new JLabel("First Name:"));
 		txtPanel.add(txtFirstName);
-		txtPanel.add(Box.createVerticalStrut(10));
 		txtPanel.add(new JLabel("Last Name"));
 		txtPanel.add(txtLastName);
-		txtPanel.add(new JLabel("Email"));
+		txtPanel.add(new JLabel("Email:"));
 		txtPanel.add(txtEmail);
+		txtPanel.add(new JLabel("Address:"));
+		txtPanel.add(txtAddress);
+		txtPanel.add(new JLabel("District:"));
+		txtPanel.add(txtDistrict);
+		txtPanel.add(new JLabel("Postal Code:"));
+		txtPanel.add(txtPostalCode);
+		txtPanel.add(new JLabel("Phone #:"));
+		txtPanel.add(txtPhone);
+		txtPanel.add(new JLabel("Cities: "));
+		txtPanel.
 
 		JPanel btnPanel = new JPanel();
 		btnPanel.setBorder(new EmptyBorder(10, 5, 10, 5));
