@@ -28,7 +28,7 @@ public class SuperController extends JFrame {
 
 		// Customer part
 		CustomerController customerController = new CustomerController(MySqlSakilaDatabase.getInstance());
-		container.addTab("Add Customer", customerController.getPanel());
+		container.addTab("Customer Maintenance", customerController.getPanel());
 
 		this.add(container);
 

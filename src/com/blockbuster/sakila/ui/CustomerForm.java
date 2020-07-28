@@ -1,8 +1,11 @@
 package com.blockbuster.sakila.ui;
 
+import java.awt.GridLayout;
+
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -21,6 +24,7 @@ import com.blockbuster.sakila.viewmodels.CustomerViewModel;
 public class CustomerForm extends JFrame {
 
 	private JTextField txtFirstName, txtLastName, txtEmail, txtAddress, txtDistrict, txtPostalCode, txtPhone;
+	private JComboBox cmbCities;
 	private JButton btnConfirm, btnCancel;
 
 	private CustomerViewModel customer;
@@ -39,8 +43,7 @@ public class CustomerForm extends JFrame {
 		txtDistrict = new JTextField();
 		txtPostalCode = new JTextField();
 		txtPhone = new JTextField();
-
-		
+		cmbCities = new JComboBox();
 
 		btnConfirm = new JButton("Confirm");
 		btnConfirm.addActionListener(e -> controller.confirmAddCustomer());
@@ -50,13 +53,15 @@ public class CustomerForm extends JFrame {
 
 		JPanel txtPanel = new JPanel();
 		txtPanel.setBorder(new EmptyBorder(10, 5, 10, 5));
-		txtPanel.setLayout(new BoxLayout(txtPanel, BoxLayout.PAGE_AXIS));
+		txtPanel.setLayout(new GridLayout(0,1,0,5));
 		txtPanel.add(new JLabel("First Name:"));
 		txtPanel.add(txtFirstName);
-		txtPanel.add(new JLabel("Last Name"));
+		txtPanel.add(new JLabel("Last Name:"));
 		txtPanel.add(txtLastName);
 		txtPanel.add(new JLabel("Email:"));
 		txtPanel.add(txtEmail);
+		txtPanel.add(new JLabel("City:"));
+		txtPanel.add(cmbCities);
 		txtPanel.add(new JLabel("Address:"));
 		txtPanel.add(txtAddress);
 		txtPanel.add(new JLabel("District:"));
@@ -65,7 +70,6 @@ public class CustomerForm extends JFrame {
 		txtPanel.add(txtPostalCode);
 		txtPanel.add(new JLabel("Phone #:"));
 		txtPanel.add(txtPhone);
-		txtPanel.add(new JLabel("Cities: "));
 
 		JPanel btnPanel = new JPanel();
 		btnPanel.setBorder(new EmptyBorder(10, 5, 10, 5));
