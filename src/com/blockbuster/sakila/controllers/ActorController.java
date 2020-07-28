@@ -1,5 +1,7 @@
 package com.blockbuster.sakila.controllers;
 
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import com.blockbuster.sakila.database.SakilaDatabase;
@@ -36,9 +38,14 @@ public class ActorController {
 	}
 
 	public void openUpdateActorForm() {
+		ActorViewModel vm = actorListViewPanel.getSelectedActor();
+		if(vm == null)
+		{
+			return;
+		}
 		actorListViewPanel.setEnabled(false);
 		actorFormFrame.setName("Update Actor");
-		actorFormFrame.setActor(actorListViewPanel.getSelectedActor());
+		actorFormFrame.setActor(vm);
 		actorFormFrame.setVisible(true);
 	}
 
@@ -50,7 +57,9 @@ public class ActorController {
 	public void confirmAddActor() {
 		actorListViewPanel.setEnabled(true);
 		ActorViewModel vm = actorFormFrame.getActor();
-		if (vm.actorId == -1) {
+		if(vm == null) {
+			return;
+		} else if (vm.actorId == -1) {
 			db.insertActor(vm);
 		} else {
 			db.updateActor(vm);
@@ -60,7 +69,11 @@ public class ActorController {
 	}
 
 	public void deleteActor() {
-		db.deleteActor(actorListViewPanel.getSelectedActor());
+		ActorViewModel vm = actorListViewPanel.getSelectedActor();
+		if(vm == null) {
+			return;
+		}
+		db.deleteActor(vm);
 		model.setData(db.selectActors());
 	}
 }
