@@ -23,6 +23,7 @@ public class CustomerListView extends JPanel {
 	private JTable customerTable;
 	private JButton btnAdd;
 	private JButton btnUpdate;
+	private JButton btnDelete;
 
 	private TableViewModel<CustomerViewModel> model;
 
@@ -36,6 +37,10 @@ public class CustomerListView extends JPanel {
 		btnAdd.addActionListener(e -> controller.openAddCustomerForm());
 		btnUpdate = new JButton("Update");
 		btnUpdate.addActionListener(e -> controller.openUpdateCustomerForm());
+		btnDelete = new JButton("Delete");
+		// NOTE: Need to create a deleteCustomer
+		//btnDelete.addActionListener(e -> controller.deleteCustomer());
+		
 
 		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 
@@ -45,6 +50,7 @@ public class CustomerListView extends JPanel {
 		btnPanel.add(Box.createHorizontalStrut(10));
 		btnPanel.add(btnUpdate);
 		btnPanel.add(Box.createHorizontalStrut(10));
+		btnPanel.add(btnDelete);
 
 		this.add(scrollPane);
 		this.add(Box.createVerticalStrut(10));

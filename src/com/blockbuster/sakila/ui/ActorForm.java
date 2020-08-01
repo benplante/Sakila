@@ -5,6 +5,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
@@ -64,8 +65,20 @@ public class ActorForm extends JFrame {
 	}
 
 	public ActorViewModel getActor() {
+		if(txtFirstName.getText().equals("")) {
+			JOptionPane.showMessageDialog(new JFrame(), "Please enter first name.", "Alter", JOptionPane.WARNING_MESSAGE);
+			txtFirstName.requestFocus();
+			return null;
+		}
+		else if(txtLastName.getText().equals("")) {
+			JOptionPane.showMessageDialog(new JFrame(), "Please enter last name.", "Alter", JOptionPane.WARNING_MESSAGE);
+			txtFirstName.requestFocus();
+			return null;
+		}
+		
 		actor.firstName = txtFirstName.getText();
 		actor.lastName = txtLastName.getText();
+		
 		return actor;
 	}
 

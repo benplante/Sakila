@@ -3,6 +3,8 @@ package com.blockbuster.sakila.ui;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -62,6 +64,10 @@ public class ActorListView extends JPanel {
 	}
 
 	public ActorViewModel getSelectedActor() {
+		if(tblActors.getSelectedRow() == -1) {
+			JOptionPane.showMessageDialog(new JFrame(), "Please select an actor.", "Alter", JOptionPane.WARNING_MESSAGE);
+			return null;
+		}
 		return model.getAtRow(tblActors.getSelectedRow());
 	}
 }
