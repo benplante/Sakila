@@ -170,7 +170,7 @@ public class MySqlSakilaDatabase implements SakilaDatabase {
 			conn = DriverManager.getConnection(CONNECTION_STRING, "root", "password");
 			conn.setAutoCommit(false);
 
-			String sqlAddress = "UPDATE address SET address = ?, district = ?, city_id = ?, postal_code = ?, phone = ?";
+			String sqlAddress = "UPDATE address SET address = ?, district = ?, city_id = ?, postal_code = ?, phone = ? WHERE address_id = ?";
 
 			stmtAddress = conn.prepareStatement(sqlAddress);
 			stmtAddress.setString(1, customer.addressLine1);
@@ -178,13 +178,15 @@ public class MySqlSakilaDatabase implements SakilaDatabase {
 			stmtAddress.setInt(3, customer.getCityId());
 			stmtAddress.setString(4, customer.postalCode);
 			stmtAddress.setString(5, customer.phone);
+			stmtAddress.setInt(6, customer.getAddressId());
 			if (stmtAddress.executeUpdate() == 1) {
-				String sqlCustomer = "UPDATE customer SET first_name = ?, last_name = ?, email = ?, active = ?";
+				String sqlCustomer = "UPDATE customer SET first_name = ?, last_name = ?, email = ?, active = ? WHERE customer_id = ?";
 				stmtCustomer = conn.prepareStatement(sqlCustomer);
 				stmtCustomer.setString(1, customer.firstName);
 				stmtCustomer.setString(2, customer.lastName);
 				stmtCustomer.setString(3, customer.email);
 				stmtCustomer.setBoolean(4, customer.getIsActive());
+				stmtCustomer.setInt(5, customer.customerId);
 				if (stmtCustomer.executeUpdate() == 1) {
 					conn.commit();
 				}

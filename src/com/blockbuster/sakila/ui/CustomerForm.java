@@ -31,6 +31,7 @@ public class CustomerForm extends JFrame {
 	private JButton btnConfirm, btnCancel;
 
 	private CustomerViewModel customer;
+	private CityViewModel[] cities;
 
 	public CustomerForm(CustomerController controller) {
 		super();
@@ -73,7 +74,6 @@ public class CustomerForm extends JFrame {
 		txtPanel.add(txtPostalCode);
 		txtPanel.add(new JLabel("Phone #:"));
 		txtPanel.add(txtPhone);
-		txtPanel.add(new JLabel("Cities: "));
 
 		JPanel btnPanel = new JPanel();
 		btnPanel.setBorder(new EmptyBorder(10, 5, 10, 5));
@@ -92,9 +92,15 @@ public class CustomerForm extends JFrame {
 	}
 
 	public CustomerViewModel getCustomer() {
+		customer.addressLine1 = txtAddress.getText();
+		customer.district = txtDistrict.getText();
+		customer.email = txtEmail.getText();
 		customer.firstName = txtFirstName.getText();
 		customer.lastName = txtLastName.getText();
-		customer.email = txtEmail.getText();
+		customer.phone = txtPhone.getText();
+		customer.postalCode = txtPostalCode.getText();
+		customer.setCityId(cities[cmbCities.getSelectedIndex()].getCityId());
+		customer.setIsActive(true);
 
 		return customer;
 	}
@@ -102,19 +108,39 @@ public class CustomerForm extends JFrame {
 	public void setCustomer(CustomerViewModel customer) {
 		this.customer = customer;
 		if (customer != null) {
+			txtAddress.setText(customer.addressLine1);
+			txtDistrict.setText(customer.district);
+			txtEmail.setText(customer.email);
 			txtFirstName.setText(customer.firstName);
 			txtLastName.setText(customer.lastName);
-			txtEmail.setText(customer.email);
+			txtPhone.setText(customer.phone);
+			txtPostalCode.setText(customer.postalCode);
+			
+			int idx = -1;
+			for (int i = 0; i < cities.length; ++i) {
+				if (cities[i].getCityId() == customer.getCityId()) {
+					idx = i;
+					break;
+				}
+			}
+			cmbCities.setSelectedIndex(idx);
 		} else {
+			this.customer = new CustomerViewModel();
+			txtAddress.setText("");
+			txtDistrict.setText("");
+			txtEmail.setText("");
 			txtFirstName.setText("");
 			txtLastName.setText("");
-			txtEmail.setText("");
+			txtPhone.setText("");
+			txtPostalCode.setText("");
+			cmbCities.setSelectedIndex(-1);
 		}
 	}
 
 	public void setCities(List<CityViewModel> cities) {
 		CityViewModel[] arr = new CityViewModel[cities.size()];
 		cities.toArray(arr);
+		this.cities = arr;
 		cmbCities.setModel(new DefaultComboBoxModel<CityViewModel>(arr));
 	}
 }
