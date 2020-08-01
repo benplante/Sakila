@@ -21,7 +21,6 @@ public class SuperController extends JFrame {
 		super("Sakila Store Management");
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-
 		JTabbedPane container = new JTabbedPane();
 		ActorController actorController = new ActorController(MySqlSakilaDatabase.getInstance());
 		container.addTab("Actor Maintenance", actorController.getPanel());
