@@ -23,7 +23,6 @@ public class CustomerController {
 
 		model = new TableViewModel<>(db.selectCustomers(), CustomerViewModel.class);
 		customerListViewPanel.setCustomerList(model);
-
 	}
 
 	public JPanel getPanel() {

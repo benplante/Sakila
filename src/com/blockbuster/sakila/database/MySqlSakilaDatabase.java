@@ -95,32 +95,149 @@ public class MySqlSakilaDatabase implements SakilaDatabase {
 
 	@Override
 	public void insertCustomer(CustomerViewModel customer) {
-		// insert into customer(store_id,first_name,last_name,email,address_id)
-		// values(1,"Maroon","Adam","adam@yahoo.com",9);
-		try (Connection conn = DriverManager.getConnection(CONNECTION_STRING, "root", "password")) {
-			PreparedStatement stmt = conn
-					.prepareStatement("INSERT INTO customer(store_id,first_name,last_name,email) VALUES(?,?,?,?)");
-			stmt.setString(1, "1");
-			stmt.setString(2, customer.firstName);
-			stmt.setString(3, customer.lastName);
-			stmt.setString(4, customer.email);
-			// stmt.setString(5, customer.setAddressId(9));
-			stmt.executeUpdate();
+
+		Connection conn = null;
+		PreparedStatement stmtAddress = null, stmtCustomer = null;
+		ResultSet rsId = null;
+		try {
+			conn = DriverManager.getConnection(CONNECTION_STRING, "root", "password");
+			conn.setAutoCommit(false);
+
+			// use location for 47 MySakila Drive record
+			String sqlAddress = "INSERT INTO address(address, district, city_id, postal_code, phone, location) " +
+				"VALUES(?,?,?,?,?,ST_GeomFromText('POINT(-112.8185647 49.6999986)'))";
+
+			stmtAddress = conn.prepareStatement(sqlAddress, Statement.RETURN_GENERATED_KEYS);
+			stmtAddress.setString(1, customer.addressLine1);
+			stmtAddress.setString(2, customer.district);
+			stmtAddress.setInt(3, customer.getCityId());
+			stmtAddress.setString(4, customer.postalCode);
+			stmtAddress.setString(5, customer.phone);
+			stmtAddress.executeUpdate();
+
+			rsId = stmtAddress.getGeneratedKeys();
+			if (rsId.next()) {
+				int addressId = rsId.getInt(1);
+
+				String sqlCustomer = "INSERT INTO customer(store_id, first_name, last_name, email, address_id, active, create_date)" +
+					"VALUES(1,?,?,?,?,?,NOW())";
+				stmtCustomer = conn.prepareStatement(sqlCustomer);
+				stmtCustomer.setString(1, customer.firstName);
+				stmtCustomer.setString(2, customer.lastName);
+				stmtCustomer.setString(3, customer.email);
+				stmtCustomer.setInt(4, addressId);
+				stmtCustomer.setBoolean(5, customer.getIsActive());
+				if (stmtCustomer.executeUpdate() == 1) {
+					conn.commit();
+				}
+				else {
+					throw new SQLException("Customer was not added!");
+				}
+			}
+			else {
+				throw new SQLException("Address was not added!");
+			}
 		} catch (SQLException e) {
-			System.out.println(e.toString());
+			try {
+				if (conn != null) conn.rollback();
+			} catch (SQLException ex) {
+				ex.printStackTrace();
+			}
+			e.printStackTrace();
+		} finally {
+			try {
+				if (conn != null)
+					conn.close();
+				if (stmtAddress != null)
+					stmtAddress.close();
+				if (stmtCustomer != null) 
+					stmtCustomer.close();
+				if (rsId != null)
+					rsId.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
 	@Override
 	public void updateCustomer(CustomerViewModel customer) {
-		// TODO Auto-generated method stub
+		Connection conn = null;
+		PreparedStatement stmtAddress = null, stmtCustomer = null;
+		ResultSet rsId = null;
+		try {
+			conn = DriverManager.getConnection(CONNECTION_STRING, "root", "password");
+			conn.setAutoCommit(false);
+
+			String sqlAddress = "UPDATE address SET address = ?, district = ?, city_id = ?, postal_code = ?, phone = ?";
+
+			stmtAddress = conn.prepareStatement(sqlAddress);
+			stmtAddress.setString(1, customer.addressLine1);
+			stmtAddress.setString(2, customer.district);
+			stmtAddress.setInt(3, customer.getCityId());
+			stmtAddress.setString(4, customer.postalCode);
+			stmtAddress.setString(5, customer.phone);
+			if (stmtAddress.executeUpdate() == 1) {
+				String sqlCustomer = "UPDATE customer SET first_name = ?, last_name = ?, email = ?, active = ?";
+				stmtCustomer = conn.prepareStatement(sqlCustomer);
+				stmtCustomer.setString(1, customer.firstName);
+				stmtCustomer.setString(2, customer.lastName);
+				stmtCustomer.setString(3, customer.email);
+				stmtCustomer.setBoolean(4, customer.getIsActive());
+				if (stmtCustomer.executeUpdate() == 1) {
+					conn.commit();
+				}
+				else {
+					throw new SQLException("Customer was not added!");
+				}
+			}
+			else {
+				throw new SQLException("Address was not added!");
+			}
+		} catch (SQLException e) {
+			try {
+				if (conn != null) conn.rollback();
+			} catch (SQLException ex) {
+				ex.printStackTrace();
+			}
+			e.printStackTrace();
+		} finally {
+			try {
+				if (conn != null)
+					conn.close();
+				if (stmtAddress != null)
+					stmtAddress.close();
+				if (stmtCustomer != null) 
+					stmtCustomer.close();
+				if (rsId != null)
+					rsId.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
 
 	}
 
 	@Override
 	public void deleteCustomer(CustomerViewModel customer) {
-		// TODO Auto-generated method stub
-
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		try {
+			conn = DriverManager.getConnection(CONNECTION_STRING, "root", "password");
+			stmt = conn.prepareStatement("DELETE FROM customer WHERE customer_id = ?");
+			stmt.setInt(1, customer.customerId);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (conn != null)
+					conn.close();
+				if (stmt != null)
+					stmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 	@Override
@@ -128,8 +245,14 @@ public class MySqlSakilaDatabase implements SakilaDatabase {
 		ArrayList<CustomerViewModel> li = new ArrayList<>();
 		try (Connection conn = DriverManager.getConnection(CONNECTION_STRING, "root", "password")) {
 			Statement stmt = conn.createStatement();
-			ResultSet rs = stmt.executeQuery(
-					"SELECT customer_id, first_name, last_name,email,address_id FROM customer ORDER BY customer_id");
+			String sql = "SELECT customer_id, first_name, last_name, email, active, city, district, "
+					+ "country, address, postal_code, phone, cu.address_id, ad.city_id "
+					+ "FROM customer cu "
+					+ "LEFT JOIN address ad ON cu.address_id = ad.address_id "
+					+ "LEFT JOIN city ct ON ad.city_id = ct.city_id "
+					+ "LEFT JOIN country co ON ct.country_id = co.country_id "
+					+ "ORDER BY customer_id";
+			ResultSet rs = stmt.executeQuery(sql);
 
 			while (rs.next()) {
 				CustomerViewModel vm = new CustomerViewModel();
@@ -137,7 +260,15 @@ public class MySqlSakilaDatabase implements SakilaDatabase {
 				vm.firstName = rs.getString(2);
 				vm.lastName = rs.getString(3);
 				vm.email = rs.getString(4);
-				vm.addressLine1 = rs.getString(5);
+				vm.setIsActive(rs.getBoolean(5));
+				vm.city = rs.getString(6);
+				vm.district = rs.getString(7);
+				vm.country = rs.getString(8);
+				vm.addressLine1 = rs.getString(9);
+				vm.postalCode = rs.getString(10);
+				vm.phone = rs.getString(11);
+				vm.setAddressId(rs.getInt(12));
+				vm.setCityId(rs.getInt(13));
 
 				li.add(vm);
 			}

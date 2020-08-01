@@ -20,7 +20,7 @@ public class SuperController extends JFrame {
 	public SuperController() {
 		super("Sakila Store Management");
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-		this.setLocationRelativeTo(null);
+
 
 		JTabbedPane container = new JTabbedPane();
 		ActorController actorController = new ActorController(MySqlSakilaDatabase.getInstance());
@@ -34,6 +34,8 @@ public class SuperController extends JFrame {
 
 		this.pack();
 		this.setResizable(false);
+		this.setLocationRelativeTo(null);
+		this.setSize(900, 700);
 
 		this.setVisible(true);
 

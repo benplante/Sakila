@@ -1,7 +1,5 @@
 package com.blockbuster.sakila.ui;
 
-import java.awt.Dimension;
-
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -33,7 +31,6 @@ public class ActorListView extends JPanel {
 		super();
 
 		tblActors = new JTable();
-		tblActors.setMaximumSize(new Dimension(500, 500));
 		JScrollPane scrollPane = new JScrollPane(tblActors);
 
 		btnAdd = new JButton("Add");

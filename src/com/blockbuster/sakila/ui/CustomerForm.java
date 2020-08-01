@@ -66,7 +66,7 @@ public class CustomerForm extends JFrame {
 		txtPanel.add(new JLabel("Phone #:"));
 		txtPanel.add(txtPhone);
 		txtPanel.add(new JLabel("Cities: "));
-		txtPanel.
+		//txtPanel.
 
 		JPanel btnPanel = new JPanel();
 		btnPanel.setBorder(new EmptyBorder(10, 5, 10, 5));

@@ -3,6 +3,12 @@ package com.blockbuster.sakila.viewmodels;
 import com.blockbuster.sakila.database.ColumnName;
 
 public class CustomerViewModel {
+	private int addressId;
+
+	private int cityId;
+
+	private boolean isActive;
+
 	@ColumnName(columnName = "Customer #")
 	public int customerId;
 
@@ -16,13 +22,13 @@ public class CustomerViewModel {
 	public String email;
 
 	@ColumnName(columnName = "Is Active")
-	public boolean isActive;
+	public String isActiveStr = isActive ? "Yes" : "No";
 
 	@ColumnName(columnName = "City")
 	public String city;
 
-	@ColumnName(columnName = "Province")
-	public String province;
+	@ColumnName(columnName = "District")
+	public String district;
 
 	@ColumnName(columnName = "Country")
 	public String country;
@@ -30,16 +36,19 @@ public class CustomerViewModel {
 	@ColumnName(columnName = "Address Line 1")
 	public String addressLine1;
 
-	@ColumnName(columnName = "Address Line 2")
-	public String addressLine2;
-
 	@ColumnName(columnName = "Post Code")
 	public String postalCode;
 
 	@ColumnName(columnName = "Phone #")
 	public String phone;
 
-	private int cityId;
+	public int getAddressId() {
+		return this.addressId;
+	}
+
+	public void setAddressId(int addressId) {
+		this.addressId = addressId;
+	}
 
 	public int getCityId() {
 		return cityId;
@@ -49,10 +58,12 @@ public class CustomerViewModel {
 		this.cityId = cityId;
 	}
 
-	private int addressId;
+	public boolean getIsActive() {
+		return this.isActive;
+	}
 
-	public void setAddressId(int addressId) {
-		this.addressId = addressId;
+	public void setIsActive(boolean isActive) {
+		this.isActive = isActive;
 	}
 
 	public CustomerViewModel() {
