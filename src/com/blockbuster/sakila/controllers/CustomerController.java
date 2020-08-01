@@ -23,6 +23,7 @@ public class CustomerController {
 
 		model = new TableViewModel<>(db.selectCustomers(), CustomerViewModel.class);
 		customerListViewPanel.setCustomerList(model);
+		customerFormFrame.setCities(db.selectCities());
 	}
 
 	public JPanel getPanel() {
@@ -59,9 +60,4 @@ public class CustomerController {
 		model.setData(db.selectCustomers());
 		customerFormFrame.setVisible(false);
 	}
-
-//    public void deleteActor() {
-//        db.deleteActor(customerListViewPanel.getSelectedActor());
-//        model.setData(db.selectActors());
-//    }
 }

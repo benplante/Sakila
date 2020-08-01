@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.blockbuster.sakila.viewmodels.ActorViewModel;
+import com.blockbuster.sakila.viewmodels.CityViewModel;
 import com.blockbuster.sakila.viewmodels.CustomerViewModel;
 
 /**
@@ -277,6 +278,46 @@ public class MySqlSakilaDatabase implements SakilaDatabase {
 		} catch (SQLException e) {
 			System.out.println(e.toString());
 		}
+		return li;
+	}
+	
+	@Override
+	public List<CityViewModel> selectCities() {
+		ArrayList<CityViewModel> li = new ArrayList<>();
+		
+		Connection conn = null;
+		Statement stmt = null;
+		ResultSet rs = null;
+		try {
+			conn = DriverManager.getConnection(CONNECTION_STRING, "root", "password");
+			String sql = "SELECT ci.city_id, ci.city, co.country "
+					+ "FROM city ci "
+					+ "INNER JOIN country co ON ci.country_id = co.country_id "
+					+ "ORDER BY ci.city, co.country";
+			stmt = conn.createStatement();
+			
+			rs = stmt.executeQuery(sql);
+			
+			while (rs.next()) {
+				CityViewModel vm = new CityViewModel();
+				vm.setCityId(rs.getInt(1));
+				vm.setCityName(rs.getString(2));
+				vm.setCountryName(rs.getString(3));
+				
+				li.add(vm);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (conn != null) conn.close();
+				if (stmt != null) stmt.close();
+				if (rs != null) rs.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
 		return li;
 	}
 

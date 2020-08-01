@@ -26,4 +26,6 @@ public interface SakilaDatabase {
 	public void deleteCustomer(CustomerViewModel customer);
 
 	public List<CustomerViewModel> selectCustomers();
+	
+	public List<CityViewModel> selectCities();
 }
