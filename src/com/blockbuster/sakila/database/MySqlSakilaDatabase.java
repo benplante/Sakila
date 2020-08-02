@@ -12,6 +12,7 @@ import java.util.List;
 import com.blockbuster.sakila.viewmodels.ActorViewModel;
 import com.blockbuster.sakila.viewmodels.CityViewModel;
 import com.blockbuster.sakila.viewmodels.CustomerViewModel;
+import com.blockbuster.sakila.viewmodels.FilmViewModel;
 
 /**
  * @author Ben Plante
@@ -347,6 +348,62 @@ public class MySqlSakilaDatabase implements SakilaDatabase {
 		}
 		
 		return li;
+	}
+	
+	@Override
+	public void insertFilm(FilmViewModel film) throws SQLException {
+
+		Connection conn = null;
+		PreparedStatement stmtFilm = null,
+											stmtFilmActor = null,
+											stmtInventory = null;
+		ResultSet rsId = null;
+		try {
+			conn = DriverManager.getConnection(CONNECTION_STRING, "root", "password");
+			conn.setAutoCommit(false);
+
+			// use location for 47 MySakila Drive record
+			String sqlFilm = "INSERT INTO film(title, description, release_year, rental_duration, "
+					+ "rental_rate, replacement_cost, rating) " +
+				"VALUES(?, ?, ?, ?, ?, ?, ?)";
+
+			stmtFilm = conn.prepareStatement(sqlFilm, Statement.RETURN_GENERATED_KEYS);
+			stmtFilm.setString(1, film.title);
+			stmtFilm.setString(2, film.description);
+			stmtFilm.setString(3, film.release_year);
+			stmtFilm.setInt(4, film.rental_duration);
+			stmtFilm.setDouble(5, film.rental_rate);
+			stmtFilm.setDouble(6, film.replacement_cost);
+			stmtFilm.setString(7, film.rating);
+			stmtFilm.executeUpdate();
+			
+			rsId = stmtFilm.getGeneratedKeys();
+			if (rsId.next()) {
+				int filmId = rsId.getInt(1);
+				String sqlFilmActor = "INSET INTO film_Actor(actor_id, film_id) "
+						+ "VALUES(?, ?)";
+				stmtFilmActor = conn.prepareStatement(sqlFilmActor, Statement.RETURN_GENERATED_KEYS);
+				stmtFilmActor.executeUpdate();
+				
+				String sqlInventory = "INSERT INTO inventory(film_id, store_id) VALUES(?, ?)";
+				stmtInventory = conn.prepareStatement(sqlInventory, Statement.RETURN_GENERATED_KEYS);
+				stmtInventory.setInt(2, 1);
+				stmtInventory.executeUpdate();
+				
+			}
+		} catch (SQLException e) {
+			if (conn != null) conn.rollback();
+			throw e;
+		} finally {
+			try {
+				if (conn != null) conn.close();
+				if (stmtFilm != null) stmtFilm.close();
+				if (rsId != null) rsId.close();
+			} catch (SQLException e) {
+				System.out.println("Error closing DB resources");
+				e.printStackTrace();
+			}
+		}
 	}
 
 }

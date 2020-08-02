@@ -29,4 +29,6 @@ public interface SakilaDatabase {
 	public List<CustomerViewModel> selectCustomers() throws SQLException;
 	
 	public List<CityViewModel> selectCities() throws SQLException;
+	
+	public void insertFilm(FilmViewModel film) throws SQLException;
 }
