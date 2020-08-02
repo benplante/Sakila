@@ -1,5 +1,10 @@
 package com.blockbuster.sakila.controllers;
 
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import com.blockbuster.sakila.database.SakilaDatabase;
@@ -20,8 +25,19 @@ public class ActorController {
 		actorListViewPanel = new ActorListView(this);
 		actorFormFrame = new ActorForm(this);
 
-		model = new TableViewModel<ActorViewModel>(db.selectActors(), ActorViewModel.class);
+		model = new TableViewModel<ActorViewModel>(getActorsFromDB(), ActorViewModel.class);
 		actorListViewPanel.setActorList(model);
+	}
+	
+	private List<ActorViewModel> getActorsFromDB() {
+		try {
+			return db.selectActors();
+		} catch (SQLException e) {
+			JOptionPane.showMessageDialog(actorListViewPanel, 
+					"Error loading customers: " + e.getMessage(), 
+					"Error loading customers", JOptionPane.ERROR_MESSAGE);
+			return new ArrayList<>();
+		}
 	}
 
 	public JPanel getPanel() {
@@ -54,15 +70,23 @@ public class ActorController {
 	public void confirmAddActor() {
 		actorListViewPanel.setEnabled(true);
 		ActorViewModel vm = actorFormFrame.getActor();
-		if (vm == null) {
-			return;
-		} else if (vm.actorId == -1) {
-			db.insertActor(vm);
-		} else {
-			db.updateActor(vm);
+		String type = "";
+		try {
+			if (vm == null) {
+				return;
+			} else if (vm.actorId == -1) {
+				type = "Add";
+				db.insertActor(vm);
+			} else {
+				type = "Update";
+				db.updateActor(vm);
+			}
+			JOptionPane.showMessageDialog(actorFormFrame, type + " actor succeeded!");
+			actorFormFrame.setVisible(false);
+			model.setData(getActorsFromDB());
+		} catch (SQLException e) {
+			JOptionPane.showMessageDialog(actorFormFrame,  "Error: " + e.getMessage(), type + " failed!", JOptionPane.ERROR_MESSAGE);
 		}
-		model.setData(db.selectActors());
-		actorFormFrame.setVisible(false);
 	}
 
 	public void deleteActor() {
@@ -70,7 +94,12 @@ public class ActorController {
 		if (vm == null) {
 			return;
 		}
-		db.deleteActor(vm);
-		model.setData(db.selectActors());
+		try {
+			db.deleteActor(vm);
+			JOptionPane.showMessageDialog(actorFormFrame, "Delete actor succeeded!");
+			model.setData(getActorsFromDB());
+		} catch (SQLException e) {
+			JOptionPane.showMessageDialog(actorFormFrame,  "Error: " + e.getMessage(), "Delete failed!", JOptionPane.ERROR_MESSAGE);
+		}
 	}
 }

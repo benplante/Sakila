@@ -24,9 +24,7 @@ public class MySqlSakilaDatabase implements SakilaDatabase {
 
 	private static SakilaDatabase instance;
 
-	public MySqlSakilaDatabase() {
-
-	}
+	public MySqlSakilaDatabase() {}
 
 	public static SakilaDatabase getInstance() {
 		if (instance == null) {
@@ -36,48 +34,78 @@ public class MySqlSakilaDatabase implements SakilaDatabase {
 	}
 
 	@Override
-	public void insertActor(ActorViewModel actor) {
-		try (Connection conn = DriverManager.getConnection(CONNECTION_STRING, "root", "password")) {
-			PreparedStatement stmt = conn.prepareStatement("INSERT INTO actor(first_name, last_name) VALUES(?, ?)");
+	public void insertActor(ActorViewModel actor) throws SQLException {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		try {
+			conn = DriverManager.getConnection(CONNECTION_STRING, "root", "password");
+			stmt = conn.prepareStatement("INSERT INTO actor(first_name, last_name) VALUES(?, ?)");
 			stmt.setString(1, actor.firstName);
 			stmt.setString(2, actor.lastName);
 			stmt.executeUpdate();
-		} catch (SQLException e) {
-			System.out.println(e.toString());
+		} finally {
+			try {
+				if (conn != null) conn.close();
+				if (stmt != null) stmt.close();
+			} catch (SQLException e) {
+				System.out.println("Error closing DB resources");
+				e.printStackTrace();
+			}
 		}
 	}
 
 	@Override
-	public void updateActor(ActorViewModel actor) {
-		try (Connection conn = DriverManager.getConnection(CONNECTION_STRING, "root", "password")) {
-			PreparedStatement stmt = conn
-					.prepareStatement("UPDATE actor SET first_name = ?, last_name = ? WHERE actor_id = ?");
+	public void updateActor(ActorViewModel actor) throws SQLException {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		try {
+			conn = DriverManager.getConnection(CONNECTION_STRING, "root", "password");
+			stmt = conn.prepareStatement("UPDATE actor SET first_name = ?, last_name = ? WHERE actor_id = ?");
 			stmt.setString(1, actor.firstName);
 			stmt.setString(2, actor.lastName);
 			stmt.setInt(3, actor.actorId);
 			stmt.executeUpdate();
-		} catch (SQLException e) {
-			System.out.println(e.toString());
+		} finally {
+			try {
+				if (conn != null) conn.close();
+				if (stmt != null) stmt.close();
+			} catch (SQLException e) {
+				System.out.println("Error closing DB resources");
+				e.printStackTrace();
+			}
 		}
 	}
 
 	@Override
-	public void deleteActor(ActorViewModel actor) {
-		try (Connection conn = DriverManager.getConnection(CONNECTION_STRING, "root", "password")) {
-			PreparedStatement stmt = conn.prepareStatement("DELETE FROM actor WHERE actor_id = ?");
+	public void deleteActor(ActorViewModel actor) throws SQLException {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		try {
+			conn = DriverManager.getConnection(CONNECTION_STRING, "root", "password");
+			stmt = conn.prepareStatement("DELETE FROM actor WHERE actor_id = ?");
 			stmt.setInt(1, actor.actorId);
 			stmt.executeUpdate();
-		} catch (SQLException e) {
-			System.out.println(e.toString());
+		} finally {
+			try {
+				if (conn != null) conn.close();
+				if (stmt != null) stmt.close();
+			} catch (SQLException e) {
+				System.out.println("Error closing DB resources");
+				e.printStackTrace();
+			}
 		}
 	}
 
 	@Override
-	public List<ActorViewModel> selectActors() {
+	public List<ActorViewModel> selectActors() throws SQLException {
 		ArrayList<ActorViewModel> li = new ArrayList<>();
-		try (Connection conn = DriverManager.getConnection(CONNECTION_STRING, "root", "password")) {
-			Statement stmt = conn.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT actor_id, first_name, last_name FROM actor ORDER BY actor_id");
+		Connection conn = null;
+		Statement stmt = null;
+		ResultSet rs = null;
+		try {
+			conn = DriverManager.getConnection(CONNECTION_STRING, "root", "password");
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery("SELECT actor_id, first_name, last_name FROM actor ORDER BY actor_id");
 
 			while (rs.next()) {
 				ActorViewModel vm = new ActorViewModel();
@@ -87,15 +115,21 @@ public class MySqlSakilaDatabase implements SakilaDatabase {
 				li.add(vm);
 			}
 			rs.close();
-			return li;
-		} catch (SQLException e) {
-			System.out.println(e.toString());
+		} finally {
+			try {
+				if (conn != null) conn.close();
+				if (stmt != null) stmt.close();
+				if (rs != null) rs.close();
+			} catch (SQLException e) {
+				System.out.println("Error closing DB resources");
+				e.printStackTrace();
+			}
 		}
 		return li;
 	}
 
 	@Override
-	public void insertCustomer(CustomerViewModel customer) {
+	public void insertCustomer(CustomerViewModel customer) throws SQLException {
 
 		Connection conn = null;
 		PreparedStatement stmtAddress = null, stmtCustomer = null;
@@ -132,37 +166,30 @@ public class MySqlSakilaDatabase implements SakilaDatabase {
 					conn.commit();
 				}
 				else {
-					throw new SQLException("Customer was not added!");
+					throw new SQLException("Customer was not added - invalid number of rows affected!");
 				}
 			}
 			else {
-				throw new SQLException("Address was not added!");
+				throw new SQLException("Address was not added - invalid number of rows affected!");
 			}
 		} catch (SQLException e) {
-			try {
-				if (conn != null) conn.rollback();
-			} catch (SQLException ex) {
-				ex.printStackTrace();
-			}
-			e.printStackTrace();
+			if (conn != null) conn.rollback();
+			throw e;
 		} finally {
 			try {
-				if (conn != null)
-					conn.close();
-				if (stmtAddress != null)
-					stmtAddress.close();
-				if (stmtCustomer != null) 
-					stmtCustomer.close();
-				if (rsId != null)
-					rsId.close();
+				if (conn != null) conn.close();
+				if (stmtAddress != null) stmtAddress.close();
+				if (stmtCustomer != null) stmtCustomer.close();
+				if (rsId != null) rsId.close();
 			} catch (SQLException e) {
+				System.out.println("Error closing DB resources");
 				e.printStackTrace();
 			}
 		}
 	}
 
 	@Override
-	public void updateCustomer(CustomerViewModel customer) {
+	public void updateCustomer(CustomerViewModel customer) throws SQLException {
 		Connection conn = null;
 		PreparedStatement stmtAddress = null, stmtCustomer = null;
 		ResultSet rsId = null;
@@ -191,30 +218,23 @@ public class MySqlSakilaDatabase implements SakilaDatabase {
 					conn.commit();
 				}
 				else {
-					throw new SQLException("Customer was not added!");
+					throw new SQLException("Customer was not updated - invalid number of rows affected!");
 				}
 			}
 			else {
-				throw new SQLException("Address was not added!");
+				throw new SQLException("Address was not updated - invalid number of rows affected!");
 			}
 		} catch (SQLException e) {
-			try {
-				if (conn != null) conn.rollback();
-			} catch (SQLException ex) {
-				ex.printStackTrace();
-			}
-			e.printStackTrace();
+			if (conn != null) conn.rollback();
+			throw e;
 		} finally {
 			try {
-				if (conn != null)
-					conn.close();
-				if (stmtAddress != null)
-					stmtAddress.close();
-				if (stmtCustomer != null) 
-					stmtCustomer.close();
-				if (rsId != null)
-					rsId.close();
+				if (conn != null) conn.close();
+				if (stmtAddress != null) stmtAddress.close();
+				if (stmtCustomer != null) stmtCustomer.close();
+				if (rsId != null) rsId.close();
 			} catch (SQLException e) {
+				System.out.println("Error closing DB resources");
 				e.printStackTrace();
 			}
 		}
@@ -222,32 +242,33 @@ public class MySqlSakilaDatabase implements SakilaDatabase {
 	}
 
 	@Override
-	public void deleteCustomer(CustomerViewModel customer) {
+	public void deleteCustomer(CustomerViewModel customer) throws SQLException {
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		try {
 			conn = DriverManager.getConnection(CONNECTION_STRING, "root", "password");
 			stmt = conn.prepareStatement("DELETE FROM customer WHERE customer_id = ?");
 			stmt.setInt(1, customer.customerId);
-		} catch (SQLException e) {
-			e.printStackTrace();
 		} finally {
 			try {
-				if (conn != null)
-					conn.close();
-				if (stmt != null)
-					stmt.close();
+				if (conn != null) conn.close();
+				if (stmt != null) stmt.close();
 			} catch (SQLException e) {
+				System.out.println("Error closing DB resources");
 				e.printStackTrace();
 			}
 		}
 	}
 
 	@Override
-	public List<CustomerViewModel> selectCustomers() {
+	public List<CustomerViewModel> selectCustomers() throws SQLException {
 		ArrayList<CustomerViewModel> li = new ArrayList<>();
-		try (Connection conn = DriverManager.getConnection(CONNECTION_STRING, "root", "password")) {
-			Statement stmt = conn.createStatement();
+		Connection conn = null;
+		Statement stmt = null;
+		ResultSet rs = null;
+		try  {
+			conn = DriverManager.getConnection(CONNECTION_STRING, "root", "password");
+			stmt = conn.createStatement();
 			String sql = "SELECT customer_id, first_name, last_name, email, active, city, district, "
 					+ "country, address, postal_code, phone, cu.address_id, ad.city_id "
 					+ "FROM customer cu "
@@ -255,7 +276,7 @@ public class MySqlSakilaDatabase implements SakilaDatabase {
 					+ "LEFT JOIN city ct ON ad.city_id = ct.city_id "
 					+ "LEFT JOIN country co ON ct.country_id = co.country_id "
 					+ "ORDER BY customer_id";
-			ResultSet rs = stmt.executeQuery(sql);
+			rs = stmt.executeQuery(sql);
 
 			while (rs.next()) {
 				CustomerViewModel vm = new CustomerViewModel();
@@ -276,15 +297,21 @@ public class MySqlSakilaDatabase implements SakilaDatabase {
 				li.add(vm);
 			}
 			rs.close();
-			return li;
-		} catch (SQLException e) {
-			System.out.println(e.toString());
+		} finally {
+			try {
+				if (conn != null) conn.close();
+				if (stmt != null) stmt.close();
+				if (rs != null) rs.close();
+			} catch (SQLException e) {
+				System.out.println("Error closing DB resources");
+				e.printStackTrace();
+			}
 		}
 		return li;
 	}
 	
 	@Override
-	public List<CityViewModel> selectCities() {
+	public List<CityViewModel> selectCities() throws SQLException {
 		ArrayList<CityViewModel> li = new ArrayList<>();
 		
 		Connection conn = null;
@@ -308,14 +335,13 @@ public class MySqlSakilaDatabase implements SakilaDatabase {
 				
 				li.add(vm);
 			}
-		} catch (SQLException e) {
-			e.printStackTrace();
 		} finally {
 			try {
 				if (conn != null) conn.close();
 				if (stmt != null) stmt.close();
 				if (rs != null) rs.close();
 			} catch (SQLException e) {
+				System.out.println("Error closing DB resources");
 				e.printStackTrace();
 			}
 		}
