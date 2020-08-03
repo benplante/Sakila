@@ -130,10 +130,4 @@ public class FilmForm extends JFrame{
 		
 		return film;
 	}
-
-	public void setFilm(Object object)
-	{
-		
-		
-	}
 }
