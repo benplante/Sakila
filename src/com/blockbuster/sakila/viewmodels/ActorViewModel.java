@@ -55,6 +55,6 @@ public class ActorViewModel {
 	}
 	
 	public String toString() {
-		return firstName + ", " + lastName;
+		return firstName + " " + lastName;
 	}
 }

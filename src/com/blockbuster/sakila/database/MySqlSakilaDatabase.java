@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.blockbuster.sakila.viewmodels.ActorViewModel;
+import com.blockbuster.sakila.viewmodels.CategoryViewModel;
 import com.blockbuster.sakila.viewmodels.CityViewModel;
 import com.blockbuster.sakila.viewmodels.CustomerViewModel;
 import com.blockbuster.sakila.viewmodels.FilmViewModel;
@@ -350,6 +351,42 @@ public class MySqlSakilaDatabase implements SakilaDatabase {
 		return li;
 	}
 	
+	   @Override
+	    public List<CategoryViewModel> selectCategories() throws SQLException {
+	        ArrayList<CategoryViewModel> li = new ArrayList<>();
+	        
+	        Connection conn = null;
+	        Statement stmt = null;
+	        ResultSet rs = null;
+	        try {
+	            conn = DriverManager.getConnection(CONNECTION_STRING, "root", "password");
+	            String sql = "SELECT Category_id, name "
+	                    + "FROM category ";
+	            stmt = conn.createStatement();
+	            
+	            rs = stmt.executeQuery(sql);
+	            
+	            while (rs.next()) {
+	              CategoryViewModel vm = new CategoryViewModel();
+	                vm.setCategoryId(rs.getInt(1));
+	                vm.setCategoryName(rs.getString(2));
+	                
+	                li.add(vm);
+	            }
+	        } finally {
+	            try {
+	                if (conn != null) conn.close();
+	                if (stmt != null) stmt.close();
+	                if (rs != null) rs.close();
+	            } catch (SQLException e) {
+	                System.out.println("Error closing DB resources");
+	                e.printStackTrace();
+	            }
+	        }
+	        
+	        return li;
+	    }
+	    
 	@Override
 	public void insertFilm(FilmViewModel film) throws SQLException {
 

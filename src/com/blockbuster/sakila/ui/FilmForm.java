@@ -15,6 +15,7 @@ import javax.swing.border.EmptyBorder;
 
 import com.blockbuster.sakila.controllers.FilmController;
 import com.blockbuster.sakila.viewmodels.ActorViewModel;
+import com.blockbuster.sakila.viewmodels.CategoryViewModel;
 import com.blockbuster.sakila.viewmodels.CityViewModel;
 import com.blockbuster.sakila.viewmodels.FilmViewModel;
 
@@ -26,6 +27,9 @@ public class FilmForm extends JPanel{
 	private JButton btnConfirm, btnCancel;
 	private JComboBox<ActorViewModel> cmbActors;
 	private ActorViewModel[] actors;
+	private JComboBox<CategoryViewModel> cmbCategories;
+	private CategoryViewModel[] categories;
+
 
 	public FilmForm(FilmController controller) {
 
@@ -39,6 +43,8 @@ public class FilmForm extends JPanel{
 		txtReplacementCost = new JTextField();
 		txtRating = new JTextField();
 		cmbActors = new JComboBox<ActorViewModel>();
+	    cmbCategories = new JComboBox<CategoryViewModel>();
+
 
 		btnConfirm = new JButton("Confirm");
 		btnConfirm.addActionListener(e -> controller.confirmAddFilm());
@@ -54,6 +60,8 @@ public class FilmForm extends JPanel{
 		txtPanel.add(txtTitle);
 		txtPanel.add(new JLabel("Description:"));
 		txtPanel.add(txtDescription);
+	    txtPanel.add(new JLabel("Category:"));
+	    txtPanel.add(cmbCategories);
 		txtPanel.add(new JLabel("Actor:"));
 		txtPanel.add(cmbActors);
 		txtPanel.add(new JLabel("Realse Year:"));
@@ -79,7 +87,7 @@ public class FilmForm extends JPanel{
 		wrapper.add(btnPanel);
 		
 		this.add(wrapper);
-		//		this.setContentPane(wrapper);
+//        this.setContentPane(wrapper);
 //		this.pack();
 //		this.setResizable(false);
 //		this.setLocationRelativeTo(null);
@@ -91,6 +99,14 @@ public class FilmForm extends JPanel{
 		this.actors = arr;
 		cmbActors.setModel(new DefaultComboBoxModel<ActorViewModel>(arr));
 	}
+	
+	  public void setCategories(List<CategoryViewModel> categories) {
+	     CategoryViewModel[] arr = new CategoryViewModel[categories.size()];
+	     categories.toArray(arr);
+	     this.categories = arr;
+	     cmbCategories.setModel(new DefaultComboBoxModel<CategoryViewModel>(arr));
+	    }
+
 
 	public FilmViewModel getFilm()
 	{

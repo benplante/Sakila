@@ -12,6 +12,7 @@ import com.blockbuster.sakila.database.TableViewModel;
 import com.blockbuster.sakila.ui.FilmForm;
 import com.blockbuster.sakila.ui.FilmListView;
 import com.blockbuster.sakila.viewmodels.ActorViewModel;
+import com.blockbuster.sakila.viewmodels.CategoryViewModel;
 import com.blockbuster.sakila.viewmodels.CustomerViewModel;
 import com.blockbuster.sakila.viewmodels.FilmViewModel;
 
@@ -23,12 +24,16 @@ public class FilmController
 	private FilmForm filmFormFrame;
 
 	private TableViewModel<ActorViewModel> model;
+	private TableViewModel<CategoryViewModel> categoryModel;
+
 
 	public FilmController(SakilaDatabase db) {
 		this.db = db;
 		filmFormFrame = new FilmForm(this);		
 		model = new TableViewModel<>(getActorsFromDB(), ActorViewModel.class);
 		filmFormFrame.setActors(getActorsFromDB());
+		categoryModel = new TableViewModel<>(getCategoriesFromDB(),CategoryViewModel.class);
+	    filmFormFrame.setCategories(getCategoriesFromDB());
 	}
 
 	private List<ActorViewModel> getActorsFromDB() {
@@ -39,6 +44,13 @@ public class FilmController
 		}
 	}
 	
+	private List<CategoryViewModel> getCategoriesFromDB() {
+        try {
+            return db.selectCategories();
+        } catch (SQLException e) {
+            return new ArrayList<>();
+        }
+	  }
 	public JPanel getPanel() {
 		return filmFormFrame;
 	}
