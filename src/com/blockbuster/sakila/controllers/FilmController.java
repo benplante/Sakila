@@ -86,6 +86,7 @@ public class FilmController
 			db.insertFilm(vm);
 			JOptionPane.showMessageDialog(filmFormFrame, type + " film succeeded!");
 			filmFormFrame.setVisible(false);
+			model.setData(getFilmsFromDB());
 		} catch (SQLException e) {
 			JOptionPane.showMessageDialog(filmFormFrame,  "Error: " + e.getMessage(), type + " failed!", JOptionPane.ERROR_MESSAGE);
 		}

@@ -396,8 +396,10 @@ public class MySqlSakilaDatabase implements SakilaDatabase {
 		ResultSet rs = null;
 		try {
 			conn = DriverManager.getConnection(CONNECTION_STRING, "root", "password");
-		String sql = "SELECT film_id, title, description, release_year,"
-				+ " rental_duration, rental_rate, replacement_cost, rating FROM film";
+		String sql = "SELECT f.film_id, f.title, f.description, f.release_year,"
+				+ " f.rental_duration, f.rental_rate, f.replacement_cost, f.rating, c.name"
+				+ " FROM sakila.film f LEFT OUTER JOIN sakila.film_category fc ON f.film_id = fc.film_id" + 
+				" LEFT OUTER JOIN sakila.category c ON fc.category_id = c.category_id;";
 		stmt = conn.createStatement();
 		
 		rs = stmt.executeQuery(sql);
@@ -412,6 +414,7 @@ public class MySqlSakilaDatabase implements SakilaDatabase {
 				vm.setRentalRate(Double.parseDouble(rs.getString(6)));
 				vm.setReplacementCost(Double.parseDouble(rs.getString(7)));
 				vm.setRating(rs.getString(8));
+				vm.setCategoryName(rs.getString(9));
 				li.add(vm);
 			}
 		} finally {
@@ -433,6 +436,7 @@ public class MySqlSakilaDatabase implements SakilaDatabase {
 		Connection conn = null;
 		PreparedStatement stmtFilm = null,
 											stmtFilmActor = null,
+											stmtFilmCategory = null,
 											stmtInventory = null;
 		ResultSet rsId = null;
 		try {
@@ -440,33 +444,45 @@ public class MySqlSakilaDatabase implements SakilaDatabase {
 			conn.setAutoCommit(false);
 
 			// use location for 47 MySakila Drive record
-			String sqlFilm = "INSERT INTO film(title, description, release_year, rental_duration, "
+			String sqlFilm = "INSERT INTO film(title, description, release_year, language_id, rental_duration, "
 					+ "rental_rate, replacement_cost, rating) " +
-				"VALUES(?, ?, ?, ?, ?, ?, ?)";
+				"VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
 
 			stmtFilm = conn.prepareStatement(sqlFilm, Statement.RETURN_GENERATED_KEYS);
 			stmtFilm.setString(1, film.title);
 			stmtFilm.setString(2, film.description);
 			stmtFilm.setString(3, film.releaseYear);
-			stmtFilm.setInt(4, film.rentalDuration);
-			stmtFilm.setDouble(5, film.rentalRate);
-			stmtFilm.setDouble(6, film.replacementCost);
-			stmtFilm.setString(7, film.rating);
+			stmtFilm.setInt(4, 1);
+			stmtFilm.setInt(5, film.rentalDuration);
+			stmtFilm.setDouble(6, film.rentalRate);
+			stmtFilm.setDouble(7, film.replacementCost);
+			stmtFilm.setString(8, film.rating);
 			stmtFilm.executeUpdate();
 			
 			rsId = stmtFilm.getGeneratedKeys();
 			if (rsId.next()) {
 				int filmId = rsId.getInt(1);
-				String sqlFilmActor = "INSET INTO film_Actor(actor_id, film_id) "
+				String sqlFilmActor = "INSERT INTO film_actor(actor_id, film_id) "
 						+ "VALUES(?, ?)";
 				stmtFilmActor = conn.prepareStatement(sqlFilmActor, Statement.RETURN_GENERATED_KEYS);
+				stmtFilmActor.setInt(1, film.getActorId());
+				stmtFilmActor.setInt(2, filmId);
 				stmtFilmActor.executeUpdate();
+				
+				String sqlFilmCategory = "INSERT INTO film_category(film_id, category_id) "
+						+ "VALUES(?, ?)";
+				stmtFilmCategory = conn.prepareStatement(sqlFilmCategory, Statement.RETURN_GENERATED_KEYS);
+				stmtFilmCategory.setInt(1, filmId);
+				stmtFilmCategory.setInt(2, film.getCategoryId());
+				stmtFilmCategory.executeUpdate();
 				
 				String sqlInventory = "INSERT INTO inventory(film_id, store_id) VALUES(?, ?)";
 				stmtInventory = conn.prepareStatement(sqlInventory, Statement.RETURN_GENERATED_KEYS);
+				stmtInventory.setInt(1, filmId);
 				stmtInventory.setInt(2, 1);
 				stmtInventory.executeUpdate();
-				
+					
+				conn.commit();
 			}
 		} catch (SQLException e) {
 			if (conn != null) conn.rollback();

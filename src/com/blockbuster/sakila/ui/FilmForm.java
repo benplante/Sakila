@@ -46,13 +46,11 @@ public class FilmForm extends JFrame{
 		cmbActors = new JComboBox<ActorViewModel>();
 	  cmbCategories = new JComboBox<CategoryViewModel>();
 
-
 		btnConfirm = new JButton("Confirm");
 		btnConfirm.addActionListener(e -> controller.confirmAddFilm());
 
 		btnCancel = new JButton("Cancel");
-		btnCancel.addActionListener(e -> controller.closeFilmForm());
-		
+		btnCancel.addActionListener(e -> controller.closeFilmForm());		
 
 		JPanel txtPanel = new JPanel();
 		txtPanel.setBorder(new EmptyBorder(10, 5, 10, 5));
@@ -108,7 +106,6 @@ public class FilmForm extends JFrame{
 	     cmbCategories.setModel(new DefaultComboBoxModel<CategoryViewModel>(arr));
 	    }
 
-
 	public FilmViewModel getFilm()
 	{
 		FilmViewModel film = new FilmViewModel();
@@ -118,6 +115,8 @@ public class FilmForm extends JFrame{
 		film.rentalDuration = Integer.parseInt(txtRentalDuration.getText());
 		film.replacementCost = Double.parseDouble(txtReplacementCost.getText());
 		film.rating = txtRating.getText();
+		film.setActorId(actors[cmbActors.getSelectedIndex()].getActorId());
+		film.setCategoryId(categories[cmbCategories.getSelectedIndex()].getCategoryId());
 		
 		return film;
 	}

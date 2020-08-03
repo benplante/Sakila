@@ -23,8 +23,6 @@ public class CategoryViewModel {
 		this.categoryName = categoryName;
 	}
 
-	
-
 	public String toString() {
 		return categoryName ;
 	}

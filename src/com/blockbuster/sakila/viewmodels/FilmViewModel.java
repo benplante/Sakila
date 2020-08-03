@@ -3,9 +3,12 @@ package com.blockbuster.sakila.viewmodels;
 import com.blockbuster.sakila.database.ColumnName;
 
 public class FilmViewModel {
+
+	private int categoryId;
+	private int actorId;
 	
 	@ColumnName(columnName = "Film #")
-  private int filmId;
+  public int filmId;
 	@ColumnName(columnName = "Title")
 	public String title;
 	@ColumnName(columnName = "Description")
@@ -22,8 +25,6 @@ public class FilmViewModel {
 	public double replacementCost;
 	@ColumnName(columnName = "Rating")
 	public String rating;
-	@ColumnName(columnName = "Category Id")
-	private int categoryId;
 	
 	public int getFilmId()
 	{
@@ -122,4 +123,14 @@ public class FilmViewModel {
   public void setCategoryId(int categoryId) {
     this.categoryId = categoryId;
   }
+  
+	public int getActorId()
+	{
+		return actorId;
+	}
+
+	public void setActorId(int actorId)
+	{
+		this.actorId = actorId;
+	}
 }
