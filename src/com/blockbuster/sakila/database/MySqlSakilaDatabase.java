@@ -388,6 +388,46 @@ public class MySqlSakilaDatabase implements SakilaDatabase {
 	    }
 	    
 	@Override
+	public List<FilmViewModel> selectFilms() throws SQLException {
+		ArrayList<FilmViewModel> li = new ArrayList<>();
+		
+		Connection conn = null;
+		Statement stmt = null;
+		ResultSet rs = null;
+		try {
+			conn = DriverManager.getConnection(CONNECTION_STRING, "root", "password");
+		String sql = "SELECT film_id, title, description, release_year,"
+				+ " rental_duration, rental_rate, replacement_cost, rating FROM film";
+		stmt = conn.createStatement();
+		
+		rs = stmt.executeQuery(sql);
+		
+			while (rs.next()) {
+				FilmViewModel vm = new FilmViewModel();
+				vm.setFilmId(rs.getInt(1));
+				vm.setTitle(rs.getString(2));
+				vm.setDescription(rs.getString(3));
+				vm.setReleaseYear(rs.getString(4));
+				vm.setRentalDuration(Integer.parseInt(rs.getString(5)));
+				vm.setRentalRate(Double.parseDouble(rs.getString(6)));
+				vm.setReplacementCost(Double.parseDouble(rs.getString(7)));
+				vm.setRating(rs.getString(8));
+				li.add(vm);
+			}
+		} finally {
+			try {
+				if (conn != null) conn.close();
+				if (stmt != null) stmt.close();
+				if (rs != null) rs.close();
+			} catch (SQLException e) {
+				System.out.println("Error closing DB resources");
+				e.printStackTrace();
+			}
+		}
+		return li;
+	}
+	   
+	@Override
 	public void insertFilm(FilmViewModel film) throws SQLException {
 
 		Connection conn = null;
@@ -407,10 +447,10 @@ public class MySqlSakilaDatabase implements SakilaDatabase {
 			stmtFilm = conn.prepareStatement(sqlFilm, Statement.RETURN_GENERATED_KEYS);
 			stmtFilm.setString(1, film.title);
 			stmtFilm.setString(2, film.description);
-			stmtFilm.setString(3, film.release_year);
-			stmtFilm.setInt(4, film.rental_duration);
-			stmtFilm.setDouble(5, film.rental_rate);
-			stmtFilm.setDouble(6, film.replacement_cost);
+			stmtFilm.setString(3, film.releaseYear);
+			stmtFilm.setInt(4, film.rentalDuration);
+			stmtFilm.setDouble(5, film.rentalRate);
+			stmtFilm.setDouble(6, film.replacementCost);
 			stmtFilm.setString(7, film.rating);
 			stmtFilm.executeUpdate();
 			

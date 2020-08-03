@@ -29,10 +29,10 @@ public class FilmListView extends JPanel
 		JScrollPane scrollPane = new JScrollPane(filmTable);
 
 		btnAdd = new JButton("Add");
-		// TODO: btnAdd.addActionListener(e -> controller.openAddFilmForm());
-		btnUpdate = new JButton("Update");
+		btnAdd.addActionListener(e -> controller.openAddFilmForm());
+		//btnUpdate = new JButton("Update");
 		// TODO: btnUpdate.addActionListener(e -> controller.openUpdateFilmForm());
-		btnDelete = new JButton("Delete");
+		//btnDelete = new JButton("Delete");
 		// TODO: btnDelete.addActionListener(e -> controller.deleteFilm ());
 		
 
@@ -42,13 +42,19 @@ public class FilmListView extends JPanel
 		btnPanel.setLayout(new BoxLayout(btnPanel, BoxLayout.LINE_AXIS));
 		btnPanel.add(btnAdd);
 		btnPanel.add(Box.createHorizontalStrut(10));
-		btnPanel.add(btnUpdate);
-		btnPanel.add(Box.createHorizontalStrut(10));
-		btnPanel.add(btnDelete);
+//		btnPanel.add(btnUpdate);
+//		btnPanel.add(Box.createHorizontalStrut(10));
+//		btnPanel.add(btnDelete);
 
 		this.add(scrollPane);
 		this.add(Box.createVerticalStrut(10));
 		this.add(btnPanel);
 		this.setBorder(new EmptyBorder(10, 10, 10, 10));
+	}
+
+	public void setFilmList(TableViewModel<FilmViewModel> model)
+	{
+		this.model = model;
+		filmTable.setModel(model);
 	}
 }

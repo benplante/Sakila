@@ -20,20 +20,31 @@ public class FilmController
 {
 
 	private SakilaDatabase db;
-	//private FilmListView filmListViewPanel;
+	private FilmListView filmListViewPanel;
 	private FilmForm filmFormFrame;
-
-	private TableViewModel<ActorViewModel> model;
+	private TableViewModel<FilmViewModel> model;
+	private TableViewModel<ActorViewModel> actorModel;
 	private TableViewModel<CategoryViewModel> categoryModel;
 
 
 	public FilmController(SakilaDatabase db) {
 		this.db = db;
-		filmFormFrame = new FilmForm(this);		
-		model = new TableViewModel<>(getActorsFromDB(), ActorViewModel.class);
+		filmListViewPanel = new FilmListView(this);
+		filmFormFrame = new FilmForm(this);	
+		model = new TableViewModel<FilmViewModel>(getFilmsFromDB(), FilmViewModel.class);
+		filmListViewPanel.setFilmList(model);
+		actorModel = new TableViewModel<>(getActorsFromDB(), ActorViewModel.class);
 		filmFormFrame.setActors(getActorsFromDB());
 		categoryModel = new TableViewModel<>(getCategoriesFromDB(),CategoryViewModel.class);
-	    filmFormFrame.setCategories(getCategoriesFromDB());
+	  filmFormFrame.setCategories(getCategoriesFromDB());
+	}
+	
+	private List<FilmViewModel> getFilmsFromDB() {
+		try {
+			return db.selectFilms();
+		} catch (SQLException e) {
+			return new ArrayList<>();
+		}
 	}
 
 	private List<ActorViewModel> getActorsFromDB() {
@@ -52,7 +63,19 @@ public class FilmController
         }
 	  }
 	public JPanel getPanel() {
-		return filmFormFrame;
+		return filmListViewPanel;
+	}
+	
+	public void openAddFilmForm() {
+		filmListViewPanel.setEnabled(false);
+		filmFormFrame.setName("Add Film");
+		filmFormFrame.setFilm(null);
+		filmFormFrame.setVisible(true);
+	}
+	
+	public void closeFilmForm() {
+		filmListViewPanel.setEnabled(true);
+		filmFormFrame.setVisible(false);
 	}
 	
 	public void confirmAddFilm() {

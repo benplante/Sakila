@@ -1,5 +1,6 @@
 package com.blockbuster.sakila.ui;
 
+import java.awt.GridLayout;
 import java.util.List;
 
 import javax.swing.Box;
@@ -19,7 +20,7 @@ import com.blockbuster.sakila.viewmodels.CategoryViewModel;
 import com.blockbuster.sakila.viewmodels.CityViewModel;
 import com.blockbuster.sakila.viewmodels.FilmViewModel;
 
-public class FilmForm extends JPanel{
+public class FilmForm extends JFrame{
 	
 	
 	private JTextField txtTitle, txtDescription, txtReleaseYear, txtRentalDuration,
@@ -33,7 +34,7 @@ public class FilmForm extends JPanel{
 
 	public FilmForm(FilmController controller) {
 
-	//	this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+	  this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		JPanel wrapper = new JPanel();
 		txtTitle = new JTextField();
 		txtDescription = new JTextField();
@@ -43,25 +44,25 @@ public class FilmForm extends JPanel{
 		txtReplacementCost = new JTextField();
 		txtRating = new JTextField();
 		cmbActors = new JComboBox<ActorViewModel>();
-	    cmbCategories = new JComboBox<CategoryViewModel>();
+	  cmbCategories = new JComboBox<CategoryViewModel>();
 
 
 		btnConfirm = new JButton("Confirm");
 		btnConfirm.addActionListener(e -> controller.confirmAddFilm());
 
 		btnCancel = new JButton("Cancel");
-		//btnCancel.addActionListener(e -> controller.closeFilmForm());
+		btnCancel.addActionListener(e -> controller.closeFilmForm());
 		
 
 		JPanel txtPanel = new JPanel();
 		txtPanel.setBorder(new EmptyBorder(10, 5, 10, 5));
-		txtPanel.setLayout(new BoxLayout(txtPanel, BoxLayout.PAGE_AXIS));
+		txtPanel.setLayout(new GridLayout(0, 1, 0, 5));
 		txtPanel.add(new JLabel("Title:"));
 		txtPanel.add(txtTitle);
 		txtPanel.add(new JLabel("Description:"));
 		txtPanel.add(txtDescription);
-	    txtPanel.add(new JLabel("Category:"));
-	    txtPanel.add(cmbCategories);
+	  txtPanel.add(new JLabel("Category:"));
+	  txtPanel.add(cmbCategories);
 		txtPanel.add(new JLabel("Actor:"));
 		txtPanel.add(cmbActors);
 		txtPanel.add(new JLabel("Realse Year:"));
@@ -87,10 +88,10 @@ public class FilmForm extends JPanel{
 		wrapper.add(btnPanel);
 		
 		this.add(wrapper);
-//        this.setContentPane(wrapper);
-//		this.pack();
-//		this.setResizable(false);
-//		this.setLocationRelativeTo(null);
+    this.setContentPane(wrapper);
+		this.pack();
+		this.setResizable(false);
+		this.setLocationRelativeTo(null);
 	}
 	
 	public void setActors(List<ActorViewModel> actors) {
@@ -113,11 +114,17 @@ public class FilmForm extends JPanel{
 		FilmViewModel film = new FilmViewModel();
 		film.title = txtTitle.getText();
 		film.description = txtDescription.getText();
-		film.release_year = txtReleaseYear.getText();
-		film.rental_duration = Integer.parseInt(txtRentalDuration.getText());
-		film.replacement_cost = Double.parseDouble(txtReplacementCost.getText());
+		film.releaseYear = txtReleaseYear.getText();
+		film.rentalDuration = Integer.parseInt(txtRentalDuration.getText());
+		film.replacementCost = Double.parseDouble(txtReplacementCost.getText());
 		film.rating = txtRating.getText();
 		
 		return film;
+	}
+
+	public void setFilm(Object object)
+	{
+		
+		
 	}
 }
