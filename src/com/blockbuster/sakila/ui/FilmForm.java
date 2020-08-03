@@ -23,14 +23,14 @@ import com.blockbuster.sakila.viewmodels.FilmViewModel;
 public class FilmForm extends JFrame{
 	
 	
-	private JTextField txtTitle, txtDescription, txtReleaseYear, txtRentalDuration,
+	private JTextField txtTitle, txtDescription, txtReleaseYear,
 	txtRentalRate, txtReplacementCost, txtRating;
 	private JButton btnConfirm, btnCancel;
 	private JComboBox<ActorViewModel> cmbActors;
 	private ActorViewModel[] actors;
 	private JComboBox<CategoryViewModel> cmbCategories;
 	private CategoryViewModel[] categories;
-
+	private JComboBox cmbDurations;
 
 	public FilmForm(FilmController controller) {
 
@@ -39,12 +39,15 @@ public class FilmForm extends JFrame{
 		txtTitle = new JTextField();
 		txtDescription = new JTextField();
 		txtReleaseYear = new JTextField();
-		txtRentalDuration = new JTextField();
 		txtRentalRate = new JTextField();
 		txtReplacementCost = new JTextField();
 		txtRating = new JTextField();
 		cmbActors = new JComboBox<ActorViewModel>();
 	  cmbCategories = new JComboBox<CategoryViewModel>();
+	  cmbDurations = new JComboBox();
+	  
+	  Integer[] durationArr = {3,4,5,6,7};
+	  cmbDurations.setModel(new DefaultComboBoxModel<Integer>(durationArr));
 
 		btnConfirm = new JButton("Confirm");
 		btnConfirm.addActionListener(e -> controller.confirmAddFilm());
@@ -66,9 +69,7 @@ public class FilmForm extends JFrame{
 		txtPanel.add(new JLabel("Realse Year:"));
 		txtPanel.add(txtReleaseYear);
 		txtPanel.add(new JLabel("Rental Duration:"));
-		txtPanel.add(txtRentalDuration);
-		txtPanel.add(new JLabel("Rental Rate:"));
-		txtPanel.add(txtRentalRate);
+		txtPanel.add(cmbDurations);
 		txtPanel.add(new JLabel("Replacement Cost:"));
 		txtPanel.add(txtReplacementCost);
 		txtPanel.add(new JLabel("Rating:"));
@@ -99,12 +100,12 @@ public class FilmForm extends JFrame{
 		cmbActors.setModel(new DefaultComboBoxModel<ActorViewModel>(arr));
 	}
 	
-	  public void setCategories(List<CategoryViewModel> categories) {
-	     CategoryViewModel[] arr = new CategoryViewModel[categories.size()];
-	     categories.toArray(arr);
-	     this.categories = arr;
-	     cmbCategories.setModel(new DefaultComboBoxModel<CategoryViewModel>(arr));
-	    }
+  public void setCategories(List<CategoryViewModel> categories) {
+     CategoryViewModel[] arr = new CategoryViewModel[categories.size()];
+     categories.toArray(arr);
+     this.categories = arr;
+     cmbCategories.setModel(new DefaultComboBoxModel<CategoryViewModel>(arr));
+    }
 
 	public FilmViewModel getFilm()
 	{
@@ -112,7 +113,16 @@ public class FilmForm extends JFrame{
 		film.title = txtTitle.getText();
 		film.description = txtDescription.getText();
 		film.releaseYear = txtReleaseYear.getText();
-		film.rentalDuration = Integer.parseInt(txtRentalDuration.getText());
+		if(Integer.parseInt(film.releaseYear) > 2001) {
+			film.rentalRate = 4.99;
+		}
+		else if(Integer.parseInt(film.releaseYear) > 1991) {
+			film.rentalRate = 2.99;
+		}
+		else if(Integer.parseInt(film.releaseYear) > 1981) {
+			film.rentalRate = 0.99;
+		}
+		film.rentalDuration = (int) cmbDurations.getSelectedItem();
 		film.replacementCost = Double.parseDouble(txtReplacementCost.getText());
 		film.rating = txtRating.getText();
 		film.setActorId(actors[cmbActors.getSelectedIndex()].getActorId());
