@@ -52,7 +52,9 @@ public class RentalController
 	private List<CustomerViewModel> getCustomersFromDB()
 	{
 		try {
-			return db.selectCustomers();
+			List<CustomerViewModel> customersFromStore1 = db.selectCustomers();
+			customersFromStore1.removeIf(c -> c.getStoreId() > 1);
+			return customersFromStore1;
 		} catch (SQLException e) {
 			JOptionPane.showMessageDialog(rentalListViewPanel, 
 					"Error loading customers: " + e.getMessage(), 

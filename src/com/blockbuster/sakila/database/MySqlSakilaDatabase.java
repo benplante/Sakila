@@ -273,7 +273,7 @@ public class MySqlSakilaDatabase implements SakilaDatabase {
 			conn = DriverManager.getConnection(CONNECTION_STRING, "root", "password");
 			stmt = conn.createStatement();
 			String sql = "SELECT customer_id, first_name, last_name, email, active, city, district, "
-					+ "country, address, postal_code, phone, cu.address_id, ad.city_id "
+					+ "country, address, postal_code, phone, cu.address_id, ad.city_id , cu.store_id "
 					+ "FROM customer cu "
 					+ "LEFT JOIN address ad ON cu.address_id = ad.address_id "
 					+ "LEFT JOIN city ct ON ad.city_id = ct.city_id "
@@ -296,6 +296,7 @@ public class MySqlSakilaDatabase implements SakilaDatabase {
 				vm.phone = rs.getString(11);
 				vm.setAddressId(rs.getInt(12));
 				vm.setCityId(rs.getInt(13));
+				vm.setStoreId(rs.getInt(14));
 
 				li.add(vm);
 			}

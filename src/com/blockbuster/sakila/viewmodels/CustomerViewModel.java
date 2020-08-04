@@ -6,6 +6,8 @@ public class CustomerViewModel {
 	private int addressId;
 
 	private int cityId;
+	
+	private int storeId;
 
 	private boolean isActive;
 
@@ -73,5 +75,15 @@ public class CustomerViewModel {
 	public String toString()
 	{
 		return this.firstName + " " +  this.lastName;
+	}
+
+	public int getStoreId()
+	{
+		return storeId;
+	}
+
+	public void setStoreId(int storeId)
+	{
+		this.storeId = storeId;
 	}
 }
