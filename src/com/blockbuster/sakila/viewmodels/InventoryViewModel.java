@@ -5,6 +5,8 @@ public class InventoryViewModel
 	private int inventoryId; 
 	
 	private String filmTitle;
+	
+	private int filmRentalDuration;
 
 	public int getInventoryId()
 	{
@@ -24,6 +26,16 @@ public class InventoryViewModel
 	public void setFilmTitle(String filmTitle)
 	{
 		this.filmTitle = filmTitle;
+	}
+	
+	public int getFilmRentalDuration()
+	{
+		return filmRentalDuration;
+	}
+
+	public void setFilmRentalDuration(int filmRentalDuration)
+	{
+		this.filmRentalDuration = filmRentalDuration;
 	}
 	
 	public String toString()

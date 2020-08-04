@@ -88,5 +88,40 @@ public class RentalController
 		rentalFormFrame.setRental(null);
 		rentalFormFrame.setVisible(true);
 	}
+
+	public void openUpdateRentalForm()
+	{
+		rentalListViewPanel.setEnabled(false);
+		rentalFormFrame.setName("Update Rental");
+		rentalFormFrame.setRental(rentalListViewPanel.getSelectedRental());
+		rentalFormFrame.setVisible(true);
+	}
+
+	public void confirmAddRental()
+	{
+		rentalListViewPanel.setEnabled(true);
+		RentalViewModel vm = rentalFormFrame.getRental();
+		String type = "";
+		try {
+			if (vm.rentalId == -1) {
+				type = "Add";
+				db.insertRental(vm);
+			} else {
+				type = "Update";
+				//db.updateCustomer(vm);
+			}
+			JOptionPane.showMessageDialog(rentalListViewPanel, type + " Rental succeeded!");
+			rentalListViewPanel.setVisible(false);
+			model.setData(getRentalsFromDB());
+		} catch (SQLException e) {
+			JOptionPane.showMessageDialog(rentalListViewPanel,  "Error: " + e.getMessage(), type + " failed!", JOptionPane.ERROR_MESSAGE);
+		}
+	}
+
+	public void closeCustomerForm()
+	{
+		rentalListViewPanel.setEnabled(true);
+		rentalFormFrame.setVisible(false);
+	}
 	
 }

@@ -56,4 +56,8 @@ public class RentalListView extends JPanel {
 		this.model = model;
 		rentalTable.setModel(model);
 	}
+	
+	public RentalViewModel getSelectedRental() { 
+		return model.getAtRow(rentalTable.getSelectedRow());
+	}
 }

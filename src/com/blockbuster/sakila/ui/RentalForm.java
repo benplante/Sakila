@@ -1,11 +1,9 @@
 package com.blockbuster.sakila.ui;
 
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
+import java.math.BigDecimal;
 import java.util.List;
+
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -20,7 +18,6 @@ import javax.swing.border.EmptyBorder;
 
 import com.blockbuster.sakila.controllers.RentalController;
 import com.blockbuster.sakila.viewmodels.CustomerViewModel;
-import com.blockbuster.sakila.viewmodels.FilmViewModel;
 import com.blockbuster.sakila.viewmodels.InventoryViewModel;
 import com.blockbuster.sakila.viewmodels.RentalViewModel;
 
@@ -46,10 +43,10 @@ public class RentalForm extends JFrame {
 		cmbCustomers = new JComboBox<>();
 		
 		btnConfirm = new JButton("Confirm");
-		//btnConfirm.addActionListener(e -> controller.confirmAddRental());
+		btnConfirm.addActionListener(e -> controller.confirmAddRental());
 
 		btnCancel = new JButton("Cancel");
-		//btnCancel.addActionListener(e -> controller.closeCustomerForm());
+		btnCancel.addActionListener(e -> controller.closeCustomerForm());
 		
 		JPanel txtPanel = new JPanel();
 		txtPanel.setBorder(new EmptyBorder(10, 5, 10, 5));
@@ -77,8 +74,41 @@ public class RentalForm extends JFrame {
 		this.setLocationRelativeTo(null);
 	}
 	
-	public void setRental(RentalViewModel customer) {
-		
+	public RentalViewModel getRental() {
+		rental.setIventoryId(inventories[cmbInventories.getSelectedIndex()].getInventoryId());
+		rental.setCustomerId(customers[cmbCustomers.getSelectedIndex()].customerId);
+		rental.setPaymentAmount(new BigDecimal(txtAmountPaid.getText()));
+		rental.setFilmRentalDuration(inventories[cmbInventories.getSelectedIndex()].getFilmRentalDuration());
+		return rental;
+	}
+	
+	public void setRental(RentalViewModel rental) {
+		this.rental = rental;
+		if (rental != null) {
+			int inventoryIdx = 1;
+			for(int i = 0; i < inventories.length; ++i) {
+				if(inventories[i].getInventoryId() == rental.getInventoryId()) {
+					inventoryIdx = i;
+					break;
+				}
+			}
+			cmbInventories.setSelectedIndex(inventoryIdx);
+			
+			int customerIdx = 1;
+			for(int i = 0; i < customers.length; ++i) {
+				if(customers[i].customerId == rental.getCustomerId()) {
+					customerIdx = i;
+					break;
+				}
+			}
+			cmbCustomers.setSelectedIndex(customerIdx);
+			txtAmountPaid.setText(rental.getPaymentAmount().toString());
+		} else {
+			this.rental = new RentalViewModel();
+			cmbInventories.setSelectedIndex(-1);
+			cmbCustomers.setSelectedIndex(-1);
+			txtAmountPaid.setText("");
+		}
 	}
 
 	public void setInventories(List<InventoryViewModel> list)

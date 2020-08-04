@@ -15,6 +15,8 @@ public class RentalViewModel {
 	
 	private int paymentId;
 	
+	private int filmRentalDuration;
+	
 	private Timestamp rentalDate;
 	
 	private Timestamp returnDate;
@@ -136,5 +138,15 @@ public class RentalViewModel {
 	
 	public RentalViewModel() {
 		this.rentalId = -1;
+	}
+
+	public int getFilmRentalDuration()
+	{
+		return filmRentalDuration;
+	}
+
+	public void setFilmRentalDuration(int filmRentalDuration)
+	{
+		this.filmRentalDuration = filmRentalDuration;
 	}
 }
