@@ -531,12 +531,12 @@ public class MySqlSakilaDatabase implements SakilaDatabase {
 				vm.filmTitle = rs.getString(3);
 				vm.customerFirstName = rs.getString(4);
 				vm.customerLastName = rs.getString(5);
-				vm.paymentAmount = rs.getBigDecimal(6);
-				vm.rentalRate = rs.getBigDecimal(7);
+				vm.setPaymentAmount(rs.getBigDecimal(6));
+				vm.setRentalRate(rs.getBigDecimal(7));
 				vm.staffFirstName = rs.getString(8);
 				vm.staffLastName = rs.getString(9);
-				vm.rentalDate = rs.getTimestamp(10);
-				vm.returnDate = rs.getTimestamp(11);
+				vm.setRentalDate(rs.getTimestamp(10));
+				vm.setReturnDate(rs.getTimestamp(11));
 				vm.setPaymentId(rs.getInt(12));
 				vm.setIventoryId(rs.getInt(13));
 				vm.setCustomerId(rs.getInt(14));

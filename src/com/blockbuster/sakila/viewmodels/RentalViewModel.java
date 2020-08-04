@@ -2,6 +2,7 @@ package com.blockbuster.sakila.viewmodels;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 
 import com.blockbuster.sakila.database.ColumnName;
 
@@ -13,6 +14,14 @@ public class RentalViewModel {
 	private int staffId;
 	
 	private int paymentId;
+	
+	private Timestamp rentalDate;
+	
+	private Timestamp returnDate;
+	
+	private BigDecimal paymentAmount;
+	
+	private BigDecimal rentalRate;
 	
 	@ColumnName(columnName = "Rental #")
 	public int rentalId;
@@ -30,10 +39,10 @@ public class RentalViewModel {
 	public String customerLastName;
 	
 	@ColumnName(columnName = "Amount Paid")
-	public BigDecimal paymentAmount;
+	public String paymentAmountStr;
 	
 	@ColumnName(columnName = "Price")
-	public BigDecimal rentalRate;
+	public String rentalRateStr;
 	
 	@ColumnName(columnName = "Staff First Name")
 	public String staffFirstName;
@@ -42,10 +51,10 @@ public class RentalViewModel {
 	public String staffLastName;
 	
 	@ColumnName(columnName = "Rental Date")
-	public Timestamp rentalDate;
-
+	public String rentalDateStr;
+	
 	@ColumnName(columnName = "Return Date")
-	public Timestamp returnDate;
+	public String returnDateStr;
 	
 
 	public int getInventoryId() {
@@ -78,6 +87,50 @@ public class RentalViewModel {
 
 	public void setPaymentId(int paymentId) {
 		this.paymentId = paymentId;
+	}
+	
+	public Timestamp getRentalDate()
+	{
+		return rentalDate;
+	}
+
+	public void setRentalDate(Timestamp rentalDate) 
+	{
+		this.rentalDate = rentalDate;
+		this.rentalDateStr = rentalDate != null ? new SimpleDateFormat("MMM dd, ''yy").format(rentalDate) : "N/A";
+	}
+
+	public Timestamp getReturnDate()
+	{
+		return returnDate;
+	}
+
+	public void setReturnDate(Timestamp returnDate)
+	{
+		this.returnDate = returnDate;
+		this.returnDateStr = returnDate != null ? new SimpleDateFormat("MMM dd, ''yy").format(returnDate) : "N/A";
+	}
+
+	public BigDecimal getPaymentAmount()
+	{
+		return paymentAmount;
+	}
+
+	public void setPaymentAmount(BigDecimal paymentAmount)
+	{
+		this.paymentAmount = paymentAmount;
+		this.paymentAmountStr = "$" + paymentAmount.toString();
+	}
+
+	public BigDecimal getRentalRate()
+	{
+		return rentalRate;
+	}
+
+	public void setRentalRate(BigDecimal rentalRate)
+	{
+		this.rentalRate = rentalRate;
+		this.rentalRateStr = "$" + rentalRate.toString();
 	}
 	
 	
