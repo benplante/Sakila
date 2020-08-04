@@ -21,16 +21,17 @@ import javax.swing.border.EmptyBorder;
 import com.blockbuster.sakila.controllers.RentalController;
 import com.blockbuster.sakila.viewmodels.CustomerViewModel;
 import com.blockbuster.sakila.viewmodels.FilmViewModel;
+import com.blockbuster.sakila.viewmodels.InventoryViewModel;
 import com.blockbuster.sakila.viewmodels.RentalViewModel;
 
 public class RentalForm extends JFrame {
 	private JTextField txtAmountPaid;
-	private JComboBox<FilmViewModel> cmbFilms;
+	private JComboBox<InventoryViewModel> cmbInventories;
 	private JComboBox<CustomerViewModel> cmbCustomers;
 	private JButton btnConfirm, btnCancel;
 	
 	private RentalViewModel rental;
-	private FilmViewModel[] films;
+	private InventoryViewModel[] inventories;
 	private CustomerViewModel[] customers;
 	
 	public RentalForm(RentalController controller) {
@@ -41,7 +42,7 @@ public class RentalForm extends JFrame {
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		JPanel wrapper = new JPanel();
 		txtAmountPaid = new JTextField();
-		cmbFilms = new JComboBox<>();
+		cmbInventories = new JComboBox<>();
 		cmbCustomers = new JComboBox<>();
 		
 		btnConfirm = new JButton("Confirm");
@@ -54,7 +55,7 @@ public class RentalForm extends JFrame {
 		txtPanel.setBorder(new EmptyBorder(10, 5, 10, 5));
 		txtPanel.setLayout(new GridLayout(0, 1, 0, 5));
 		txtPanel.add(new JLabel("Film:"));
-		txtPanel.add(cmbFilms);
+		txtPanel.add(cmbInventories);
 		txtPanel.add(new JLabel("Customer:"));
 		txtPanel.add(cmbCustomers);
 		txtPanel.add(new JLabel("Amount ($):"));
@@ -80,12 +81,12 @@ public class RentalForm extends JFrame {
 		
 	}
 
-	public void setFilms(List<FilmViewModel> films)
+	public void setInventories(List<InventoryViewModel> list)
 	{
-		FilmViewModel[] arr = new FilmViewModel[films.size()];
-		films.toArray(arr);
-		this.films = arr;
-		cmbFilms.setModel(new DefaultComboBoxModel<FilmViewModel>(arr));
+		InventoryViewModel[] arr = new InventoryViewModel[list.size()];
+		list.toArray(arr);
+		this.inventories = arr;
+		cmbInventories.setModel(new DefaultComboBoxModel<InventoryViewModel>(arr));
 	}
 
 	public void setCustomers(List<CustomerViewModel> customers)
@@ -95,5 +96,4 @@ public class RentalForm extends JFrame {
 		this.customers = arr;
 		cmbCustomers.setModel(new DefaultComboBoxModel<CustomerViewModel>(arr));
 	}
-
 }

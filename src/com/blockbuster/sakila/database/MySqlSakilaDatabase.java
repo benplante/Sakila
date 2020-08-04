@@ -14,6 +14,7 @@ import com.blockbuster.sakila.viewmodels.CategoryViewModel;
 import com.blockbuster.sakila.viewmodels.CityViewModel;
 import com.blockbuster.sakila.viewmodels.CustomerViewModel;
 import com.blockbuster.sakila.viewmodels.FilmViewModel;
+import com.blockbuster.sakila.viewmodels.InventoryViewModel;
 import com.blockbuster.sakila.viewmodels.RentalViewModel;
 
 /**
@@ -543,6 +544,47 @@ public class MySqlSakilaDatabase implements SakilaDatabase {
 				vm.setCustomerId(rs.getInt(14));
 				vm.setStaffId(rs.getInt(15));
 
+				li.add(vm);
+			}
+			rs.close();
+		} finally {
+			try {
+				if (conn != null) conn.close();
+				if (stmt != null) stmt.close();
+				if (rs != null) rs.close();
+			} catch (SQLException e) {
+				System.out.println("Error closing DB resources");
+				e.printStackTrace();
+			}
+		}
+		return li;
+	}
+
+	@Override
+	public List<InventoryViewModel> selectInventories() throws SQLException
+	{
+		ArrayList<InventoryViewModel> li = new ArrayList<>();
+		Connection conn = null;
+		Statement stmt = null;
+		ResultSet rs = null;
+		try  {
+			conn = DriverManager.getConnection(CONNECTION_STRING, "root", "password");
+			stmt = conn.createStatement();
+			String sql = "SELECT s.inventory_id, f.title FROM "
+					+"( "
+					+ "SELECT i.inventory_id, i.film_id, ROW_NUMBER() OVER (PARTITION BY i.film_id ORDER BY i.film_id) AS rn "
+					+ "From inventory i " 
+					+ "WHERE store_id = 1 "
+					+ ") s "
+					+ "INNER JOIN film f "
+					+ "ON s.film_id = f.film_id "
+					+ "WHERE s.rn = 1";
+			rs = stmt.executeQuery(sql);
+
+			while (rs.next()) {
+				InventoryViewModel vm = new InventoryViewModel();
+				vm.setInventoryId(rs.getInt(1));
+				vm.setFilmTitle(rs.getString(2));
 				li.add(vm);
 			}
 			rs.close();

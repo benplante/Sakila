@@ -13,6 +13,7 @@ import com.blockbuster.sakila.ui.RentalForm;
 import com.blockbuster.sakila.ui.RentalListView;
 import com.blockbuster.sakila.viewmodels.CustomerViewModel;
 import com.blockbuster.sakila.viewmodels.FilmViewModel;
+import com.blockbuster.sakila.viewmodels.InventoryViewModel;
 import com.blockbuster.sakila.viewmodels.RentalViewModel;
 
 public class RentalController
@@ -31,14 +32,14 @@ public class RentalController
 		rentalFormFrame = new RentalForm(this);
 		model = new TableViewModel<>(getRentalsFromDB(), RentalViewModel.class);
 		rentalListViewPanel.setRentalList(model);
-		rentalFormFrame.setFilms(getFilmsFromDB());
+		rentalFormFrame.setInventories(getInventoriesFromDB());
 		rentalFormFrame.setCustomers(getCustomersFromDB());
 	}
 
-	private List<FilmViewModel> getFilmsFromDB()
+	private List<InventoryViewModel> getInventoriesFromDB()
 	{
 		try {
-			return db.selectFilms();
+			return db.selectInventories();
 		} catch (SQLException e) {
 			JOptionPane.showMessageDialog(rentalListViewPanel, 
 					"Error loading films: " + e.getMessage(), 

@@ -42,5 +42,7 @@ public interface SakilaDatabase {
   // Rental
   public List<RentalViewModel> selectRentals() throws SQLException;
   
+  public List<InventoryViewModel> selectInventories() throws SQLException;
+  
   
 }
