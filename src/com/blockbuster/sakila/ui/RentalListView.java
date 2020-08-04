@@ -33,7 +33,7 @@ public class RentalListView extends JPanel {
 		btnUpdate = new JButton("Update");
 		// TODO: btnUpdate.addActionListener(e -> controller.openUpdateRentalForm());
 		btnDelete = new JButton("Delete");
-		// TODO: btnDelete.addActionListener(e -> controller.deleteRental ());
+		btnDelete.addActionListener(e -> controller.deleteRental());
 		
 
 		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));

@@ -12,7 +12,6 @@ import com.blockbuster.sakila.database.TableViewModel;
 import com.blockbuster.sakila.ui.RentalForm;
 import com.blockbuster.sakila.ui.RentalListView;
 import com.blockbuster.sakila.viewmodels.CustomerViewModel;
-import com.blockbuster.sakila.viewmodels.FilmViewModel;
 import com.blockbuster.sakila.viewmodels.InventoryViewModel;
 import com.blockbuster.sakila.viewmodels.RentalViewModel;
 
@@ -34,6 +33,10 @@ public class RentalController
 		rentalListViewPanel.setRentalList(model);
 		rentalFormFrame.setInventories(getInventoriesFromDB());
 		rentalFormFrame.setCustomers(getCustomersFromDB());
+	}
+	
+	public JPanel getPanel() {
+		return rentalListViewPanel;
 	}
 
 	private List<InventoryViewModel> getInventoriesFromDB()
@@ -77,9 +80,7 @@ public class RentalController
 		}
 	}
 
-	public JPanel getPanel() {
-		return rentalListViewPanel;
-	}
+
 
 	public void openAddRentalForm()
 	{
@@ -124,4 +125,17 @@ public class RentalController
 		rentalFormFrame.setVisible(false);
 	}
 	
+	public void deleteRental() {
+		RentalViewModel vm = rentalListViewPanel.getSelectedRental();
+		if (vm == null) {
+			return;
+		}
+		try {
+			db.deleteRental(vm);
+			JOptionPane.showMessageDialog(rentalFormFrame, "Delete rental succeeded!");
+			model.setData(getRentalsFromDB());
+		} catch (SQLException e) {
+			JOptionPane.showMessageDialog(rentalFormFrame,  "Error: " + e.getMessage(), "Delete failed!", JOptionPane.ERROR_MESSAGE);
+		}
+	}
 }

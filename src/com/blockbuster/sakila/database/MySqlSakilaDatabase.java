@@ -604,7 +604,7 @@ public class MySqlSakilaDatabase implements SakilaDatabase {
 	}
 
 	@Override
-	public void insertRental(RentalViewModel vm) throws SQLException
+	public void insertRental(RentalViewModel rental) throws SQLException
 	{
 
 		Connection conn = null;
@@ -618,9 +618,9 @@ public class MySqlSakilaDatabase implements SakilaDatabase {
 			String sqlRental = "INSERT INTO rental(inventory_id, customer_id, staff_id, rental_date, return_date) " +
 				"VALUES(?,?,1,NOW(), DATE_ADD(now(), INTERVAL ? DAY))";
 			stmtRental = conn.prepareStatement(sqlRental, Statement.RETURN_GENERATED_KEYS);
-			stmtRental.setInt(1, vm.getInventoryId());
-			stmtRental.setInt(2, vm.getCustomerId());
-			stmtRental.setInt(3, vm.getFilmRentalDuration());
+			stmtRental.setInt(1, rental.getInventoryId());
+			stmtRental.setInt(2, rental.getCustomerId());
+			stmtRental.setInt(3, rental.getFilmRentalDuration());
 			stmtRental.executeUpdate();
 			
 			rsId = stmtRental.getGeneratedKeys();
@@ -630,8 +630,8 @@ public class MySqlSakilaDatabase implements SakilaDatabase {
 					"VALUES(?,?,?,1,NOW())";
 				stmtPayment = conn.prepareStatement(sqlPayment);
 				stmtPayment.setInt(1, rentalId);
-				stmtPayment.setBigDecimal(2, vm.getPaymentAmount());
-				stmtPayment.setInt(3, vm.getCustomerId());
+				stmtPayment.setBigDecimal(2, rental.getPaymentAmount());
+				stmtPayment.setInt(3, rental.getCustomerId());
 				if (stmtPayment.executeUpdate() == 1) {
 					conn.commit();
 				}
@@ -656,6 +656,34 @@ public class MySqlSakilaDatabase implements SakilaDatabase {
 				e.printStackTrace();
 			}
 		}
+		
+	}
+
+	@Override
+	public void deleteRental(RentalViewModel rental) throws SQLException
+	{
+		Connection conn = null;
+		PreparedStatement stmtRental = null, stmtPayment = null;
+		try {
+			conn = DriverManager.getConnection(CONNECTION_STRING, "root", "password");
+			stmtRental = conn.prepareStatement("DELETE FROM rental WHERE rental_id = ?");
+			stmtRental.setInt(1, rental.rentalId);
+			stmtRental.executeUpdate();
+			
+			stmtPayment = conn.prepareStatement("DELETE FROM payment WHERE payment_id = ?");
+			stmtPayment.setInt(1, rental.getPaymentId());
+			stmtPayment.executeUpdate();
+		} finally {
+			try {
+				if (conn != null) conn.close();
+				if (stmtRental != null) stmtRental.close();
+				if (stmtPayment != null) stmtPayment.close();
+			} catch (SQLException e) {
+				System.out.println("Error closing DB resources");
+				e.printStackTrace();
+			}
+		}
+
 		
 	}
 }
