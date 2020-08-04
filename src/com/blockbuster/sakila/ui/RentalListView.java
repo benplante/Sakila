@@ -11,6 +11,7 @@ import javax.swing.border.EmptyBorder;
 
 import com.blockbuster.sakila.controllers.RentalController;
 import com.blockbuster.sakila.database.TableViewModel;
+import com.blockbuster.sakila.viewmodels.CustomerViewModel;
 import com.blockbuster.sakila.viewmodels.RentalViewModel;
 
 public class RentalListView extends JPanel {
@@ -49,5 +50,10 @@ public class RentalListView extends JPanel {
 		this.add(Box.createVerticalStrut(10));
 		this.add(btnPanel);
 		this.setBorder(new EmptyBorder(10, 10, 10, 10));
+	}
+	
+	public void setRentalList(TableViewModel<RentalViewModel> model) {
+		this.model = model;
+		rentalTable.setModel(model);
 	}
 }

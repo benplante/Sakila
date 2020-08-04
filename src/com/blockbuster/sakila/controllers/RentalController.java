@@ -1,5 +1,10 @@
 package com.blockbuster.sakila.controllers;
 
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import com.blockbuster.sakila.database.SakilaDatabase;
@@ -22,9 +27,23 @@ public class RentalController
 
 		rentalListViewPanel = new RentalListView(this);
 		rentalFormFrame = new RentalForm(this);
+		model = new TableViewModel<>(getRentalsFromDB(), RentalViewModel.class);
+		rentalListViewPanel.setRentalList(model);
+	}
+	
+	private List<RentalViewModel> getRentalsFromDB() {
+		try {
+			return db.selectRentals();
+		} catch (SQLException e) {
+			JOptionPane.showMessageDialog(rentalListViewPanel, 
+					"Error loading rentals: " + e.getMessage(), 
+					"Error loading rentals", JOptionPane.ERROR_MESSAGE);
+			return new ArrayList<>();
+		}
 	}
 
 	public JPanel getPanel() {
 		return rentalListViewPanel;
 	}
+	
 }

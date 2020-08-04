@@ -12,6 +12,7 @@ import com.blockbuster.sakila.viewmodels.*;
  *         Interacts with the Sakila database model
  */
 public interface SakilaDatabase {
+	// Actor
 	public void insertActor(ActorViewModel actor) throws SQLException;
 
 	public void updateActor(ActorViewModel actor) throws SQLException;
@@ -20,6 +21,7 @@ public interface SakilaDatabase {
 
 	public List<ActorViewModel> selectActors() throws SQLException;
 
+	// Customer
 	public void insertCustomer(CustomerViewModel customer) throws SQLException;
 
 	public void updateCustomer(CustomerViewModel customer) throws SQLException;
@@ -32,7 +34,13 @@ public interface SakilaDatabase {
 	
 	public List<FilmViewModel> selectFilms() throws SQLException;
 	
+	// Film
 	public void insertFilm(FilmViewModel film) throws SQLException;
 
   public List<CategoryViewModel> selectCategories() throws SQLException;
+  
+  // Rental
+  public List<RentalViewModel> selectRentals() throws SQLException;
+  
+  
 }

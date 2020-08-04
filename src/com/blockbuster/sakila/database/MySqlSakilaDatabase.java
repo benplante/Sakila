@@ -14,6 +14,7 @@ import com.blockbuster.sakila.viewmodels.CategoryViewModel;
 import com.blockbuster.sakila.viewmodels.CityViewModel;
 import com.blockbuster.sakila.viewmodels.CustomerViewModel;
 import com.blockbuster.sakila.viewmodels.FilmViewModel;
+import com.blockbuster.sakila.viewmodels.RentalViewModel;
 
 /**
  * @author Ben Plante
@@ -497,6 +498,64 @@ public class MySqlSakilaDatabase implements SakilaDatabase {
 				e.printStackTrace();
 			}
 		}
+	}
+
+	@Override
+	public List<RentalViewModel> selectRentals() throws SQLException
+	{
+		ArrayList<RentalViewModel> li = new ArrayList<>();
+		Connection conn = null;
+		Statement stmt = null;
+		ResultSet rs = null;
+		try  {
+			conn = DriverManager.getConnection(CONNECTION_STRING, "root", "password");
+			stmt = conn.createStatement();
+			String sql = "SELECT r.rental_id, a.address, f.title, c.first_name, c.last_name, "
+					+ "p.amount, f.rental_rate, sta.first_name, sta.last_name, r.rental_date, r.return_date, "
+					+ "p.payment_id, r.inventory_id, r.customer_id, r.staff_id "
+					+ "FROM rental r  "
+					+ "LEFT JOIN payment p on r.rental_id = p.rental_id  "
+					+ "LEFT JOIN customer c on r.customer_id = c.customer_id "
+					+ "LEFT JOIN staff sta ON r.staff_id = sta.staff_id "
+					+ "LEFT JOIN inventory i ON r.inventory_id = i.inventory_id "
+					+ "LEFT JOIN film f ON i.film_id = f.film_id "
+					+ "LEFT JOIN store s ON i.store_id = s.store_id "
+					+ "LEFT JOIN address a ON s.address_id = a.address_id "
+					+ "ORDER BY r.rental_id";
+			rs = stmt.executeQuery(sql);
+
+			while (rs.next()) {
+				RentalViewModel vm = new RentalViewModel();
+				vm.rentalId = rs.getInt(1);
+				vm.storeAddress = rs.getString(2);
+				vm.filmTitle = rs.getString(3);
+				vm.customerFirstName = rs.getString(4);
+				vm.customerLastName = rs.getString(5);
+				vm.paymentAmount = rs.getBigDecimal(6);
+				vm.rentalRate = rs.getBigDecimal(7);
+				vm.staffFirstName = rs.getString(8);
+				vm.staffLastName = rs.getString(9);
+				vm.rentalDate = rs.getTimestamp(10);
+				vm.returnDate = rs.getTimestamp(11);
+				vm.setPaymentId(rs.getInt(12));
+				vm.setIventoryId(rs.getInt(13));
+				vm.setCustomerId(rs.getInt(14));
+				vm.setStaffId(rs.getInt(15));
+
+				li.add(vm);
+			}
+			rs.close();
+		} finally {
+			try {
+				if (conn != null) conn.close();
+				if (stmt != null) stmt.close();
+				if (rs != null) rs.close();
+			} catch (SQLException e) {
+				System.out.println("Error closing DB resources");
+				e.printStackTrace();
+			}
+		}
+		return li;
 	}
 
 }
