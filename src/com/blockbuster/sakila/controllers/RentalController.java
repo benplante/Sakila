@@ -94,8 +94,15 @@ public class RentalController
 	{
 		rentalListViewPanel.setEnabled(false);
 		rentalFormFrame.setName("Update Rental");
-		rentalFormFrame.setRental(rentalListViewPanel.getSelectedRental());
-		rentalFormFrame.setVisible(true);
+		RentalViewModel vm = rentalListViewPanel.getSelectedRental();
+		if(vm == null) {
+			return;
+		}
+		else {
+			rentalFormFrame.setRental(vm);
+			rentalFormFrame.setVisible(true);
+		}
+
 	}
 
 	public void confirmAddRental()

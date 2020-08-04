@@ -666,13 +666,25 @@ public class MySqlSakilaDatabase implements SakilaDatabase {
 		PreparedStatement stmtRental = null, stmtPayment = null;
 		try {
 			conn = DriverManager.getConnection(CONNECTION_STRING, "root", "password");
+			conn.setAutoCommit(false);
+			
 			stmtRental = conn.prepareStatement("DELETE FROM rental WHERE rental_id = ?");
 			stmtRental.setInt(1, rental.rentalId);
-			stmtRental.executeUpdate();
 			
-			stmtPayment = conn.prepareStatement("DELETE FROM payment WHERE payment_id = ?");
-			stmtPayment.setInt(1, rental.getPaymentId());
-			stmtPayment.executeUpdate();
+			if(stmtRental.executeUpdate() == 1) {
+				stmtPayment = conn.prepareStatement("DELETE FROM payment WHERE payment_id = ?");
+				stmtPayment.setInt(1, rental.getPaymentId());
+				
+				if (stmtPayment.executeUpdate() == 1) {
+					conn.commit();
+				}
+				else {
+					throw new SQLException("Payment was not deleted - invalid number of rows affected!");
+				}
+			}
+			else { 
+				throw new SQLException("Rental was not deleted - invalid number of rows affected!");
+			}
 		} finally {
 			try {
 				if (conn != null) conn.close();

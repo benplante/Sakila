@@ -4,6 +4,7 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -11,7 +12,6 @@ import javax.swing.border.EmptyBorder;
 
 import com.blockbuster.sakila.controllers.RentalController;
 import com.blockbuster.sakila.database.TableViewModel;
-import com.blockbuster.sakila.viewmodels.CustomerViewModel;
 import com.blockbuster.sakila.viewmodels.RentalViewModel;
 
 public class RentalListView extends JPanel {
@@ -31,7 +31,7 @@ public class RentalListView extends JPanel {
 		btnAdd = new JButton("Add");
 		btnAdd.addActionListener(e -> controller.openAddRentalForm());
 		btnUpdate = new JButton("Update");
-		// TODO: btnUpdate.addActionListener(e -> controller.openUpdateRentalForm());
+	  btnUpdate.addActionListener(e -> controller.openUpdateRentalForm());
 		btnDelete = new JButton("Delete");
 		btnDelete.addActionListener(e -> controller.deleteRental());
 		
@@ -58,6 +58,11 @@ public class RentalListView extends JPanel {
 	}
 	
 	public RentalViewModel getSelectedRental() { 
+		if (rentalTable.getSelectedRow() == -1) {
+			JOptionPane.showMessageDialog(new JFrame(), "Please select a rental.", "Invalid",
+					JOptionPane.WARNING_MESSAGE);
+			return null;
+		}
 		return model.getAtRow(rentalTable.getSelectedRow());
 	}
 }
