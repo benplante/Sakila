@@ -11,6 +11,8 @@ import com.blockbuster.sakila.database.SakilaDatabase;
 import com.blockbuster.sakila.database.TableViewModel;
 import com.blockbuster.sakila.ui.RentalForm;
 import com.blockbuster.sakila.ui.RentalListView;
+import com.blockbuster.sakila.viewmodels.CustomerViewModel;
+import com.blockbuster.sakila.viewmodels.FilmViewModel;
 import com.blockbuster.sakila.viewmodels.RentalViewModel;
 
 public class RentalController
@@ -29,8 +31,38 @@ public class RentalController
 		rentalFormFrame = new RentalForm(this);
 		model = new TableViewModel<>(getRentalsFromDB(), RentalViewModel.class);
 		rentalListViewPanel.setRentalList(model);
+		rentalFormFrame.setFilms(getFilmsFromDB());
+		rentalFormFrame.setCustomers(getCustomersFromDB());
 	}
-	
+
+	private List<FilmViewModel> getFilmsFromDB()
+	{
+		try {
+			return db.selectFilms();
+		} catch (SQLException e) {
+			JOptionPane.showMessageDialog(rentalListViewPanel, 
+					"Error loading films: " + e.getMessage(), 
+					"Error loading films", JOptionPane.ERROR_MESSAGE);
+			return new ArrayList<>();
+		}
+	}
+
+
+
+	private List<CustomerViewModel> getCustomersFromDB()
+	{
+		try {
+			return db.selectCustomers();
+		} catch (SQLException e) {
+			JOptionPane.showMessageDialog(rentalListViewPanel, 
+					"Error loading customers: " + e.getMessage(), 
+					"Error loading customers", JOptionPane.ERROR_MESSAGE);
+			return new ArrayList<>();
+		}
+	}
+
+
+
 	private List<RentalViewModel> getRentalsFromDB() {
 		try {
 			return db.selectRentals();
@@ -44,6 +76,14 @@ public class RentalController
 
 	public JPanel getPanel() {
 		return rentalListViewPanel;
+	}
+
+	public void openAddRentalForm()
+	{
+		rentalListViewPanel.setEnabled(false);
+		rentalFormFrame.setName("Add Rental");
+		rentalFormFrame.setRental(null);
+		rentalFormFrame.setVisible(true);
 	}
 	
 }

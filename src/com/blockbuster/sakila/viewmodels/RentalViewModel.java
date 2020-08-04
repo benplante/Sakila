@@ -15,8 +15,6 @@ public class RentalViewModel {
 	
 	private int paymentId;
 	
-	private int categoryId;
-	
 	private Timestamp rentalDate;
 	
 	private Timestamp returnDate;
@@ -30,9 +28,6 @@ public class RentalViewModel {
 	
 	@ColumnName(columnName = "Store")
 	public String storeAddress;
-	
-	@ColumnName(columnName = "Category")
-	public String filmCategory;
 	
 	@ColumnName(columnName = "Title")
 	public String filmTitle;
@@ -141,15 +136,5 @@ public class RentalViewModel {
 	
 	public RentalViewModel() {
 		this.rentalId = -1;
-	}
-
-	public int getCategoryId()
-	{
-		return categoryId;
-	}
-
-	public void setCategoryId(int categoryId)
-	{
-		this.categoryId = categoryId;
 	}
 }

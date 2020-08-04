@@ -69,4 +69,9 @@ public class CustomerViewModel {
 	public CustomerViewModel() {
 		this.customerId = -1;
 	}
+	
+	public String toString()
+	{
+		return this.firstName + " " +  this.lastName;
+	}
 }

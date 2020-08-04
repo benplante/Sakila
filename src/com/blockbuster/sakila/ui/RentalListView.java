@@ -29,7 +29,7 @@ public class RentalListView extends JPanel {
 		JScrollPane scrollPane = new JScrollPane(rentalTable);
 
 		btnAdd = new JButton("Add");
-		// TODO: btnAdd.addActionListener(e -> controller.openAddRentalForm());
+		btnAdd.addActionListener(e -> controller.openAddRentalForm());
 		btnUpdate = new JButton("Update");
 		// TODO: btnUpdate.addActionListener(e -> controller.openUpdateRentalForm());
 		btnDelete = new JButton("Delete");

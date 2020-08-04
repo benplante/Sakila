@@ -133,4 +133,9 @@ public class FilmViewModel {
 	{
 		this.actorId = actorId;
 	}
+	
+	public String toString()
+	{
+		return this.title;
+	}
 }
