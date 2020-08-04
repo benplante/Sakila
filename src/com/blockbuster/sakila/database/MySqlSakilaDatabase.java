@@ -512,7 +512,7 @@ public class MySqlSakilaDatabase implements SakilaDatabase {
 			stmt = conn.createStatement();
 			String sql = "SELECT r.rental_id, a.address, ca.name, f.title, c.first_name, c.last_name, "
 					+ "p.amount, f.rental_rate, sta.first_name, sta.last_name, r.rental_date, r.return_date, "
-					+ "p.payment_id, r.inventory_id, r.customer_id, r.staff_id "
+					+ "p.payment_id, r.inventory_id, r.customer_id, r.staff_id, fc.category_id "
 					+ "FROM rental r  "
 					+ "LEFT JOIN payment p on r.rental_id = p.rental_id  "
 					+ "LEFT JOIN customer c on r.customer_id = c.customer_id "
@@ -544,6 +544,7 @@ public class MySqlSakilaDatabase implements SakilaDatabase {
 				vm.setIventoryId(rs.getInt(14));
 				vm.setCustomerId(rs.getInt(15));
 				vm.setStaffId(rs.getInt(16));
+				vm.setCategoryId(rs.getInt(17));
 
 				li.add(vm);
 			}
