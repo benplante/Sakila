@@ -510,7 +510,7 @@ public class MySqlSakilaDatabase implements SakilaDatabase {
 		try  {
 			conn = DriverManager.getConnection(CONNECTION_STRING, "root", "password");
 			stmt = conn.createStatement();
-			String sql = "SELECT r.rental_id, a.address, f.title, c.first_name, c.last_name, "
+			String sql = "SELECT r.rental_id, a.address, ca.name, f.title, c.first_name, c.last_name, "
 					+ "p.amount, f.rental_rate, sta.first_name, sta.last_name, r.rental_date, r.return_date, "
 					+ "p.payment_id, r.inventory_id, r.customer_id, r.staff_id "
 					+ "FROM rental r  "
@@ -521,6 +521,8 @@ public class MySqlSakilaDatabase implements SakilaDatabase {
 					+ "LEFT JOIN film f ON i.film_id = f.film_id "
 					+ "LEFT JOIN store s ON i.store_id = s.store_id "
 					+ "LEFT JOIN address a ON s.address_id = a.address_id "
+				  + "LEFT JOIN film_category fc ON f.film_id = fc.film_id " 
+					+ "LEFT JOIN category ca ON fc.category_id = ca.category_id "
 					+ "ORDER BY r.rental_id";
 			rs = stmt.executeQuery(sql);
 
@@ -528,19 +530,20 @@ public class MySqlSakilaDatabase implements SakilaDatabase {
 				RentalViewModel vm = new RentalViewModel();
 				vm.rentalId = rs.getInt(1);
 				vm.storeAddress = rs.getString(2);
-				vm.filmTitle = rs.getString(3);
-				vm.customerFirstName = rs.getString(4);
-				vm.customerLastName = rs.getString(5);
-				vm.setPaymentAmount(rs.getBigDecimal(6));
-				vm.setRentalRate(rs.getBigDecimal(7));
-				vm.staffFirstName = rs.getString(8);
-				vm.staffLastName = rs.getString(9);
-				vm.setRentalDate(rs.getTimestamp(10));
-				vm.setReturnDate(rs.getTimestamp(11));
-				vm.setPaymentId(rs.getInt(12));
-				vm.setIventoryId(rs.getInt(13));
-				vm.setCustomerId(rs.getInt(14));
-				vm.setStaffId(rs.getInt(15));
+				vm.filmCategory = rs.getString(3);
+				vm.filmTitle = rs.getString(4);
+				vm.customerFirstName = rs.getString(5);
+				vm.customerLastName = rs.getString(6);
+				vm.setPaymentAmount(rs.getBigDecimal(7));
+				vm.setRentalRate(rs.getBigDecimal(8));
+				vm.staffFirstName = rs.getString(9);
+				vm.staffLastName = rs.getString(10);
+				vm.setRentalDate(rs.getTimestamp(11));
+				vm.setReturnDate(rs.getTimestamp(12));
+				vm.setPaymentId(rs.getInt(13));
+				vm.setIventoryId(rs.getInt(14));
+				vm.setCustomerId(rs.getInt(15));
+				vm.setStaffId(rs.getInt(16));
 
 				li.add(vm);
 			}

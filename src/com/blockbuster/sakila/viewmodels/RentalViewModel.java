@@ -29,6 +29,9 @@ public class RentalViewModel {
 	@ColumnName(columnName = "Store")
 	public String storeAddress;
 	
+	@ColumnName(columnName = "Category")
+	public String filmCategory;
+	
 	@ColumnName(columnName = "Title")
 	public String filmTitle;
 	
