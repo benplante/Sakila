@@ -43,6 +43,10 @@ public interface SakilaDatabase {
   public List<RentalViewModel> selectRentals() throws SQLException;
   
   public List<InventoryViewModel> selectInventories() throws SQLException;
+
+	public void insertRental(RentalViewModel rental) throws SQLException;
+
+	public void deleteRental(RentalViewModel rental) throws SQLException;
   
   
 }

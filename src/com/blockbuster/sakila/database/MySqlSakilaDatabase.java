@@ -514,7 +514,7 @@ public class MySqlSakilaDatabase implements SakilaDatabase {
 			stmt = conn.createStatement();
 			String sql = "SELECT r.rental_id, a.address, f.title, c.first_name, c.last_name, "
 					+ "p.amount, f.rental_rate, sta.first_name, sta.last_name, r.rental_date, r.return_date, "
-					+ "p.payment_id, r.inventory_id, r.customer_id, r.staff_id "
+					+ "p.payment_id, r.inventory_id, r.customer_id, r.staff_id, f.rental_duration "
 					+ "FROM rental r  "
 					+ "LEFT JOIN payment p on r.rental_id = p.rental_id  "
 					+ "LEFT JOIN customer c on r.customer_id = c.customer_id "
@@ -543,6 +543,7 @@ public class MySqlSakilaDatabase implements SakilaDatabase {
 				vm.setIventoryId(rs.getInt(13));
 				vm.setCustomerId(rs.getInt(14));
 				vm.setStaffId(rs.getInt(15));
+				vm.setFilmRentalDuration(rs.getInt(16));
 
 				li.add(vm);
 			}
@@ -570,11 +571,10 @@ public class MySqlSakilaDatabase implements SakilaDatabase {
 		try  {
 			conn = DriverManager.getConnection(CONNECTION_STRING, "root", "password");
 			stmt = conn.createStatement();
-			String sql = "SELECT s.inventory_id, f.title FROM "
+			String sql = "SELECT s.inventory_id, f.title, f.rental_duration, f.rental_rate FROM "
 					+"( "
 					+ "SELECT i.inventory_id, i.film_id, ROW_NUMBER() OVER (PARTITION BY i.film_id ORDER BY i.film_id) AS rn "
 					+ "From inventory i " 
-					+ "WHERE store_id = 1 "
 					+ ") s "
 					+ "INNER JOIN film f "
 					+ "ON s.film_id = f.film_id "
@@ -585,6 +585,8 @@ public class MySqlSakilaDatabase implements SakilaDatabase {
 				InventoryViewModel vm = new InventoryViewModel();
 				vm.setInventoryId(rs.getInt(1));
 				vm.setFilmTitle(rs.getString(2));
+				vm.setFilmRentalDuration(rs.getInt(3));
+				vm.setRentalRate(rs.getBigDecimal(4));
 				li.add(vm);
 			}
 			rs.close();
@@ -599,5 +601,101 @@ public class MySqlSakilaDatabase implements SakilaDatabase {
 			}
 		}
 		return li;
+	}
+
+	@Override
+	public void insertRental(RentalViewModel rental) throws SQLException
+	{
+
+		Connection conn = null;
+		PreparedStatement stmtRental = null, stmtPayment = null;
+		ResultSet rsId = null;
+		try {
+			conn = DriverManager.getConnection(CONNECTION_STRING, "root", "password");
+			conn.setAutoCommit(false);
+
+			// use location for 47 MySakila Drive record
+			String sqlRental = "INSERT INTO rental(inventory_id, customer_id, staff_id, rental_date, return_date) " +
+				"VALUES(?,?,1,NOW(), DATE_ADD(now(), INTERVAL ? DAY))";
+			stmtRental = conn.prepareStatement(sqlRental, Statement.RETURN_GENERATED_KEYS);
+			stmtRental.setInt(1, rental.getInventoryId());
+			stmtRental.setInt(2, rental.getCustomerId());
+			stmtRental.setInt(3, rental.getFilmRentalDuration());
+			stmtRental.executeUpdate();
+			
+			rsId = stmtRental.getGeneratedKeys();
+			if (rsId.next()) {
+				int rentalId = rsId.getInt(1);
+				String sqlPayment = "INSERT INTO payment(rental_id, amount, customer_id, staff_id, payment_date)" +
+					"VALUES(?,?,?,1,NOW())";
+				stmtPayment = conn.prepareStatement(sqlPayment);
+				stmtPayment.setInt(1, rentalId);
+				stmtPayment.setBigDecimal(2, rental.getPaymentAmount());
+				stmtPayment.setInt(3, rental.getCustomerId());
+				if (stmtPayment.executeUpdate() == 1) {
+					conn.commit();
+				}
+				else {
+					throw new SQLException("Payment was not added - invalid number of rows affected!");
+				}
+			}
+			else {
+				throw new SQLException("Rental was not added - invalid number of rows affected!");
+			}
+		} catch (SQLException e) {
+			if (conn != null) conn.rollback();
+			throw e;
+		} finally {
+			try {
+				if (conn != null) conn.close();
+				if (stmtRental != null) stmtRental.close();
+				if (stmtPayment != null) stmtPayment.close();
+				if (rsId != null) rsId.close();
+			} catch (SQLException e) {
+				System.out.println("Error closing DB resources");
+				e.printStackTrace();
+			}
+		}
+		
+	}
+
+	@Override
+	public void deleteRental(RentalViewModel rental) throws SQLException
+	{
+		Connection conn = null;
+		PreparedStatement stmtRental = null, stmtPayment = null;
+		try {
+			conn = DriverManager.getConnection(CONNECTION_STRING, "root", "password");
+			conn.setAutoCommit(false);
+			
+			stmtRental = conn.prepareStatement("DELETE FROM rental WHERE rental_id = ?");
+			stmtRental.setInt(1, rental.rentalId);
+			
+			if(stmtRental.executeUpdate() == 1) {
+				stmtPayment = conn.prepareStatement("DELETE FROM payment WHERE payment_id = ?");
+				stmtPayment.setInt(1, rental.getPaymentId());
+				
+				if (stmtPayment.executeUpdate() == 1) {
+					conn.commit();
+				}
+				else {
+					throw new SQLException("Payment was not deleted - invalid number of rows affected!");
+				}
+			}
+			else { 
+				throw new SQLException("Rental was not deleted - invalid number of rows affected!");
+			}
+		} finally {
+			try {
+				if (conn != null) conn.close();
+				if (stmtRental != null) stmtRental.close();
+				if (stmtPayment != null) stmtPayment.close();
+			} catch (SQLException e) {
+				System.out.println("Error closing DB resources");
+				e.printStackTrace();
+			}
+		}
+
+		
 	}
 }

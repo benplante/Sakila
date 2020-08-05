@@ -4,6 +4,7 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -21,7 +22,7 @@ public class RentalListView extends JPanel {
 	private JButton btnDelete;
 
 	private TableViewModel<RentalViewModel> model;
-	
+
 	public RentalListView(RentalController controller) {
 		super();
 
@@ -30,19 +31,19 @@ public class RentalListView extends JPanel {
 
 		btnAdd = new JButton("Add");
 		btnAdd.addActionListener(e -> controller.openAddRentalForm());
-		btnUpdate = new JButton("Update");
-		// TODO: btnUpdate.addActionListener(e -> controller.openUpdateRentalForm());
+		//btnUpdate = new JButton("Update");
+	  	//btnUpdate.addActionListener(e -> controller.openUpdateRentalForm());
 		btnDelete = new JButton("Delete");
-		// TODO: btnDelete.addActionListener(e -> controller.deleteRental ());
-		
+		btnDelete.addActionListener(e -> controller.deleteRental());
+
 
 		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 
 		JPanel btnPanel = new JPanel();
 		btnPanel.setLayout(new BoxLayout(btnPanel, BoxLayout.LINE_AXIS));
 		btnPanel.add(btnAdd);
-		btnPanel.add(Box.createHorizontalStrut(10));
-		btnPanel.add(btnUpdate);
+		//btnPanel.add(Box.createHorizontalStrut(10));
+		//btnPanel.add(btnUpdate);
 		btnPanel.add(Box.createHorizontalStrut(10));
 		btnPanel.add(btnDelete);
 
@@ -51,9 +52,18 @@ public class RentalListView extends JPanel {
 		this.add(btnPanel);
 		this.setBorder(new EmptyBorder(10, 10, 10, 10));
 	}
-	
+
 	public void setRentalList(TableViewModel<RentalViewModel> model) {
 		this.model = model;
 		rentalTable.setModel(model);
+	}
+
+	public RentalViewModel getSelectedRental() { 
+		if (rentalTable.getSelectedRow() == -1) {
+			JOptionPane.showMessageDialog(new JFrame(), "Please select a rental.", "Invalid",
+					JOptionPane.WARNING_MESSAGE);
+			return null;
+		}
+		return model.getAtRow(rentalTable.getSelectedRow());
 	}
 }
