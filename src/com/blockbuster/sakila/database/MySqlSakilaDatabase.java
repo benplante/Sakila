@@ -571,11 +571,10 @@ public class MySqlSakilaDatabase implements SakilaDatabase {
 		try  {
 			conn = DriverManager.getConnection(CONNECTION_STRING, "root", "password");
 			stmt = conn.createStatement();
-			String sql = "SELECT s.inventory_id, f.title, f.rental_duration FROM "
+			String sql = "SELECT s.inventory_id, f.title, f.rental_duration, f.rental_rate FROM "
 					+"( "
 					+ "SELECT i.inventory_id, i.film_id, ROW_NUMBER() OVER (PARTITION BY i.film_id ORDER BY i.film_id) AS rn "
 					+ "From inventory i " 
-					+ "WHERE store_id = 1 "
 					+ ") s "
 					+ "INNER JOIN film f "
 					+ "ON s.film_id = f.film_id "
@@ -587,6 +586,7 @@ public class MySqlSakilaDatabase implements SakilaDatabase {
 				vm.setInventoryId(rs.getInt(1));
 				vm.setFilmTitle(rs.getString(2));
 				vm.setFilmRentalDuration(rs.getInt(3));
+				vm.setRentalRate(rs.getBigDecimal(4));
 				li.add(vm);
 			}
 			rs.close();

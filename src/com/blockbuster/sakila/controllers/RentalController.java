@@ -109,6 +109,10 @@ public class RentalController
 	{
 		rentalListViewPanel.setEnabled(true);
 		RentalViewModel vm = rentalFormFrame.getRental();
+		if (vm == null)
+		{
+			return;
+		}
 		String type = "";
 		try {
 			if (vm.rentalId == -1) {
@@ -116,7 +120,7 @@ public class RentalController
 				db.insertRental(vm);
 			} else {
 				type = "Update";
-				//db.updateCustomer(vm);
+				//db.updateRental(vm);
 			}
 			JOptionPane.showMessageDialog(rentalListViewPanel, type + " Rental succeeded!");
 			rentalListViewPanel.setVisible(false);

@@ -1,5 +1,7 @@
 package com.blockbuster.sakila.viewmodels;
 
+import java.math.BigDecimal;
+
 public class InventoryViewModel
 {
 	private int inventoryId; 
@@ -7,6 +9,8 @@ public class InventoryViewModel
 	private String filmTitle;
 	
 	private int filmRentalDuration;
+	
+	private BigDecimal rentalRate;
 
 	public int getInventoryId()
 	{
@@ -41,6 +45,16 @@ public class InventoryViewModel
 	public String toString()
 	{
 		return this.filmTitle;
+	}
+
+	public BigDecimal getRentalRate()
+	{
+		return rentalRate;
+	}
+
+	public void setRentalRate(BigDecimal rentalRate)
+	{
+		this.rentalRate = rentalRate;
 	}
 	
 }
