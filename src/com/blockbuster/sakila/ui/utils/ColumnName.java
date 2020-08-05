@@ -1,4 +1,4 @@
-package com.blockbuster.sakila.database;
+package com.blockbuster.sakila.ui.utils;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

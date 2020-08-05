@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 
-import com.blockbuster.sakila.database.ColumnName;
+import com.blockbuster.sakila.ui.utils.ColumnName;
 
 public class RentalViewModel {
 	private int inventoryId;

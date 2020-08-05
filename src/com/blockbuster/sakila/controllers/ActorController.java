@@ -8,9 +8,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import com.blockbuster.sakila.database.SakilaDatabase;
-import com.blockbuster.sakila.database.TableViewModel;
 import com.blockbuster.sakila.ui.ActorForm;
 import com.blockbuster.sakila.ui.ActorListView;
+import com.blockbuster.sakila.ui.utils.TableViewModel;
 import com.blockbuster.sakila.viewmodels.ActorViewModel;
 
 public class ActorController {

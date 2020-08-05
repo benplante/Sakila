@@ -8,9 +8,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import com.blockbuster.sakila.database.SakilaDatabase;
-import com.blockbuster.sakila.database.TableViewModel;
 import com.blockbuster.sakila.ui.CustomerForm;
 import com.blockbuster.sakila.ui.CustomerListView;
+import com.blockbuster.sakila.ui.utils.TableViewModel;
 import com.blockbuster.sakila.viewmodels.CityViewModel;
 import com.blockbuster.sakila.viewmodels.CustomerViewModel;
 

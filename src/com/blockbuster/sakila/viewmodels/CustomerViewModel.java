@@ -1,6 +1,6 @@
 package com.blockbuster.sakila.viewmodels;
 
-import com.blockbuster.sakila.database.ColumnName;
+import com.blockbuster.sakila.ui.utils.ColumnName;
 
 public class CustomerViewModel {
 	private int addressId;

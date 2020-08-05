@@ -11,7 +11,7 @@ import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
 
 import com.blockbuster.sakila.controllers.ActorController;
-import com.blockbuster.sakila.database.TableViewModel;
+import com.blockbuster.sakila.ui.utils.TableViewModel;
 import com.blockbuster.sakila.viewmodels.ActorViewModel;
 
 /**
