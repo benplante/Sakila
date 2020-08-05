@@ -24,13 +24,17 @@ public class FilmForm extends JFrame{
 	
 	
 	private JTextField txtTitle, txtDescription, txtReleaseYear,
-	txtRentalRate, txtReplacementCost, txtRating;
+	txtRentalRate, txtReplacementCost,txtLength;
 	private JButton btnConfirm, btnCancel;
 	private JComboBox<ActorViewModel> cmbActors;
 	private ActorViewModel[] actors;
 	private JComboBox<CategoryViewModel> cmbCategories;
 	private CategoryViewModel[] categories;
 	private JComboBox cmbDurations;
+	private JComboBox cmbLanguages;
+	private JComboBox cmbSpecialFeature;
+    private JComboBox cmbRating;
+
 
 	public FilmForm(FilmController controller) {
 
@@ -40,16 +44,27 @@ public class FilmForm extends JFrame{
 		txtDescription = new JTextField();
 		txtReleaseYear = new JTextField();
 		txtRentalRate = new JTextField();
+		txtLength =  new JTextField();
 		txtReplacementCost = new JTextField();
-		txtRating = new JTextField();
 		cmbActors = new JComboBox<ActorViewModel>();
-	  cmbCategories = new JComboBox<CategoryViewModel>();
-	  cmbDurations = new JComboBox();
-	  
-	  Integer[] durationArr = {3,4,5,6,7};
-	  cmbDurations.setModel(new DefaultComboBoxModel<Integer>(durationArr));
+	    cmbCategories = new JComboBox<CategoryViewModel>();
+	    cmbDurations = new JComboBox();
+	    Integer[] durationArr = {3,4,5,6,7};
+	    cmbDurations.setModel(new DefaultComboBoxModel<Integer>(durationArr));
+	    cmbLanguages = new JComboBox();
+        String[] langArr= {"English","Italian","Japanese","Mandarin","French","German"};
+        cmbLanguages.setModel(new DefaultComboBoxModel<String>(langArr));
+	    
+        String[] ratingArr = {"G","PG","PG-13","R","NC-17"};
+        cmbRating = new JComboBox();
+        cmbRating.setModel(new DefaultComboBoxModel<String>(ratingArr));
+        
+        cmbSpecialFeature = new JComboBox();
+        String[] specialFeaturesArr= {"Trailers","Commentaries","Deleted Scenes","Behind the Scenes"};
+        cmbSpecialFeature.setModel(new DefaultComboBoxModel<String>(specialFeaturesArr));
 
-		btnConfirm = new JButton("Confirm");
+
+        btnConfirm = new JButton("Confirm");
 		btnConfirm.addActionListener(e -> controller.confirmAddFilm());
 
 		btnCancel = new JButton("Cancel");
@@ -62,18 +77,24 @@ public class FilmForm extends JFrame{
 		txtPanel.add(txtTitle);
 		txtPanel.add(new JLabel("Description:"));
 		txtPanel.add(txtDescription);
-	  txtPanel.add(new JLabel("Category:"));
-	  txtPanel.add(cmbCategories);
+	    txtPanel.add(new JLabel("Category:"));
+	    txtPanel.add(cmbCategories);
+	    txtPanel.add(new JLabel("Language:"));
+	    txtPanel.add(cmbLanguages);
 		txtPanel.add(new JLabel("Actor:"));
 		txtPanel.add(cmbActors);
 		txtPanel.add(new JLabel("Realse Year:"));
 		txtPanel.add(txtReleaseYear);
 		txtPanel.add(new JLabel("Rental Duration:"));
 		txtPanel.add(cmbDurations);
+		txtPanel.add(new JLabel("Length:"));
+        txtPanel.add(txtLength);
 		txtPanel.add(new JLabel("Replacement Cost:"));
 		txtPanel.add(txtReplacementCost);
 		txtPanel.add(new JLabel("Rating:"));
-		txtPanel.add(txtRating);
+		txtPanel.add((cmbRating));
+		txtPanel.add(new JLabel("Special Features:"));
+        txtPanel.add(cmbSpecialFeature);
 
 		JPanel btnPanel = new JPanel();
 		btnPanel.setBorder(new EmptyBorder(10, 5, 10, 5));
@@ -113,6 +134,8 @@ public class FilmForm extends JFrame{
 		film.title = txtTitle.getText();
 		film.description = txtDescription.getText();
 		film.releaseYear = txtReleaseYear.getText();
+	    film.setLanguageId((int) cmbLanguages.getSelectedIndex()+1);
+
 		if(Integer.parseInt(film.releaseYear) > 2001) {
 			film.rentalRate = 4.99;
 		}
@@ -122,12 +145,13 @@ public class FilmForm extends JFrame{
 		else if(Integer.parseInt(film.releaseYear) > 1981) {
 			film.rentalRate = 0.99;
 		}
+		film.length = Integer.parseInt(txtLength.getText());
 		film.rentalDuration = (int) cmbDurations.getSelectedItem();
 		film.replacementCost = Double.parseDouble(txtReplacementCost.getText());
-		film.rating = txtRating.getText();
+		film.rating = (String) cmbRating.getSelectedItem();
 		film.setActorId(actors[cmbActors.getSelectedIndex()].getActorId());
 		film.setCategoryId(categories[cmbCategories.getSelectedIndex()].getCategoryId());
-		
+		film.specialFeatures = (String) cmbSpecialFeature.getSelectedItem();
 		return film;
 	}
 }

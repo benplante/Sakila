@@ -400,7 +400,8 @@ public class MySqlSakilaDatabase implements SakilaDatabase {
 		try {
 			conn = DriverManager.getConnection(CONNECTION_STRING, "root", "password");
 		String sql = "SELECT f.film_id, f.title, f.description, f.release_year,"
-				+ " f.rental_duration, f.rental_rate, f.replacement_cost, f.rating, c.name"
+				+ " f.rental_duration, f.rental_rate,f.length, f.replacement_cost, f.rating, "
+		        + "f.special_features ,  c.name"
 				+ " FROM sakila.film f LEFT OUTER JOIN sakila.film_category fc ON f.film_id = fc.film_id" + 
 				" LEFT OUTER JOIN sakila.category c ON fc.category_id = c.category_id;";
 		stmt = conn.createStatement();
@@ -415,9 +416,11 @@ public class MySqlSakilaDatabase implements SakilaDatabase {
 				vm.setReleaseYear(rs.getString(4));
 				vm.setRentalDuration(Integer.parseInt(rs.getString(5)));
 				vm.setRentalRate(Double.parseDouble(rs.getString(6)));
-				vm.setReplacementCost(Double.parseDouble(rs.getString(7)));
-				vm.setRating(rs.getString(8));
-				vm.setCategoryName(rs.getString(9));
+                vm.setLength((rs.getInt(7)));
+				vm.setReplacementCost(Double.parseDouble(rs.getString(8)));
+				vm.setRating(rs.getString(9));
+                vm.setSpecialFeatures(rs.getString(10));
+				vm.setCategoryName(rs.getString(11));
 				li.add(vm);
 			}
 		} finally {
@@ -448,18 +451,20 @@ public class MySqlSakilaDatabase implements SakilaDatabase {
 
 			// use location for 47 MySakila Drive record
 			String sqlFilm = "INSERT INTO film(title, description, release_year, language_id, rental_duration, "
-					+ "rental_rate, replacement_cost, rating) " +
-				"VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
+					+ "rental_rate, length , replacement_cost, rating , special_features) " +
+				"VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 			stmtFilm = conn.prepareStatement(sqlFilm, Statement.RETURN_GENERATED_KEYS);
 			stmtFilm.setString(1, film.title);
 			stmtFilm.setString(2, film.description);
 			stmtFilm.setString(3, film.releaseYear);
-			stmtFilm.setInt(4, 1);
+			stmtFilm.setInt(4, film.getLanguageId());
 			stmtFilm.setInt(5, film.rentalDuration);
 			stmtFilm.setDouble(6, film.rentalRate);
-			stmtFilm.setDouble(7, film.replacementCost);
-			stmtFilm.setString(8, film.rating);
+	        stmtFilm.setInt(7, film.length);
+			stmtFilm.setDouble(8, film.replacementCost);
+			stmtFilm.setString(9, film.rating);
+			stmtFilm.setString(10, film.specialFeatures);
 			stmtFilm.executeUpdate();
 			
 			rsId = stmtFilm.getGeneratedKeys();
