@@ -77,7 +77,10 @@ public class FilmController
 	public void confirmAddFilm() {
 		filmListViewPanel.setEnabled(true);
 		FilmViewModel vm = filmFormFrame.getFilm();
-		String type = "";
+		if(vm == null) {
+			return;
+		}
+		String type = "Add";
 		try {
 			db.insertFilm(vm);
 			JOptionPane.showMessageDialog(filmFormFrame, type + " film succeeded!");

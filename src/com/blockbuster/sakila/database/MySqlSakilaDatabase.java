@@ -253,6 +253,7 @@ public class MySqlSakilaDatabase implements SakilaDatabase {
 			conn = DriverManager.getConnection(CONNECTION_STRING, "root", "password");
 			stmt = conn.prepareStatement("DELETE FROM customer WHERE customer_id = ?");
 			stmt.setInt(1, customer.customerId);
+			stmt.executeUpdate();
 		} finally {
 			try {
 				if (conn != null) conn.close();
@@ -413,7 +414,7 @@ public class MySqlSakilaDatabase implements SakilaDatabase {
 				vm.setFilmId(rs.getInt(1));
 				vm.setTitle(rs.getString(2));
 				vm.setDescription(rs.getString(3));
-				vm.setReleaseYear(rs.getString(4));
+				vm.setReleaseYear(rs.getInt(4));
 				vm.setRentalDuration(Integer.parseInt(rs.getString(5)));
 				vm.setRentalRate(Double.parseDouble(rs.getString(6)));
                 vm.setLength((rs.getInt(7)));
@@ -457,7 +458,7 @@ public class MySqlSakilaDatabase implements SakilaDatabase {
 			stmtFilm = conn.prepareStatement(sqlFilm, Statement.RETURN_GENERATED_KEYS);
 			stmtFilm.setString(1, film.title);
 			stmtFilm.setString(2, film.description);
-			stmtFilm.setString(3, film.releaseYear);
+			stmtFilm.setInt(3, film.releaseYear);
 			stmtFilm.setInt(4, film.getLanguageId());
 			stmtFilm.setInt(5, film.rentalDuration);
 			stmtFilm.setDouble(6, film.rentalRate);

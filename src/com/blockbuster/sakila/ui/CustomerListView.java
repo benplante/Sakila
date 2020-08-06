@@ -39,8 +39,7 @@ public class CustomerListView extends JPanel {
 		btnUpdate = new JButton("Update");
 		btnUpdate.addActionListener(e -> controller.openUpdateCustomerForm());
 		btnDelete = new JButton("Delete");
-		// NOTE: Need to create a deleteCustomer
-		// btnDelete.addActionListener(e -> controller.deleteCustomer());
+		btnDelete.addActionListener(e -> controller.deleteCustomer());
 
 		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 

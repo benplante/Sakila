@@ -17,14 +17,14 @@ public class FilmViewModel {
 	@ColumnName(columnName = "Category Name")
 	public String categoryName;
 	@ColumnName(columnName = "Release year")
-	public String releaseYear;
+	public int releaseYear;
 	@ColumnName(columnName = "Rental Duration")
 	public int rentalDuration;
 	@ColumnName(columnName = "Rental Rate")
 	public double rentalRate;
 	@ColumnName(columnName = "Length")
-    public int length;
-   @ColumnName(columnName = "Replacement Cost")
+  public int length;
+  @ColumnName(columnName = "Replacement Cost")
 	public double replacementCost;
 	@ColumnName(columnName = "Rating")
 	public String rating;
@@ -71,12 +71,12 @@ public class FilmViewModel {
 		this.categoryName = categoryName;
 	}
 
-	public String getReleaseYear()
+	public int getReleaseYear()
 	{
 		return releaseYear;
 	}
 
-	public void setReleaseYear(String releaseYear)
+	public void setReleaseYear(int releaseYear)
 	{
 		this.releaseYear = releaseYear;
 	}

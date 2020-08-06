@@ -105,4 +105,17 @@ public class CustomerController {
 			JOptionPane.showMessageDialog(customerFormFrame,  "Error: " + e.getMessage(), type + " failed!", JOptionPane.ERROR_MESSAGE);
 		}
 	}
+	public void deleteCustomer() {
+		CustomerViewModel vm = customerListViewPanel.getSelectedCustomer();
+		if (vm == null) {
+			return;
+		}
+		try {
+			db.deleteCustomer(vm);
+			JOptionPane.showMessageDialog(customerFormFrame, "Delete customer succeeded!");
+			model.setData(getCustomersFromDB());
+		} catch (SQLException e) {
+			JOptionPane.showMessageDialog(customerFormFrame,  "Error: " + e.getMessage(), "Delete failed!", JOptionPane.ERROR_MESSAGE);
+		}
+	}
 }
