@@ -32,4 +32,15 @@ public class Checkable<E> {
 	public String toString() {
 		return data.toString();
 	}
+	
+	public static class SelectAll<E> extends Checkable<E> {
+		public SelectAll() {
+			super(null);
+		}
+		
+		@Override
+		public String toString() {
+			return "Select All";
+		}
+	}
 }

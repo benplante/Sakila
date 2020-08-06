@@ -3,6 +3,7 @@ package com.blockbuster.sakila.ui.utils;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.swing.AbstractListModel;
 import javax.swing.ComboBoxModel;
@@ -17,7 +18,9 @@ public class ComboCheckBoxModel<E> extends AbstractListModel<Checkable<E>> imple
 	}
 	
 	public ComboCheckBoxModel(List<E> items) {
+		this.items = new ArrayList<>();
 		if (items == null) items = new ArrayList<>();
+		this.items.add(new Checkable.SelectAll<>());
 		items.forEach(i -> this.items.add(new Checkable<>(i)));
 		lastSelectedItem = null;
 	}
@@ -45,7 +48,6 @@ public class ComboCheckBoxModel<E> extends AbstractListModel<Checkable<E>> imple
 	
 	public void setCheckableItems(List<Checkable<E>> items) {
 		this.items = items;
-		//super.fireContentsChanged(this, 0, this.items.size() - 1);
 	}
 	
 	public List<E> getItems() {
@@ -53,8 +55,11 @@ public class ComboCheckBoxModel<E> extends AbstractListModel<Checkable<E>> imple
 	}
 	
 	public void setItems(List<E> items) {
-		this.items = items.parallelStream().map(Checkable<E>::new).collect(Collectors.toList());
-		//super.fireContentsChanged(this, 0, this.items.size() - 1);
+		this.items = Stream.concat(
+					Stream.of(new Checkable.SelectAll<E>()),
+					items.parallelStream().map(Checkable<E>::new)
+				).collect(Collectors.toList());
+		super.fireContentsChanged(this, 0, this.getSize());
 	}
 	
 	public List<E> getAllSelected() {
@@ -64,13 +69,17 @@ public class ComboCheckBoxModel<E> extends AbstractListModel<Checkable<E>> imple
 	@Override
 	public void setSelectedItem(Object anItem) {
 		if (anItem instanceof Checkable<?>) {
-			
-			int idx = this.items.indexOf(anItem);
-			if (idx != -1) {
-				this.lastSelectedItem = (Checkable<?>)anItem;
-				var item = this.items.get(idx);
-				item.setSelected(!item.isSelected());
-				System.out.println(item.getData().toString() + ": " + item.isSelected());
+			if (anItem instanceof Checkable.SelectAll<?>) {
+				boolean newSetting = !((Checkable.SelectAll<?>)anItem).isSelected();
+				this.items.forEach(i -> i.setSelected(newSetting));
+			}
+			else {
+				int idx = this.items.indexOf(anItem);
+				if (idx != -1) {
+					this.lastSelectedItem = (Checkable<?>)anItem;
+					var item = this.items.get(idx);
+					item.setSelected(!item.isSelected());
+				}
 			}
 			super.fireContentsChanged(this, -1, -1);
 		}

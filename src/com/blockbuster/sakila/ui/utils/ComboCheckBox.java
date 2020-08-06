@@ -1,5 +1,6 @@
 package com.blockbuster.sakila.ui.utils;
 
+import java.awt.Dimension;
 import java.util.List;
 
 import javax.swing.JComboBox;
@@ -9,12 +10,16 @@ public class ComboCheckBox<E> extends JComboBox<Checkable<E>> {
 	private ComboCheckBoxModel<E> model;
 	
 	public ComboCheckBox(String title) {
-		this(null, title);
+		this(new ComboCheckBoxModel<>(null), title);
 	}
 	
 	public ComboCheckBox(List<E> items, String title) {
+		this(new ComboCheckBoxModel<>(items), title);
+	}
+	
+	public ComboCheckBox(ComboCheckBoxModel<E> model, String title) {
 		super();
-		model = new ComboCheckBoxModel<>(items);
+		this.model = model;
 		this.setModel(model);
 		this.setRenderer(new ComboCheckBoxRenderer<E>(title));
 	}
@@ -40,7 +45,8 @@ public class ComboCheckBox<E> extends JComboBox<Checkable<E>> {
 	}
 	
 	public void setItems(List<E> items) {
-		model.setItems(items);
+		this.model.setItems(items);
+		this.setModel(this.model);
 	}
 	
 	public List<E> getSelectedItems() {
