@@ -65,7 +65,7 @@ public class ActorListView extends JPanel {
 
 	public ActorViewModel getSelectedActor() {
 		if (tblActors.getSelectedRow() == -1) {
-			JOptionPane.showMessageDialog(new JFrame(), "Please select an actor.", "Alter",
+			JOptionPane.showMessageDialog(this, "Please select an actor.", "Selection Failed!",
 					JOptionPane.WARNING_MESSAGE);
 			return null;
 		}

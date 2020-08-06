@@ -66,9 +66,13 @@ public class CustomerController {
 	}
 
 	public void openUpdateCustomerForm() {
+		CustomerViewModel vm = customerListViewPanel.getSelectedCustomer();
+		if (vm == null) {
+			return;
+		}
 		customerListViewPanel.setEnabled(false);
 		customerFormFrame.setName("Update Customer");
-		customerFormFrame.setCustomer(customerListViewPanel.getSelectedCustomer());
+		customerFormFrame.setCustomer(vm);
 		customerFormFrame.setVisible(true);
 	}
 
@@ -81,6 +85,10 @@ public class CustomerController {
 	public void confirmAddCustomer() {
 		customerListViewPanel.setEnabled(true);
 		CustomerViewModel vm = customerFormFrame.getCustomer();
+		if (vm == null)
+		{
+			return;
+		}
 		String type = "";
 		try {
 			if (vm.customerId == -1) {
