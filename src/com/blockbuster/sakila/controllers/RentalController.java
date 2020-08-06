@@ -51,8 +51,6 @@ public class RentalController
 		}
 	}
 
-
-
 	private List<CustomerViewModel> getCustomersFromDB()
 	{
 		try {
@@ -80,30 +78,20 @@ public class RentalController
 		}
 	}
 
-
-
 	public void openAddRentalForm()
 	{
 		rentalListViewPanel.setEnabled(false);
 		rentalFormFrame.setName("Add Rental");
-		rentalFormFrame.setRental(null);
+		rentalFormFrame.setRental();
 		rentalFormFrame.setVisible(true);
 	}
-
-	public void openUpdateRentalForm()
+	
+	public void closeCustomerForm()
 	{
-		rentalListViewPanel.setEnabled(false);
-		rentalFormFrame.setName("Update Rental");
-		RentalViewModel vm = rentalListViewPanel.getSelectedRental();
-		if(vm == null) {
-			return;
-		}
-		else {
-			rentalFormFrame.setRental(vm);
-			rentalFormFrame.setVisible(true);
-		}
-
+		rentalListViewPanel.setEnabled(true);
+		rentalFormFrame.setVisible(false);
 	}
+
 
 	public void confirmAddRental()
 	{
@@ -113,27 +101,14 @@ public class RentalController
 		{
 			return;
 		}
-		String type = "";
 		try {
-			if (vm.rentalId == -1) {
-				type = "Add";
-				db.insertRental(vm);
-			} else {
-				type = "Update";
-				//db.updateRental(vm);
-			}
-			JOptionPane.showMessageDialog(rentalListViewPanel, type + " Rental succeeded!");
-			rentalListViewPanel.setVisible(false);
+			db.insertRental(vm);
+			JOptionPane.showMessageDialog(rentalFormFrame, "Add Rental succeeded!");
+			rentalFormFrame.setVisible(false);
 			model.setData(getRentalsFromDB());
 		} catch (SQLException e) {
-			JOptionPane.showMessageDialog(rentalListViewPanel,  "Error: " + e.getMessage(), type + " failed!", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(rentalFormFrame,  "Error: " + e.getMessage(), "Add failed!", JOptionPane.ERROR_MESSAGE);
 		}
-	}
-
-	public void closeCustomerForm()
-	{
-		rentalListViewPanel.setEnabled(true);
-		rentalFormFrame.setVisible(false);
 	}
 
 	public void deleteRental() {
