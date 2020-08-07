@@ -19,7 +19,7 @@ import com.blockbuster.sakila.viewmodels.ActorViewModel;
  *  @author Saja Alhadeethi, Colin Manliclic, Dahye Min, Ben Plante
  *
  *         Actor Add/Update form in a JFrame contains text fields for an actors
- *         first and last name
+ *         first and last name fields of actor table
  */
 public class ActorForm extends JFrame {
 
@@ -54,7 +54,7 @@ public class ActorForm extends JFrame {
 		btnPanel.setBorder(new EmptyBorder(10, 5, 10, 5));
 		btnPanel.setLayout(new BoxLayout(btnPanel, BoxLayout.LINE_AXIS));
 		btnPanel.add(btnConfirm);
-		btnPanel.add(Box.createHorizontalStrut(10));
+		btnPanel.add(Box.createHorizontalStrut(70));
 		btnPanel.add(btnCancel);
 
 		wrapper.setLayout(new BoxLayout(wrapper, BoxLayout.PAGE_AXIS));

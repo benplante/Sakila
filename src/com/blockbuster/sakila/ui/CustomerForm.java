@@ -23,8 +23,8 @@ import com.blockbuster.sakila.viewmodels.CustomerViewModel;
 /**
  * @author Saja Alhadeethi, Colin Manliclic, Dahye Min, Ben Plante
  *
- *         Customer Add/Update form in a JFrame contains text fields for a customers
- *         first and last name
+ *         Customer CRUD operation ,form in a JFrame contains text fields for a customers
+ *         first and last name 
  */
 public class CustomerForm extends JFrame {
 
@@ -39,7 +39,8 @@ public class CustomerForm extends JFrame {
 		super();
 
 		customer = new CustomerViewModel();
-
+		
+	    //BOILER PLATE CODE.....seen on every GUI app
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		JPanel wrapper = new JPanel();
 		txtFirstName = new JTextField();
@@ -81,7 +82,7 @@ public class CustomerForm extends JFrame {
 		btnPanel.setBorder(new EmptyBorder(10, 5, 10, 5));
 		btnPanel.setLayout(new BoxLayout(btnPanel, BoxLayout.LINE_AXIS));
 		btnPanel.add(btnConfirm);
-		btnPanel.add(Box.createHorizontalStrut(10));
+		btnPanel.add(Box.createHorizontalStrut(50));
 		btnPanel.add(btnCancel);
 
 		wrapper.setLayout(new BoxLayout(wrapper, BoxLayout.PAGE_AXIS));

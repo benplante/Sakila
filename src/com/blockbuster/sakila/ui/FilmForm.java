@@ -25,13 +25,13 @@ import com.blockbuster.sakila.viewmodels.FilmViewModel;
 /**
  * @author Saja Alhadeethi, Colin Manliclic, Dahye Min, Ben Plante
  *
- *         Film Add/Update form in a JFrame contains text fields for a films
- *         first and last name
+ *         Film form in a JFrame contains text fields for a films
+ *         Insert and Delete
  */
 
 public class FilmForm extends JFrame {
 	
-	
+	//components of film form
 	private JTextField txtTitle, txtDescription, txtReleaseYear,
 	txtRentalRate, txtReplacementCost,txtLength;
 	private JButton btnConfirm, btnCancel;
@@ -42,7 +42,7 @@ public class FilmForm extends JFrame {
 	private JComboBox<Integer> cmbDurations;
 	private JComboBox<String> cmbLanguages;
 	private JComboBox<String> cmbSpecialFeature;
-  private JComboBox<String> cmbRating;
+    private JComboBox<String> cmbRating;
 
 
 	public FilmForm(FilmController controller) {
@@ -57,7 +57,7 @@ public class FilmForm extends JFrame {
 		txtReplacementCost = new JTextField();
 		cmbActors = new JComboBox<ActorViewModel>();
     cmbCategories = new JComboBox<CategoryViewModel>();
-    
+    //loading combo boxes with data base information
     cmbDurations = new JComboBox<Integer>();
     Integer[] durationArr = {3,4,5,6,7};
     cmbDurations.setModel(new DefaultComboBoxModel<Integer>(durationArr));
@@ -88,10 +88,10 @@ public class FilmForm extends JFrame {
 		txtPanel.add(txtTitle);
 		txtPanel.add(new JLabel("Description:"));
 		txtPanel.add(txtDescription);
-	  txtPanel.add(new JLabel("Category:"));
-	  txtPanel.add(cmbCategories);
-	  txtPanel.add(new JLabel("Language:"));
-	  txtPanel.add(cmbLanguages);
+	    txtPanel.add(new JLabel("Category:"));
+	    txtPanel.add(cmbCategories);
+	    txtPanel.add(new JLabel("Language:"));
+	    txtPanel.add(cmbLanguages);
 		txtPanel.add(new JLabel("Actor:"));
 		txtPanel.add(cmbActors);
 		txtPanel.add(new JLabel("Release Year:"));
@@ -99,19 +99,19 @@ public class FilmForm extends JFrame {
 		txtPanel.add(new JLabel("Rental Duration:"));
 		txtPanel.add(cmbDurations);
 		txtPanel.add(new JLabel("Length:"));
-    txtPanel.add(txtLength);
+        txtPanel.add(txtLength);
 		txtPanel.add(new JLabel("Replacement Cost:"));
 		txtPanel.add(txtReplacementCost);
 		txtPanel.add(new JLabel("Rating:"));
 		txtPanel.add((cmbRating));
 		txtPanel.add(new JLabel("Special Features:"));
-    txtPanel.add(cmbSpecialFeature);
+        txtPanel.add(cmbSpecialFeature);
 
 		JPanel btnPanel = new JPanel();
 		btnPanel.setBorder(new EmptyBorder(10, 5, 10, 5));
 		btnPanel.setLayout(new BoxLayout(btnPanel, BoxLayout.LINE_AXIS));
 		btnPanel.add(btnConfirm);
-		btnPanel.add(Box.createHorizontalStrut(10));
+		btnPanel.add(Box.createHorizontalStrut(50));
 		btnPanel.add(btnCancel);
 
 		wrapper.setLayout(new BoxLayout(wrapper, BoxLayout.PAGE_AXIS));
@@ -119,7 +119,7 @@ public class FilmForm extends JFrame {
 		wrapper.add(btnPanel);
 		
 		this.add(wrapper);
-    this.setContentPane(wrapper);
+        this.setContentPane(wrapper);
 		this.pack();
 		this.setResizable(false);
 		this.setLocationRelativeTo(null);
