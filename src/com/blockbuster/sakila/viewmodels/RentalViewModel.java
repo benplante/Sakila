@@ -6,6 +6,13 @@ import java.text.SimpleDateFormat;
 
 import com.blockbuster.sakila.ui.utils.ColumnName;
 
+/**
+ * @author Saja Alhadeethi, Colin Manliclic, Dahye Min, Ben Plante
+ *
+ *         View Model for a Rental. All fields are public and annotated with a
+ *         column name.
+ */
+
 public class RentalViewModel {
 	private int inventoryId;
 	

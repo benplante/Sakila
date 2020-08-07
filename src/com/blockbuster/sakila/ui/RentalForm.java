@@ -24,6 +24,13 @@ import com.blockbuster.sakila.viewmodels.CustomerViewModel;
 import com.blockbuster.sakila.viewmodels.InventoryViewModel;
 import com.blockbuster.sakila.viewmodels.RentalViewModel;
 
+/**
+ * @author Saja Alhadeethi, Colin Manliclic, Dahye Min, Ben Plante
+ *
+ *         Rental add form in a JFrame contains fields for a rental's
+ *         film, customer, and payment amount
+ */
+
 public class RentalForm extends JFrame {
 	private JTextField txtAmountPaid, txtRentalRate, txtRentalDuration;
 	private JComboBox<InventoryViewModel> cmbInventories;
@@ -53,6 +60,7 @@ public class RentalForm extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (cmbInventories.getSelectedIndex() > -1) {
+					// Will output the rental rate and rental duration of the selected film in the inventory combo box
 					txtRentalRate.setText("$" + inventories[cmbInventories.getSelectedIndex()].getRentalRate().toString());
 					txtRentalDuration.setText(inventories[cmbInventories.getSelectedIndex()].getFilmRentalDuration() + " day(s)");
 				}
@@ -112,7 +120,7 @@ public class RentalForm extends JFrame {
 			cmbCustomers.requestFocus();
 			return null;
 		}
-		else if(!Pattern.matches("^[0-9]{1,3}(\\.[0-9]{1,2})?$", txtAmountPaid.getText())) {
+		else if(!Pattern.matches("^[0-9]{1,3}(\\.[0-9]{1,2})?$", txtAmountPaid.getText())) { // Regex for 0-999
 			JOptionPane.showMessageDialog(this, "Please enter a valid amount.\nAmount can not exceed $999.99", "Payment Failed!",
 					JOptionPane.WARNING_MESSAGE);
 			txtAmountPaid.requestFocus();
@@ -120,6 +128,7 @@ public class RentalForm extends JFrame {
 		}
 		
 		BigDecimal amountPaid = new BigDecimal(txtAmountPaid.getText());
+		// BigDecimal comparison equivalent to amountPaid < rentalRate
 		if(amountPaid.compareTo(rentalRate) < 0) {
 			JOptionPane.showMessageDialog(this, "Amount must be greater than price.", "Payment Failed!",
 					JOptionPane.WARNING_MESSAGE);

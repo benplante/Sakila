@@ -15,6 +15,12 @@ import com.blockbuster.sakila.viewmodels.CustomerViewModel;
 import com.blockbuster.sakila.viewmodels.InventoryViewModel;
 import com.blockbuster.sakila.viewmodels.RentalViewModel;
 
+/**
+ * @author Saja Alhadeethi, Colin Manliclic, Dahye Min, Ben Plante
+ *
+ *         Rental controller. Interacts with RentalForm, RentalListView and SakilaDatabase.
+ */
+
 public class RentalController
 {
 

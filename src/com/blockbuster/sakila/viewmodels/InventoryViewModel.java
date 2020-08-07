@@ -2,6 +2,12 @@ package com.blockbuster.sakila.viewmodels;
 
 import java.math.BigDecimal;
 
+/**
+ * @author Saja Alhadeethi, Colin Manliclic, Dahye Min, Ben Plante
+ *
+ *         View Model for an Inventory.
+ */
+
 public class InventoryViewModel
 {
 	private int inventoryId; 

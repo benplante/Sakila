@@ -15,6 +15,13 @@ import com.blockbuster.sakila.ui.utils.TableViewModel;
 import com.blockbuster.sakila.viewmodels.CustomerViewModel;
 import com.blockbuster.sakila.viewmodels.RentalViewModel;
 
+/**
+ * @author Saja Alhadeethi, Colin Manliclic, Dahye Min, Ben Plante
+ *
+ *         Panel for viewing a list of all rentals in the database displays
+ *         rentals in a JTable and contains buttons to add
+ */
+
 public class RentalListView extends JPanel {
 	private JTable rentalTable;
 	private JButton btnAdd;
