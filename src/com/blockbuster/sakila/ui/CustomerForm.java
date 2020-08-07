@@ -175,7 +175,7 @@ public class CustomerForm extends JFrame {
 
 	/** 
 	 * Method Name: setCustomer
-	 * Purpose: Instantiates CustomerViewModel and populates fields 
+	 * Purpose: Instantiates CustomerForm's CustomerViewModel and populates fields 
 	 * 					based on user selecting 'Add' or user selecting a row and selecting 'Update' from CustomerListView.
 	 * Accepts: A CustomerViewModel object.
 	 * Returns: Nothing.
@@ -214,7 +214,7 @@ public class CustomerForm extends JFrame {
 
 	/** 
 	 * Method Name: setCities
-	 * Purpose: Instantiates CityViewModel array from database 
+	 * Purpose: Instantiates CityViewModel array 
 	 * 					and sets the array to the JComboBox.
 	 * Accepts: A list of CityViewModel objects.
 	 * Returns: Nothing.

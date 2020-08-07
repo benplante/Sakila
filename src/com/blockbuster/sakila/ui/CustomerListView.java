@@ -65,7 +65,7 @@ public class CustomerListView extends JPanel {
 	/** 
 	 * Method Name: setCustomerList
 	 * Purpose: To populate the CustomerListView.
-	 * Accepts: A TableViewModel object of CustomerViewModel objects. 
+	 * Accepts: A TableViewModel object of CustomerViewModel objects.
 	 * Return: Nothing.
 	 */
 	public void setCustomerList(TableViewModel<CustomerViewModel> model) {
@@ -75,7 +75,8 @@ public class CustomerListView extends JPanel {
 
 	/** 
 	 * Method Name: getSelectedCustomer
-	 * Purpose: To get the user selected row of the list. Used in ActorController's deleteCustomer() & openUpdateCustomerForm().
+	 * Purpose: To get the user selected row of the list. 
+	 * 					Used in CustomerController's deleteCustomer() & openUpdateCustomerForm().
 	 * Accepts: Nothing.
 	 * Return: The selected row's CustomerViewModel.
 	 */

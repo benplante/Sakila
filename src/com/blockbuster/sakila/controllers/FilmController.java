@@ -45,10 +45,22 @@ public class FilmController
 		model = new TableViewModel<FilmViewModel>(getFilmsFromDB(), FilmViewModel.class);
 		filmListViewPanel.setFilmList(model);
 	}
+	
+	/** 
+	 * Method Name: getPanel
+	 * Purpose: Gets FilmController's FilmListView.
+	 * 					Is used when adding a tab to the SuperController.
+	 * Accepts: Nothing.
+	 * Return: A FilmListView object.
+	 */
+	public JPanel getPanel() {
+		return filmListViewPanel;
+	}
 		
 	/**
 	 *  Method Name: refreshDB
-	 *  Purpose: Refreshes FilmForm data on every tab change. Is essential if data from other tabs is deleted.
+	 *  Purpose: Refreshes data on every tab change.
+	 *  				 Is essential if data from other tabs is deleted.
 	 *  Accepts: Nothing.
 	 *  Returns: Nothing.
 	 */
@@ -73,7 +85,8 @@ public class FilmController
 
 	/** 
 	 * Method Name: getActorsFromDB
-	 * Purpose: Gets the actors from the database. Used for FilmForm's ComboCheckBox cmbActors.
+	 * Purpose: Gets the actors from the database.
+	 * 					Used for FilmForm's ComboCheckBox cmbActors.
 	 * Accepts: Nothing.
 	 * Return: A list of ActorViewModel objects.
 	 */
@@ -87,7 +100,8 @@ public class FilmController
 	
 	/** 
 	 * Method Name: getCategoriesFromDB
-	 * Purpose: Gets the categories from the database. Used for FilmForm's JComboBox cmbCategories.
+	 * Purpose: Gets the categories from the database.
+	 * 					Used for FilmForm's JComboBox cmbCategories.
 	 * Accepts: Nothing.
 	 * Return: A list of CategoryViewModel objects.
 	 */
@@ -163,16 +177,5 @@ public class FilmController
 	public void closeFilmForm() {
 		filmListViewPanel.setEnabled(true);
 		filmFormFrame.setVisible(false);
-	}
-	
-	/** 
-	 * Method Name: getPanel
-	 * Purpose: Gets FilmController's FilmListView.
-	 * 					Is used when adding a tab to the SuperController.
-	 * Accepts: Nothing.
-	 * Return: A FilmListView object.
-	 */
-	public JPanel getPanel() {
-		return filmListViewPanel;
 	}
 }

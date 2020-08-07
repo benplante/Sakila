@@ -76,7 +76,8 @@ public class ActorListView extends JPanel {
 
 	/** 
 	 * Method Name: getSelectedActor
-	 * Purpose: To get the user selected row of the list. Used in ActorController's deleteActor() & openUpdateActorForm().
+	 * Purpose: To get the user selected row of the list.
+	 * 					Used in ActorController's deleteActor() & openUpdateActorForm().
 	 * Accepts: Nothing.
 	 * Return: The selected row's ActorViewModel.
 	 */

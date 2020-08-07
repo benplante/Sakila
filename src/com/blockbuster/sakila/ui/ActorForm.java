@@ -98,7 +98,7 @@ public class ActorForm extends JFrame {
 
 	/** 
 	 * Method Name: setActor
-	 * Purpose: Instantiates ActorViewModel and populates fields 
+	 * Purpose: Instantiates ActorForm's ActorViewModel and populates fields 
 	 * 					based on user selecting 'Add' or user selecting a row and selecting 'Update' from ActorListView.
 	 * Accepts: An ActorViewModel object.
 	 * Returns: Nothing.

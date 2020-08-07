@@ -201,7 +201,7 @@ public class FilmForm extends JFrame {
 	
 	/** 
 	 * Method Name: setFilm
-	 * Purpose: Instantiates FilmViewModel and clears all fields 
+	 * Purpose: Instantiates FilmForm's FilmViewModel and clears all fields 
 	 * 					when user selects 'Add' from FilmListView.
 	 * Accepts: Nothing.
 	 * Returns: Nothing.
@@ -223,7 +223,7 @@ public class FilmForm extends JFrame {
 	
 	/** 
 	 * Method Name: setActors
-	 * Purpose: Instantiates ActorViewModel array from database 
+	 * Purpose: Instantiates ActorViewModel array 
 	 * 					and sets the array to the ComboCheckBox.
 	 * Accepts: A list of ActorViewModel objects.
 	 * Returns: Nothing.
@@ -237,7 +237,7 @@ public class FilmForm extends JFrame {
 
 	/** 
 	 * Method Name: setCategories
-	 * Purpose: Instantiates CategoryViewModel array from database 
+	 * Purpose: Instantiates CategoryViewModel array
 	 * 					and sets the array to the JComboBox.
 	 * Accepts: A list of CategoryViewModel objects.
 	 * Returns: Nothing.

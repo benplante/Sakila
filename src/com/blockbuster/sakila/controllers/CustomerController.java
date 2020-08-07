@@ -45,9 +45,21 @@ public class CustomerController {
 		customerListViewPanel.setCustomerList(model);
 	}
 	
+	/** 
+	 * Method Name: getPanel
+	 * Purpose: Gets CustomerController's CustomerListView.
+	 * 					Is used when adding a tab to the SuperController.
+	 * Accepts: Nothing.
+	 * Return: An CustomerListView object.
+	 */
+	public JPanel getPanel() {
+		return customerListViewPanel;
+	}
+	
 	/**
 	 *  Method Name: refreshDB
-	 *  Purpose: Refreshes CustomerForm data on every tab change. Is essential if data from other tabs is deleted.
+	 *  Purpose: Refreshes data on every tab change.
+	 *  				 Is essential if data from other tabs is deleted.
 	 *  Accepts: Nothing.
 	 *  Returns: Nothing.
 	 */
@@ -74,7 +86,8 @@ public class CustomerController {
 	
 	/** 
 	 * Method Name: getCitiesFromDB
-	 * Purpose: Gets the Cities from the database. Used for CustomerForm's JComboBox cmbCities.
+	 * Purpose: Gets the Cities from the database.
+	 * 					Used for CustomerForm's JComboBox cmbCities.
 	 * Accepts: Nothing.
 	 * Return: A list of CityViewModel objects.
 	 */
@@ -140,17 +153,6 @@ public class CustomerController {
 	}
 
 	/** 
-	 * Method Name: closeCustomerForm
-	 * Purpose: The actions to be performed when listening for 'Close' button in CustomerForm.
-	 * Accepts: Nothing.
-	 * Return: Nothing.
-	 */
-	public void closeCustomerForm() {
-		customerListViewPanel.setEnabled(true);
-		customerFormFrame.setVisible(false);
-	}
-
-	/** 
 	 * Method Name: confirmAddCustomer
 	 * Purpose: The actions to be performed when listening for 'Confirm' button in CustomerForm.
 	 * Accepts: Nothing.
@@ -180,13 +182,13 @@ public class CustomerController {
 	}
 	
 	/** 
-	 * Method Name: getPanel
-	 * Purpose: Gets CustomerController's CustomerListView.
-	 * 					Is used when adding a tab to the SuperController.
+	 * Method Name: closeCustomerForm
+	 * Purpose: The actions to be performed when listening for 'Close' button in CustomerForm.
 	 * Accepts: Nothing.
-	 * Return: An CustomerListView object.
+	 * Return: Nothing.
 	 */
-	public JPanel getPanel() {
-		return customerListViewPanel;
+	public void closeCustomerForm() {
+		customerListViewPanel.setEnabled(true);
+		customerFormFrame.setVisible(false);
 	}
 }

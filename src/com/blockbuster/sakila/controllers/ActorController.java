@@ -45,6 +45,17 @@ public class ActorController {
 	}
 	
 	/** 
+	 * Method Name: getPanel
+	 * Purpose: Gets ActorController's ActorListView.
+	 * 					Is used when adding a tab to the SuperController.
+	 * Accepts: Nothing.
+	 * Return: An ActorListView object.
+	 */
+	public JPanel getPanel() {
+		return actorListViewPanel;
+	}
+	
+	/** 
 	 * Method Name: getActorsFromDB
 	 * Purpose: Gets the actors from the database.
 	 * Accepts: Nothing.
@@ -110,18 +121,7 @@ public class ActorController {
 			JOptionPane.showMessageDialog(actorFormFrame,  "Error: " + e.getMessage(), "Delete failed!", JOptionPane.ERROR_MESSAGE);
 		}
 	}
-	
-	/** 
-	 * Method Name: closeActorForm
-	 * Purpose: The actions to be performed when listening for 'Close' button in ActorForm.
-	 * Accepts: Nothing.
-	 * Return: Nothing.
-	 */
-	public void closeActorForm() {
-		actorListViewPanel.setEnabled(true);
-		actorFormFrame.setVisible(false);
-	}
-	
+		
 	/** 
 	 * Method Name: confirmAddActor
 	 * Purpose: The actions to be performed when listening for 'Confirm' button in ActorForm.
@@ -148,17 +148,16 @@ public class ActorController {
 		} catch (SQLException e) {
 			JOptionPane.showMessageDialog(actorFormFrame,  "Error: " + e.getMessage(), type + " failed!", JOptionPane.ERROR_MESSAGE);
 		}
-	}
+	}	
 	
 	/** 
-	 * Method Name: getPanel
-	 * Purpose: Gets ActorController's ActorListView.
-	 * 					Is used when adding a tab to the SuperController.
+	 * Method Name: closeActorForm
+	 * Purpose: The actions to be performed when listening for 'Close' button in ActorForm.
 	 * Accepts: Nothing.
-	 * Return: An ActorListView object.
+	 * Return: Nothing.
 	 */
-	public JPanel getPanel() {
-		return actorListViewPanel;
+	public void closeActorForm() {
+		actorListViewPanel.setEnabled(true);
+		actorFormFrame.setVisible(false);
 	}
-	
 }
