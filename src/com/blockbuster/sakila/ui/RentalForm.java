@@ -5,7 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.math.BigDecimal;
 import java.util.List;
-
+import java.util.regex.Pattern;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -25,7 +25,7 @@ import com.blockbuster.sakila.viewmodels.InventoryViewModel;
 import com.blockbuster.sakila.viewmodels.RentalViewModel;
 
 public class RentalForm extends JFrame {
-	private JTextField txtAmountPaid, txtRentalRate;
+	private JTextField txtAmountPaid, txtRentalRate, txtRentalDuration;
 	private JComboBox<InventoryViewModel> cmbInventories;
 	private JComboBox<CustomerViewModel> cmbCustomers;
 	private JButton btnConfirm, btnCancel;
@@ -44,19 +44,19 @@ public class RentalForm extends JFrame {
 		txtAmountPaid = new JTextField();
 		txtRentalRate = new JTextField();
 		txtRentalRate.setEditable(false);
+		txtRentalDuration = new JTextField();
+		txtRentalDuration.setEditable(false);
 		cmbInventories = new JComboBox<>();
 		cmbCustomers = new JComboBox<>();	
 		
 		cmbInventories.addActionListener(new ActionListener() {
-
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (cmbInventories.getSelectedIndex() > -1) {
 					txtRentalRate.setText("$" + inventories[cmbInventories.getSelectedIndex()].getRentalRate().toString());
+					txtRentalDuration.setText(inventories[cmbInventories.getSelectedIndex()].getFilmRentalDuration() + " day(s)");
 				}
-				
 			}
-			
 		});
 		
 		btnConfirm = new JButton("Confirm");
@@ -74,6 +74,8 @@ public class RentalForm extends JFrame {
 		txtPanel.add(cmbCustomers);
 		txtPanel.add(new JLabel("Price:"));
 		txtPanel.add(txtRentalRate);
+		txtPanel.add(new JLabel("Rental Duration:"));
+		txtPanel.add(txtRentalDuration);
 		txtPanel.add(new JLabel("Payment ($):"));
 		txtPanel.add(txtAmountPaid);
 		
@@ -96,8 +98,7 @@ public class RentalForm extends JFrame {
 	public RentalViewModel getRental() {
 		int inventoryIdx = cmbInventories.getSelectedIndex();		
 		int customerIdx = cmbCustomers.getSelectedIndex();
-		BigDecimal amountPaid = null;
-		BigDecimal rentalRate = null;
+		BigDecimal rentalRate = inventories[inventoryIdx].getRentalRate();
 		
 		if(inventoryIdx < 0) {
 			JOptionPane.showMessageDialog(this, "Please select a film.", "Actor Selection Failed!",
@@ -111,24 +112,16 @@ public class RentalForm extends JFrame {
 			cmbCustomers.requestFocus();
 			return null;
 		}
-		
-		try {
-			amountPaid = new BigDecimal(txtAmountPaid.getText());
-			rentalRate = inventories[inventoryIdx].getRentalRate();
-			
-			if (amountPaid.compareTo(rentalRate) < 0 || amountPaid.compareTo(new BigDecimal(999.99)) > 0) {
-				throw new Exception();
-			}
-			
-		}
-		catch (NumberFormatException ex) {
-			JOptionPane.showMessageDialog(this, "Please enter a valid amount.", "Payment Failed!",
+		else if(!Pattern.matches("^[0-9]{1,3}(\\.[0-9]{1,2})?$", txtAmountPaid.getText())) {
+			JOptionPane.showMessageDialog(this, "Please enter a valid amount.\nAmount can not exceed $999.99", "Payment Failed!",
 					JOptionPane.WARNING_MESSAGE);
 			txtAmountPaid.requestFocus();
 			return null;
 		}
-		catch (Exception ex) {
-			JOptionPane.showMessageDialog(this, "Amount must be greater than price \nand can not exceed $999.99.", "Payment Failed!",
+		
+		BigDecimal amountPaid = new BigDecimal(txtAmountPaid.getText());
+		if(amountPaid.compareTo(rentalRate) < 0) {
+			JOptionPane.showMessageDialog(this, "Amount must be greater than price.", "Payment Failed!",
 					JOptionPane.WARNING_MESSAGE);
 			txtAmountPaid.requestFocus();
 			return null;
@@ -145,18 +138,21 @@ public class RentalForm extends JFrame {
 			this.rental = new RentalViewModel();
 			cmbInventories.setSelectedIndex(-1);
 			cmbCustomers.setSelectedIndex(-1);
-			txtAmountPaid.setText("");
 			txtRentalRate.setText("Please select a film.");	
+			txtRentalDuration.setText("Please select a film.");
+			txtAmountPaid.setText("");
 	}
 
-	public void setInventories(List<InventoryViewModel> list) {
+	public void setInventories(List<InventoryViewModel> list)
+	{
 		InventoryViewModel[] arr = new InventoryViewModel[list.size()];
 		list.toArray(arr);
 		this.inventories = arr;
 		cmbInventories.setModel(new DefaultComboBoxModel<InventoryViewModel>(arr));
 	}
 
-	public void setCustomers(List<CustomerViewModel> customers) {
+	public void setCustomers(List<CustomerViewModel> customers)
+	{
 		CustomerViewModel[] arr = new CustomerViewModel[customers.size()];
 		customers.toArray(arr);
 		this.customers = arr;
