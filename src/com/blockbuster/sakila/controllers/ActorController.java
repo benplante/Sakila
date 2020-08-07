@@ -44,10 +44,9 @@ public class ActorController {
 		actorListViewPanel.setActorList(model);
 	}
 	
-	
 	/** 
 	 * Method Name: getActorsFromDB
-	 * Purpose: Get the actors from the database.
+	 * Purpose: Gets the actors from the database.
 	 * Accepts: Nothing.
 	 * Return: A list of ActorViewModel objects.
 	 */
@@ -114,7 +113,7 @@ public class ActorController {
 	
 	/** 
 	 * Method Name: closeActorForm
-	 * Purpose: The actions to be performed when listening for 'Close' button in in ActorForm.
+	 * Purpose: The actions to be performed when listening for 'Close' button in ActorForm.
 	 * Accepts: Nothing.
 	 * Return: Nothing.
 	 */
@@ -125,7 +124,7 @@ public class ActorController {
 	
 	/** 
 	 * Method Name: confirmAddActor
-	 * Purpose: The actions to be performed when listening for 'Confirm' button in it ActorForm.
+	 * Purpose: The actions to be performed when listening for 'Confirm' button in ActorForm.
 	 * Accepts: Nothing.
 	 * Return: Nothing.
 	 */

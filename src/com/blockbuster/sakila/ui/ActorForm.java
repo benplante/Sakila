@@ -22,7 +22,7 @@ import com.blockbuster.sakila.viewmodels.ActorViewModel;
  *         first and last name fields of actor table
  */
 public class ActorForm extends JFrame {
-	// ActorForm Members
+	// ActorForm members
 	private JTextField txtFirstName, txtLastName;
 	private JButton btnConfirm, btnCancel;
 	private ActorViewModel actor;
@@ -35,8 +35,8 @@ public class ActorForm extends JFrame {
 	 */
 	public ActorForm(ActorController controller) {
 		super();
-
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		
 		JPanel wrapper = new JPanel();
 		txtFirstName = new JTextField();
 		txtLastName = new JTextField();
@@ -75,7 +75,7 @@ public class ActorForm extends JFrame {
 	 * Method Name: getActor
 	 * Purpose: To validate input and get ActorViewModel when user selects 'Confirm' in ActorForm.
 	 * Accepts: Nothing.
-	 * Returns: ActorViewModel populated with user input.
+	 * Returns: ActorViewModel object populated with user input.
 	 */
 	public ActorViewModel getActor() {
 		if (txtFirstName.getText().isBlank()) {
@@ -100,7 +100,7 @@ public class ActorForm extends JFrame {
 	 * Method Name: setActor
 	 * Purpose: Instantiates ActorViewModel and populates fields 
 	 * 					based on user selecting 'Add' or user selecting a row and selecting 'Update' from ActorListView.
-	 * Accepts: An ActorViewModel.
+	 * Accepts: An ActorViewModel object.
 	 * Returns: Nothing.
 	 */
 	public void setActor(ActorViewModel actor) {

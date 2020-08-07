@@ -27,21 +27,23 @@ import com.blockbuster.sakila.viewmodels.CustomerViewModel;
  *         first and last name 
  */
 public class CustomerForm extends JFrame {
-
+	// CustomerForm members
 	private JTextField txtFirstName, txtLastName, txtEmail, txtAddress, txtDistrict, txtPostalCode, txtPhone;
 	private JComboBox<CityViewModel> cmbCities;
 	private JButton btnConfirm, btnCancel;
-	
 	private CustomerViewModel customer;
 	private CityViewModel[] cities;
 	
+	/** 
+	 * Method Name: CustomerForm
+	 * Purpose: CustomerForm is a JFrame for user input.
+	 * Accepts: CustomerController to handle for listener events. 
+	 * Return: An CustomerForm object.
+	 */
 	public CustomerForm(CustomerController controller) {
 		super();
-
-		customer = new CustomerViewModel();
-		
-	    //BOILER PLATE CODE.....seen on every GUI app
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		
 		JPanel wrapper = new JPanel();
 		txtFirstName = new JTextField();
 		txtLastName = new JTextField();
@@ -94,6 +96,12 @@ public class CustomerForm extends JFrame {
 		this.setLocationRelativeTo(null);
 	}
 
+	/** 
+	 * Method Name: getCustomer
+	 * Purpose: To validate input and get CustomerViewModel when user selects 'Confirm' in CustomerForm.
+	 * Accepts: Nothing.
+	 * Returns: CustomerViewModel object populated with user input.
+	 */
 	public CustomerViewModel getCustomer() {
 		String firstName = txtFirstName.getText();
 		String lastName = txtLastName.getText();
@@ -162,10 +170,16 @@ public class CustomerForm extends JFrame {
 		customer.postalCode = postalCode;
 		customer.phone = phone;
 		customer.setIsActive(true);
-		
 		return customer;
 	}
 
+	/** 
+	 * Method Name: setCustomer
+	 * Purpose: Instantiates CustomerViewModel and populates fields 
+	 * 					based on user selecting 'Add' or user selecting a row and selecting 'Update' from CustomerListView.
+	 * Accepts: A CustomerViewModel object.
+	 * Returns: Nothing.
+	 */
 	public void setCustomer(CustomerViewModel customer) {
 		this.customer = customer;
 		if (customer != null) {
@@ -198,6 +212,13 @@ public class CustomerForm extends JFrame {
 		}
 	}
 
+	/** 
+	 * Method Name: setCities
+	 * Purpose: Instantiates CityViewModel array from database 
+	 * 					and sets the array to the JComboBox.
+	 * Accepts: A list of CityViewModel objects.
+	 * Returns: Nothing.
+	 */
 	public void setCities(List<CityViewModel> cities) {
 		CityViewModel[] arr = new CityViewModel[cities.size()];
 		cities.toArray(arr);

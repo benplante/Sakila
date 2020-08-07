@@ -48,8 +48,6 @@ public class ActorListView extends JPanel {
 		btnDelete = new JButton("Delete");
 		btnDelete.addActionListener(e -> controller.deleteActor());
 
-		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
-
 		JPanel btnPanel = new JPanel();
 		btnPanel.setLayout(new BoxLayout(btnPanel, BoxLayout.LINE_AXIS));
 		btnPanel.add(btnAdd);
@@ -57,7 +55,8 @@ public class ActorListView extends JPanel {
 		btnPanel.add(btnUpdate);
 		btnPanel.add(Box.createHorizontalStrut(10));
 		btnPanel.add(btnDelete);
-
+		
+		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 		this.add(scrollPane);
 		this.add(Box.createVerticalStrut(10));
 		this.add(btnPanel);

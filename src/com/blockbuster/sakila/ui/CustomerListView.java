@@ -21,13 +21,19 @@ import com.blockbuster.sakila.viewmodels.CustomerViewModel;
  *         customer
  */
 public class CustomerListView extends JPanel {
+	// CustomerListView members
 	private JTable customerTable;
 	private JButton btnAdd;
 	private JButton btnUpdate;
 	private JButton btnDelete;
-
 	private TableViewModel<CustomerViewModel> model;
 
+	/** 
+	 * Method Name: CustomerListView
+	 * Purpose: CustomerListView is a JPanel to show list of actors and its attributes.
+	 * Accepts: CustomerController to handle for listener events.
+	 * Return: A CustomerListView object.
+	 */
 	public CustomerListView(CustomerController controller) {
 		super();
 
@@ -41,8 +47,6 @@ public class CustomerListView extends JPanel {
 		btnDelete = new JButton("Delete");
 		btnDelete.addActionListener(e -> controller.deleteCustomer());
 
-		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
-
 		JPanel btnPanel = new JPanel();
 		btnPanel.setLayout(new BoxLayout(btnPanel, BoxLayout.LINE_AXIS));
 		btnPanel.add(btnAdd);
@@ -50,18 +54,31 @@ public class CustomerListView extends JPanel {
 		btnPanel.add(btnUpdate);
 		btnPanel.add(Box.createHorizontalStrut(10));
 		btnPanel.add(btnDelete);
-
+		
+		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 		this.add(scrollPane);
 		this.add(Box.createVerticalStrut(10));
 		this.add(btnPanel);
 		this.setBorder(new EmptyBorder(10, 10, 10, 10));
 	}
 
+	/** 
+	 * Method Name: setCustomerList
+	 * Purpose: To populate the CustomerListView.
+	 * Accepts: A TableViewModel object of CustomerViewModel objects. 
+	 * Return: Nothing.
+	 */
 	public void setCustomerList(TableViewModel<CustomerViewModel> model) {
 		this.model = model;
 		customerTable.setModel(model);
 	}
 
+	/** 
+	 * Method Name: getSelectedCustomer
+	 * Purpose: To get the user selected row of the list. Used in ActorController's deleteCustomer() & openUpdateCustomerForm().
+	 * Accepts: Nothing.
+	 * Return: The selected row's CustomerViewModel.
+	 */
 	public CustomerViewModel getSelectedCustomer() {
 		if (customerTable.getSelectedRow() == -1) {
 			JOptionPane.showMessageDialog(this, "Please select a customer.", "Selection Failed!",
