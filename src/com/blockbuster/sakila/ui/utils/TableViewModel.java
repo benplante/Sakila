@@ -1,6 +1,7 @@
 package com.blockbuster.sakila.ui.utils;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
@@ -18,6 +19,10 @@ public class TableViewModel<T> extends AbstractTableModel {
 	private List<T> data;
 	private Class<T> type;
 
+	public TableViewModel(Class<T> type) {
+		this(new ArrayList<>(), type);
+	}
+	
 	public TableViewModel(List<T> data, Class<T> type) {
 		super();
 		this.data = data;

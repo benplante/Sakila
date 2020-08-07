@@ -1,36 +1,41 @@
 package com.blockbuster.sakila.controllers;
 
 import java.sql.SQLException;
+import java.util.stream.Collectors;
 
 import javax.swing.JPanel;
 
 import com.blockbuster.sakila.database.SakilaDatabase;
-import com.blockbuster.sakila.ui.ReportForm;
 import com.blockbuster.sakila.ui.ReportListView;
 import com.blockbuster.sakila.ui.utils.TableViewModel;
-import com.blockbuster.sakila.viewmodels.ReportViewModel;
 
 public class ReportController
 {
 
 	private SakilaDatabase db;
 	private ReportListView reportListViewPanel;
-	private ReportForm reportFormFrame;
-
-	private TableViewModel<ReportViewModel> model;
 
 	public ReportController(SakilaDatabase db) {
 		this.db = db;
 
 		reportListViewPanel = new ReportListView(this);
-		reportFormFrame = new ReportForm(this);
 		try {
-			reportListViewPanel.setCities(db.selectCities());
+			reportListViewPanel.setStores(db.selectStores());
 		} catch(SQLException e) {
 			e.printStackTrace();
 		}
 	}
 
+	public void generateStoreReport() {
+		var stores = reportListViewPanel.getSelectedStores();
+		try {
+			reportListViewPanel.setSalesReport(
+					db.getSalesByStore(stores.stream().map(s -> s.getStoreId()).collect(Collectors.toList())));
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public JPanel getPanel() {
 		return reportListViewPanel;
 	}

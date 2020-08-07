@@ -16,6 +16,8 @@ import com.blockbuster.sakila.viewmodels.CustomerViewModel;
 import com.blockbuster.sakila.viewmodels.FilmViewModel;
 import com.blockbuster.sakila.viewmodels.InventoryViewModel;
 import com.blockbuster.sakila.viewmodels.RentalViewModel;
+import com.blockbuster.sakila.viewmodels.StoreReportViewModel;
+import com.blockbuster.sakila.viewmodels.StoreViewModel;
 
 /**
  * @author Ben Plante
@@ -701,7 +703,100 @@ public class MySqlSakilaDatabase implements SakilaDatabase {
 				e.printStackTrace();
 			}
 		}
-
+	}
+	
+	public List<StoreViewModel> selectStores() throws SQLException {
+		ArrayList<StoreViewModel> list = new ArrayList<>();
 		
+		Connection conn = null;
+		Statement stmt = null;
+		ResultSet rs = null;
+		try {
+			conn = DriverManager.getConnection(CONNECTION_STRING, "root", "password");
+			stmt = conn.createStatement();
+			
+			rs = stmt.executeQuery(
+					"SELECT s.store_id, c.city, u.country "
+					+ "FROM store s "
+					+ "INNER JOIN address a ON s.address_id = a.address_id "
+					+ "INNER JOIN city c ON a.city_id = c.city_id "
+					+ "INNER JOIN country u ON c.country_id = u.country_id"
+				);
+			
+			while (rs.next()) {
+				StoreViewModel vm = new StoreViewModel();
+				vm.setStoreId(rs.getInt(1));
+				vm.setCity(rs.getString(2));
+				vm.setCountry(rs.getString(3));
+				list.add(vm);
+			}
+		} finally {
+			try {
+				if (conn != null) conn.close();
+				if (stmt != null) stmt.close();
+				if (rs != null) rs.close();
+			} catch (SQLException e) {
+				System.out.println("Error closing DB resources");
+				e.printStackTrace();
+			}
+		}
+		
+		return list;
+	}
+	
+	public List<StoreReportViewModel> getSalesByStore(List<Integer> stores) throws SQLException {
+		ArrayList<StoreReportViewModel> list = new ArrayList<>();
+		
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		
+		String sql = 				
+			"SELECT s.store_id, CONCAT(c.city, ', ', u.country), SUM(p.amount) "
+			+ "FROM payment p "
+			+ "INNER JOIN rental r ON p.rental_id = r.rental_id "
+			+ "INNER JOIN inventory i ON r.inventory_id = i.inventory_id "
+			+ "INNER JOIN store s ON i.store_id = s.store_id "
+			+ "INNER JOIN address a ON s.address_id = a.address_id "
+			+ "INNER JOIN city c ON a.city_id = c.city_id "
+			+ "INNER JOIN country u ON c.country_id = u.country_id "
+			+ "WHERE s.store_id IN (";
+
+		if (stores.size() == 0) throw new SQLException("No Stores Selected");
+		String paramList = "";
+		for (int i = 0; i < stores.size(); ++i) {
+			paramList += "?,";
+		}
+		sql += paramList.substring(0, paramList.length() - 1);
+		sql += ") GROUP BY s.store_id, c.city, u.country "
+				+ "ORDER BY 3 DESC";
+		try {
+			conn = DriverManager.getConnection(CONNECTION_STRING, "root", "password");
+			stmt = conn.prepareStatement(sql);
+			
+			for (int i = 0; i < stores.size(); ++i) {
+				stmt.setInt(i+1, stores.get(i));
+			}
+			
+			rs = stmt.executeQuery();
+			
+			while (rs.next() ) {
+				StoreReportViewModel vm = new StoreReportViewModel();
+				vm.storeId = rs.getInt(1);
+				vm.storeLocation = rs.getString(2);
+				vm.salesAmount = rs.getBigDecimal(3);
+				list.add(vm);
+			}
+		} finally {
+			try {
+				if (conn != null) conn.close();
+				if (stmt != null) stmt.close();
+				if (rs != null) rs.close();
+			} catch (SQLException e) {
+				System.out.println("Error closing DB resources");
+				e.printStackTrace();
+			}
+		}
+		return list;
 	}
 }

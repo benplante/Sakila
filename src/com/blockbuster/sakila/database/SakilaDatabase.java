@@ -29,24 +29,28 @@ public interface SakilaDatabase {
 	public void deleteCustomer(CustomerViewModel customer) throws SQLException;
 
 	public List<CustomerViewModel> selectCustomers() throws SQLException;
-	
+
 	public List<CityViewModel> selectCities() throws SQLException;
-	
+
 	public List<FilmViewModel> selectFilms() throws SQLException;
-	
+
 	// Film
 	public void insertFilm(FilmViewModel film) throws SQLException;
 
-  public List<CategoryViewModel> selectCategories() throws SQLException;
-  
-  // Rental
-  public List<RentalViewModel> selectRentals() throws SQLException;
-  
-  public List<InventoryViewModel> selectInventories() throws SQLException;
+	public List<CategoryViewModel> selectCategories() throws SQLException;
+
+	// Rental
+	public List<RentalViewModel> selectRentals() throws SQLException;
+
+	public List<InventoryViewModel> selectInventories() throws SQLException;
 
 	public void insertRental(RentalViewModel rental) throws SQLException;
 
 	public void deleteRental(RentalViewModel rental) throws SQLException;
-  
-  
+
+	public List<StoreViewModel> selectStores() throws SQLException;
+	
+	public List<StoreReportViewModel> getSalesByStore(List<Integer> stores) throws SQLException;
+	
+	
 }
