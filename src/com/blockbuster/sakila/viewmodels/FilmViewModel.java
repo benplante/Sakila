@@ -1,5 +1,7 @@
 package com.blockbuster.sakila.viewmodels;
 
+import java.util.List;
+
 import com.blockbuster.sakila.ui.utils.ColumnName;
 
 /**
@@ -11,12 +13,11 @@ import com.blockbuster.sakila.ui.utils.ColumnName;
 public class FilmViewModel {
 
 	private int categoryId;
-	private int actorId;
+	private List<Integer> actors;
 	private int languageId;
-	private int inventoryId;
-	
+
 	@ColumnName(columnName = "Film #")
-  public int filmId;
+	public int filmId;
 	@ColumnName(columnName = "Title")
 	public String title;
 	@ColumnName(columnName = "Description")
@@ -30,14 +31,14 @@ public class FilmViewModel {
 	@ColumnName(columnName = "Rental Rate")
 	public double rentalRate;
 	@ColumnName(columnName = "Length")
-  public int length;
-  @ColumnName(columnName = "Replacement Cost")
+	public int length;
+	@ColumnName(columnName = "Replacement Cost")
 	public double replacementCost;
 	@ColumnName(columnName = "Rating")
 	public String rating;
 	@ColumnName(columnName = "Special Features")
-  public String specialFeatures;
-	
+	public String specialFeatures;
+
 	public int getFilmId() {
 		return filmId;
 	}
@@ -110,45 +111,46 @@ public class FilmViewModel {
 		this.rating = rating;
 	}
 
-  public int getCategoryId() {
-      return categoryId;
-  }
-  
-  public int getLength() {
-  	return length;
-  }
-
-  public void setLength(int length) {
-    this.length = length;
-  }
-
-  public String getSpecialFeatures() {
-    return specialFeatures;
-  }
-
-  public void setSpecialFeatures(String specialFeatures) {
-    this.specialFeatures = specialFeatures;
-  }
-
-  public void setCategoryId(int categoryId) {
-  	this.categoryId = categoryId;
-  }
-  
-	public int getActorId() {
-		return actorId;
+	public int getCategoryId() {
+		return categoryId;
 	}
 
-	public void setActorId(int actorId) {
-		this.actorId = actorId;
+	public int getLength() {
+		return length;
 	}
-	
+
+	public void setLength(int length) {
+		this.length = length;
+	}
+
+	public String getSpecialFeatures() {
+		return specialFeatures;
+	}
+
+	public void setSpecialFeatures(String specialFeatures) {
+		this.specialFeatures = specialFeatures;
+	}
+
+	public void setCategoryId(int categoryId) {
+		this.categoryId = categoryId;
+	}
+
+	public List<Integer> getActors() {
+		return actors;
+	}
+
+	public void setActors(List<Integer> actors) {
+		this.actors = actors;
+	}
+
 	public void setLanguageId(int languageId) {
-	  this.languageId = languageId;
+		this.languageId = languageId;
 	}
-	
+
 	public int getLanguageId() {
-	  return  languageId;
+		return languageId;
 	}
+
 	public String toString() {
 		return this.title;
 	}

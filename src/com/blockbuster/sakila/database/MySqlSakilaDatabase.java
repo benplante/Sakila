@@ -34,7 +34,8 @@ public class MySqlSakilaDatabase implements SakilaDatabase {
 
 	private static SakilaDatabase instance;
 
-	public MySqlSakilaDatabase() {}
+	public MySqlSakilaDatabase() {
+	}
 
 	public static SakilaDatabase getInstance() {
 		if (instance == null) {
@@ -55,8 +56,10 @@ public class MySqlSakilaDatabase implements SakilaDatabase {
 			stmt.executeUpdate();
 		} finally {
 			try {
-				if (conn != null) conn.close();
-				if (stmt != null) stmt.close();
+				if (conn != null)
+					conn.close();
+				if (stmt != null)
+					stmt.close();
 			} catch (SQLException e) {
 				System.out.println("Error closing DB resources");
 				e.printStackTrace();
@@ -77,8 +80,10 @@ public class MySqlSakilaDatabase implements SakilaDatabase {
 			stmt.executeUpdate();
 		} finally {
 			try {
-				if (conn != null) conn.close();
-				if (stmt != null) stmt.close();
+				if (conn != null)
+					conn.close();
+				if (stmt != null)
+					stmt.close();
 			} catch (SQLException e) {
 				System.out.println("Error closing DB resources");
 				e.printStackTrace();
@@ -93,24 +98,26 @@ public class MySqlSakilaDatabase implements SakilaDatabase {
 		try {
 			conn = DriverManager.getConnection(CONNECTION_STRING, "root", "password");
 			conn.setAutoCommit(false);
-			
+
 			stmtFilm_Actor = conn.prepareStatement("DELETE FROM film_actor WHERE actor_id = ?");
-			stmtFilm_Actor.setInt(1, actor.actorId); 
+			stmtFilm_Actor.setInt(1, actor.actorId);
 			stmtFilm_Actor.executeUpdate();
-			
+
 			stmtActor = conn.prepareStatement("DELETE FROM actor WHERE actor_id = ?");
 			stmtActor.setInt(1, actor.actorId);
 			if (stmtActor.executeUpdate() == 1) {
 				conn.commit();
-			}
-			else { 
+			} else {
 				throw new SQLException("Actor was not deleted - invalid number of rows affected!");
 			}
 		} finally {
 			try {
-				if (conn != null) conn.close();
-				if (stmtFilm_Actor != null) stmtFilm_Actor.close();
-				if (stmtActor != null) stmtActor.close();
+				if (conn != null)
+					conn.close();
+				if (stmtFilm_Actor != null)
+					stmtFilm_Actor.close();
+				if (stmtActor != null)
+					stmtActor.close();
 			} catch (SQLException e) {
 				System.out.println("Error closing DB resources");
 				e.printStackTrace();
@@ -139,9 +146,12 @@ public class MySqlSakilaDatabase implements SakilaDatabase {
 			rs.close();
 		} finally {
 			try {
-				if (conn != null) conn.close();
-				if (stmt != null) stmt.close();
-				if (rs != null) rs.close();
+				if (conn != null)
+					conn.close();
+				if (stmt != null)
+					stmt.close();
+				if (rs != null)
+					rs.close();
 			} catch (SQLException e) {
 				System.out.println("Error closing DB resources");
 				e.printStackTrace();
@@ -150,7 +160,7 @@ public class MySqlSakilaDatabase implements SakilaDatabase {
 		return li;
 	}
 // end of Actor Crud operation
-	
+
 	@Override
 	public void insertCustomer(CustomerViewModel customer) throws SQLException {
 
@@ -162,8 +172,8 @@ public class MySqlSakilaDatabase implements SakilaDatabase {
 			conn.setAutoCommit(false);
 
 			// use location for 47 MySakila Drive record
-			String sqlAddress = "INSERT INTO address(address, district, city_id, postal_code, phone, location) " +
-				"VALUES(?,?,?,?,?,ST_GeomFromText('POINT(-112.8185647 49.6999986)'))";
+			String sqlAddress = "INSERT INTO address(address, district, city_id, postal_code, phone, location) "
+					+ "VALUES(?,?,?,?,?,ST_GeomFromText('POINT(-112.8185647 49.6999986)'))";
 
 			stmtAddress = conn.prepareStatement(sqlAddress, Statement.RETURN_GENERATED_KEYS);
 			stmtAddress.setString(1, customer.addressLine1);
@@ -177,8 +187,8 @@ public class MySqlSakilaDatabase implements SakilaDatabase {
 			if (rsId.next()) {
 				int addressId = rsId.getInt(1);
 
-				String sqlCustomer = "INSERT INTO customer(store_id, first_name, last_name, email, address_id, active, create_date)" +
-					"VALUES(1,?,?,?,?,?,NOW())";
+				String sqlCustomer = "INSERT INTO customer(store_id, first_name, last_name, email, address_id, active, create_date)"
+						+ "VALUES(1,?,?,?,?,?,NOW())";
 				stmtCustomer = conn.prepareStatement(sqlCustomer);
 				stmtCustomer.setString(1, customer.firstName);
 				stmtCustomer.setString(2, customer.lastName);
@@ -187,23 +197,26 @@ public class MySqlSakilaDatabase implements SakilaDatabase {
 				stmtCustomer.setBoolean(5, customer.getIsActive());
 				if (stmtCustomer.executeUpdate() == 1) {
 					conn.commit();
-				}
-				else {
+				} else {
 					throw new SQLException("Customer was not added - invalid number of rows affected!");
 				}
-			}
-			else {
+			} else {
 				throw new SQLException("Address was not added - invalid number of rows affected!");
 			}
 		} catch (SQLException e) {
-			if (conn != null) conn.rollback();
+			if (conn != null)
+				conn.rollback();
 			throw e;
 		} finally {
 			try {
-				if (conn != null) conn.close();
-				if (stmtAddress != null) stmtAddress.close();
-				if (stmtCustomer != null) stmtCustomer.close();
-				if (rsId != null) rsId.close();
+				if (conn != null)
+					conn.close();
+				if (stmtAddress != null)
+					stmtAddress.close();
+				if (stmtCustomer != null)
+					stmtCustomer.close();
+				if (rsId != null)
+					rsId.close();
 			} catch (SQLException e) {
 				System.out.println("Error closing DB resources");
 				e.printStackTrace();
@@ -239,23 +252,26 @@ public class MySqlSakilaDatabase implements SakilaDatabase {
 				stmtCustomer.setInt(5, customer.customerId);
 				if (stmtCustomer.executeUpdate() == 1) {
 					conn.commit();
-				}
-				else {
+				} else {
 					throw new SQLException("Customer was not updated - invalid number of rows affected!");
 				}
-			}
-			else {
+			} else {
 				throw new SQLException("Address was not updated - invalid number of rows affected!");
 			}
 		} catch (SQLException e) {
-			if (conn != null) conn.rollback();
+			if (conn != null)
+				conn.rollback();
 			throw e;
 		} finally {
 			try {
-				if (conn != null) conn.close();
-				if (stmtAddress != null) stmtAddress.close();
-				if (stmtCustomer != null) stmtCustomer.close();
-				if (rsId != null) rsId.close();
+				if (conn != null)
+					conn.close();
+				if (stmtAddress != null)
+					stmtAddress.close();
+				if (stmtCustomer != null)
+					stmtCustomer.close();
+				if (rsId != null)
+					rsId.close();
 			} catch (SQLException e) {
 				System.out.println("Error closing DB resources");
 				e.printStackTrace();
@@ -271,39 +287,42 @@ public class MySqlSakilaDatabase implements SakilaDatabase {
 		try {
 			conn = DriverManager.getConnection(CONNECTION_STRING, "root", "password");
 			conn.setAutoCommit(false);
-			
+
 			stmtPayment = conn.prepareStatement("DELETE FROM payment WHERE customer_id = ?");
 			stmtPayment.setInt(1, customer.customerId);
 			stmtPayment.executeUpdate();
-			
+
 			stmtRental = conn.prepareStatement("DELETE FROM rental WHERE customer_id = ?");
 			stmtRental.setInt(1, customer.customerId);
 			stmtRental.executeUpdate();
-			
+
 			stmtCustomer = conn.prepareStatement("DELETE from customer WHERE customer_id = ?");
 			stmtCustomer.setInt(1, customer.customerId);
-			
-			if(stmtCustomer.executeUpdate() == 1) {
+
+			if (stmtCustomer.executeUpdate() == 1) {
 				stmtAddress = conn.prepareStatement("DELETE FROM address WHERE address_id = ?");
 				stmtAddress.setInt(1, customer.getAddressId());
-				
+
 				if (stmtAddress.executeUpdate() == 1) {
 					conn.commit();
-				}
-				else {
+				} else {
 					throw new SQLException("Address was not deleted - invalid number of rows affected!");
 				}
-			}
-			else {
+			} else {
 				throw new SQLException("Customer was not deleted - invalid number of rows affected!");
 			}
 		} finally {
 			try {
-				if (conn != null) conn.close();
-				if (stmtPayment != null) stmtPayment.close();
-				if (stmtRental != null) stmtRental.close();
-				if (stmtCustomer != null) stmtCustomer.close();
-				if (stmtAddress != null) stmtAddress.close();
+				if (conn != null)
+					conn.close();
+				if (stmtPayment != null)
+					stmtPayment.close();
+				if (stmtRental != null)
+					stmtRental.close();
+				if (stmtCustomer != null)
+					stmtCustomer.close();
+				if (stmtAddress != null)
+					stmtAddress.close();
 			} catch (SQLException e) {
 				System.out.println("Error closing DB resources");
 				e.printStackTrace();
@@ -317,16 +336,14 @@ public class MySqlSakilaDatabase implements SakilaDatabase {
 		Connection conn = null;
 		Statement stmt = null;
 		ResultSet rs = null;
-		try  {
+		try {
 			conn = DriverManager.getConnection(CONNECTION_STRING, "root", "password");
 			stmt = conn.createStatement();
 			String sql = "SELECT customer_id, first_name, last_name, email, active, city, district, "
 					+ "country, address, postal_code, phone, cu.address_id, ad.city_id , cu.store_id "
-					+ "FROM customer cu "
-					+ "LEFT JOIN address ad ON cu.address_id = ad.address_id "
+					+ "FROM customer cu " + "LEFT JOIN address ad ON cu.address_id = ad.address_id "
 					+ "LEFT JOIN city ct ON ad.city_id = ct.city_id "
-					+ "LEFT JOIN country co ON ct.country_id = co.country_id "
-					+ "ORDER BY customer_id";
+					+ "LEFT JOIN country co ON ct.country_id = co.country_id " + "ORDER BY customer_id";
 			rs = stmt.executeQuery(sql);
 
 			while (rs.next()) {
@@ -351,9 +368,12 @@ public class MySqlSakilaDatabase implements SakilaDatabase {
 			rs.close();
 		} finally {
 			try {
-				if (conn != null) conn.close();
-				if (stmt != null) stmt.close();
-				if (rs != null) rs.close();
+				if (conn != null)
+					conn.close();
+				if (stmt != null)
+					stmt.close();
+				if (rs != null)
+					rs.close();
 			} catch (SQLException e) {
 				System.out.println("Error closing DB resources");
 				e.printStackTrace();
@@ -361,103 +381,106 @@ public class MySqlSakilaDatabase implements SakilaDatabase {
 		}
 		return li;
 	}
-	
+
 	@Override
 	public List<CityViewModel> selectCities() throws SQLException {
 		ArrayList<CityViewModel> li = new ArrayList<>();
-		
+
 		Connection conn = null;
 		Statement stmt = null;
 		ResultSet rs = null;
 		try {
 			conn = DriverManager.getConnection(CONNECTION_STRING, "root", "password");
-			String sql = "SELECT ci.city_id, ci.city, co.country "
-					+ "FROM city ci "
-					+ "INNER JOIN country co ON ci.country_id = co.country_id "
-					+ "ORDER BY ci.city, co.country";
+			String sql = "SELECT ci.city_id, ci.city, co.country " + "FROM city ci "
+					+ "INNER JOIN country co ON ci.country_id = co.country_id " + "ORDER BY ci.city, co.country";
 			stmt = conn.createStatement();
-			
+
 			rs = stmt.executeQuery(sql);
-			
+
 			while (rs.next()) {
 				CityViewModel vm = new CityViewModel();
 				vm.setCityId(rs.getInt(1));
 				vm.setCityName(rs.getString(2));
 				vm.setCountryName(rs.getString(3));
-				
+
 				li.add(vm);
 			}
 		} finally {
 			try {
-				if (conn != null) conn.close();
-				if (stmt != null) stmt.close();
-				if (rs != null) rs.close();
+				if (conn != null)
+					conn.close();
+				if (stmt != null)
+					stmt.close();
+				if (rs != null)
+					rs.close();
 			} catch (SQLException e) {
 				System.out.println("Error closing DB resources");
 				e.printStackTrace();
 			}
 		}
-		
+
 		return li;
 	}
-	
-	//End of customer
-	
-	//loading categories form sakila datbase
+
+	// End of customer
+
+	// loading categories form sakila datbase
 	@Override
 	public List<CategoryViewModel> selectCategories() throws SQLException {
-	 	ArrayList<CategoryViewModel> li = new ArrayList<>();
-	     
-	 	Connection conn = null;
-	 	Statement stmt = null;
-	 	ResultSet rs = null;
-	 	try {
-      conn = DriverManager.getConnection(CONNECTION_STRING, "root", "password");
-      String sql = "SELECT Category_id, name "
-                  + "FROM category ";
-      stmt = conn.createStatement();
-          
-      rs = stmt.executeQuery(sql);
-          
-      while (rs.next()) {
-        CategoryViewModel vm = new CategoryViewModel();
-        vm.setCategoryId(rs.getInt(1));
-        vm.setCategoryName(rs.getString(2));
-              
-        li.add(vm);
-      }
-    } finally {
-      try {
-      	if (conn != null) conn.close();
-      	if (stmt != null) stmt.close();
-        if (rs != null) rs.close();
-      } catch (SQLException e) {
-          System.out.println("Error closing DB resources");
-          e.printStackTrace();
-      }
-    }
-    return li;
-  }
-	 //displaying sakila films in film form   
+		ArrayList<CategoryViewModel> li = new ArrayList<>();
+
+		Connection conn = null;
+		Statement stmt = null;
+		ResultSet rs = null;
+		try {
+			conn = DriverManager.getConnection(CONNECTION_STRING, "root", "password");
+			String sql = "SELECT Category_id, name " + "FROM category ";
+			stmt = conn.createStatement();
+
+			rs = stmt.executeQuery(sql);
+
+			while (rs.next()) {
+				CategoryViewModel vm = new CategoryViewModel();
+				vm.setCategoryId(rs.getInt(1));
+				vm.setCategoryName(rs.getString(2));
+
+				li.add(vm);
+			}
+		} finally {
+			try {
+				if (conn != null)
+					conn.close();
+				if (stmt != null)
+					stmt.close();
+				if (rs != null)
+					rs.close();
+			} catch (SQLException e) {
+				System.out.println("Error closing DB resources");
+				e.printStackTrace();
+			}
+		}
+		return li;
+	}
+
+	// displaying sakila films in film form
 	@Override
 	public List<FilmViewModel> selectFilms() throws SQLException {
 		ArrayList<FilmViewModel> li = new ArrayList<>();
-		
+
 		Connection conn = null;
 		Statement stmt = null;
 		ResultSet rs = null;
 		try {
 			conn = DriverManager.getConnection(CONNECTION_STRING, "root", "password");
 			String sql = "SELECT f.film_id, f.title, f.description, f.release_year,"
-											 + " f.rental_duration, f.rental_rate,f.length, f.replacement_cost,"
-											 + " f.rating, f.special_features , c.name"
-											 + " FROM sakila.film f"
-											 + " LEFT OUTER JOIN sakila.film_category fc ON f.film_id = fc.film_id"
-											 + " LEFT OUTER JOIN sakila.category c ON fc.category_id = c.category_id;";
+					+ " f.rental_duration, f.rental_rate,f.length, f.replacement_cost,"
+					+ " f.rating, f.special_features , c.name" + " FROM sakila.film f"
+					+ " LEFT OUTER JOIN sakila.film_category fc ON f.film_id = fc.film_id"
+					+ " LEFT OUTER JOIN sakila.category c ON fc.category_id = c.category_id;";
 			stmt = conn.createStatement();
-			
+
 			rs = stmt.executeQuery(sql);
-		
+
 			while (rs.next()) {
 				FilmViewModel vm = new FilmViewModel();
 				vm.setFilmId(rs.getInt(1));
@@ -466,18 +489,21 @@ public class MySqlSakilaDatabase implements SakilaDatabase {
 				vm.setReleaseYear(rs.getInt(4));
 				vm.setRentalDuration(Integer.parseInt(rs.getString(5)));
 				vm.setRentalRate(Double.parseDouble(rs.getString(6)));
-        vm.setLength((rs.getInt(7)));
+				vm.setLength((rs.getInt(7)));
 				vm.setReplacementCost(Double.parseDouble(rs.getString(8)));
 				vm.setRating(rs.getString(9));
-        vm.setSpecialFeatures(rs.getString(10));
+				vm.setSpecialFeatures(rs.getString(10));
 				vm.setCategoryName(rs.getString(11));
 				li.add(vm);
 			}
 		} finally {
 			try {
-				if (conn != null) conn.close();
-				if (stmt != null) stmt.close();
-				if (rs != null) rs.close();
+				if (conn != null)
+					conn.close();
+				if (stmt != null)
+					stmt.close();
+				if (rs != null)
+					rs.close();
 			} catch (SQLException e) {
 				System.out.println("Error closing DB resources");
 				e.printStackTrace();
@@ -485,23 +511,20 @@ public class MySqlSakilaDatabase implements SakilaDatabase {
 		}
 		return li;
 	}
-	   
+
 	@Override
 	public void insertFilm(FilmViewModel film) throws SQLException {
 
 		Connection conn = null;
-		PreparedStatement stmtFilm = null,
-											stmtFilmActor = null,
-											stmtFilmCategory = null,
-											stmtInventory = null;
+		PreparedStatement stmtFilm = null, stmtFilmActor = null, stmtFilmCategory = null, stmtInventory = null;
 		ResultSet rsId = null;
 		try {
 			conn = DriverManager.getConnection(CONNECTION_STRING, "root", "password");
 			conn.setAutoCommit(false);
 
 			String sqlFilm = "INSERT INTO film(title, description, release_year, language_id, rental_duration, "
-																			+ "rental_rate, length , replacement_cost, rating , special_features) " +
-																				"VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+					+ "rental_rate, length , replacement_cost, rating , special_features) "
+					+ "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 			stmtFilm = conn.prepareStatement(sqlFilm, Statement.RETURN_GENERATED_KEYS);
 			stmtFilm.setString(1, film.title);
@@ -510,131 +533,139 @@ public class MySqlSakilaDatabase implements SakilaDatabase {
 			stmtFilm.setInt(4, film.getLanguageId());
 			stmtFilm.setInt(5, film.rentalDuration);
 			stmtFilm.setDouble(6, film.rentalRate);
-            stmtFilm.setInt(7, film.length);
+			stmtFilm.setInt(7, film.length);
 			stmtFilm.setDouble(8, film.replacementCost);
 			stmtFilm.setString(9, film.rating);
 			stmtFilm.setString(10, film.specialFeatures);
 			stmtFilm.executeUpdate();
-			
+
 			rsId = stmtFilm.getGeneratedKeys();
 			if (rsId.next()) {
 				int filmId = rsId.getInt(1);
+
 				String sqlFilmActor = "INSERT INTO film_actor(actor_id, film_id) VALUES(?, ?)";
-				stmtFilmActor = conn.prepareStatement(sqlFilmActor, Statement.RETURN_GENERATED_KEYS);
-				stmtFilmActor.setInt(1, film.getActorId());
-				stmtFilmActor.setInt(2, filmId);
-				stmtFilmActor.executeUpdate();
-				
+				stmtFilmActor = conn.prepareStatement(sqlFilmActor);
+				for (Integer actorId : film.getActors()) {
+					stmtFilmActor.setInt(1, actorId);
+					stmtFilmActor.setInt(2, filmId);
+					stmtFilmActor.addBatch();
+				}
+				stmtFilmActor.executeBatch();
+
 				String sqlFilmCategory = "INSERT INTO film_category(film_id, category_id) VALUES(?, ?)";
 				stmtFilmCategory = conn.prepareStatement(sqlFilmCategory, Statement.RETURN_GENERATED_KEYS);
 				stmtFilmCategory.setInt(1, filmId);
 				stmtFilmCategory.setInt(2, film.getCategoryId());
 				stmtFilmCategory.executeUpdate();
-				
+
 				String sqlInventory = "INSERT INTO inventory(film_id, store_id) VALUES(?, ?)";
 				stmtInventory = conn.prepareStatement(sqlInventory, Statement.RETURN_GENERATED_KEYS);
 				stmtInventory.setInt(1, filmId);
 				stmtInventory.setInt(2, 1);
 				stmtInventory.executeUpdate();
-					
+
 				conn.commit();
 			}
 		} catch (SQLException e) {
-			if (conn != null) conn.rollback();
+			if (conn != null)
+				conn.rollback();
 			throw e;
 		} finally {
 			try {
-				if (conn != null) conn.close();
-				if (stmtFilm != null) stmtFilm.close();
-				if (stmtFilmActor != null) stmtFilmActor.close();
-				if (stmtFilmCategory != null) stmtFilmCategory.close();
-				if (stmtInventory != null) stmtInventory.close();
-				if (rsId != null) rsId.close();
+				if (conn != null)
+					conn.close();
+				if (stmtFilm != null)
+					stmtFilm.close();
+				if (stmtFilmActor != null)
+					stmtFilmActor.close();
+				if (stmtFilmCategory != null)
+					stmtFilmCategory.close();
+				if (stmtInventory != null)
+					stmtInventory.close();
+				if (rsId != null)
+					rsId.close();
 			} catch (SQLException e) {
 				System.out.println("Error closing DB resources");
 				e.printStackTrace();
 			}
 		}
 	}
-	
+
 	@Override
-	public void deleteFilm(FilmViewModel film) throws SQLException
-	{
+	public void deleteFilm(FilmViewModel film) throws SQLException {
 		Connection conn = null;
-		PreparedStatement stmtFilm = null,
-											stmtFilmActor = null,
-											stmtFilmCategory = null,
-											stmtInventory = null,
-											stmtRental = null,
-											stmtPayment = null;
+		PreparedStatement stmtFilm = null, stmtFilmActor = null, stmtFilmCategory = null, stmtInventory = null,
+				stmtRental = null, stmtPayment = null;
 		try {
 			conn = DriverManager.getConnection(CONNECTION_STRING, "root", "password");
 			conn.setAutoCommit(false);
-			
+
 			stmtFilmActor = conn.prepareStatement("DELETE FROM film_actor WHERE film_id = ?");
 			stmtFilmActor.setInt(1, film.filmId);
 			stmtFilmActor.executeUpdate();
-			
+
 			stmtFilmCategory = conn.prepareStatement("DELETE FROM film_category WHERE film_id = ?");
 			stmtFilmCategory.setInt(1, film.filmId);
 			stmtFilmCategory.executeUpdate();
-			
-			stmtPayment = conn.prepareStatement("DELETE p FROM payment p "
-																				+ "INNER JOIN rental r ON p.rental_id = r.rental_id "
-																				+ "INNER JOIN inventory i ON r.inventory_id = i.inventory_id "
-																				+ "WHERE i.film_id = ?");
+
+			stmtPayment = conn
+					.prepareStatement("DELETE p FROM payment p " + "INNER JOIN rental r ON p.rental_id = r.rental_id "
+							+ "INNER JOIN inventory i ON r.inventory_id = i.inventory_id " + "WHERE i.film_id = ?");
 			stmtPayment.setInt(1, film.filmId);
 			stmtPayment.executeUpdate();
-			
-			stmtRental = conn.prepareStatement("DELETE r FROM rental r INNER JOIN inventory i ON r.inventory_id = i.inventory_id where i.film_id = ?");
+
+			stmtRental = conn.prepareStatement(
+					"DELETE r FROM rental r INNER JOIN inventory i ON r.inventory_id = i.inventory_id where i.film_id = ?");
 			stmtRental.setInt(1, film.filmId);
 			stmtRental.executeUpdate();
-			
+
 			stmtInventory = conn.prepareStatement("DELETE FROM inventory WHERE film_id = ?");
 			stmtInventory.setInt(1, film.filmId);
 			stmtInventory.executeUpdate();
-			
+
 			stmtFilm = conn.prepareStatement("DELETE FROM film WHERE film_id = ?");
 			stmtFilm.setInt(1, film.filmId);
-			if(stmtFilm.executeUpdate() == 1) {
+			if (stmtFilm.executeUpdate() == 1) {
 				conn.commit();
 			}
 		} finally {
 			try {
-				if (conn != null) conn.close();
-				if (stmtFilm != null) stmtFilm.close();
-				if (stmtFilmActor != null) stmtFilmActor.close();
-				if (stmtFilmCategory != null) stmtFilmCategory.close();
-				if (stmtInventory != null) stmtInventory.close();
+				if (conn != null)
+					conn.close();
+				if (stmtFilm != null)
+					stmtFilm.close();
+				if (stmtFilmActor != null)
+					stmtFilmActor.close();
+				if (stmtFilmCategory != null)
+					stmtFilmCategory.close();
+				if (stmtInventory != null)
+					stmtInventory.close();
 			} catch (SQLException e) {
 				System.out.println("Error closing DB resources");
 				e.printStackTrace();
 			}
-		}	
+		}
 	}
+
 //End of film CRUD operation
 	@Override
-	public List<RentalViewModel> selectRentals() throws SQLException
-	{
+	public List<RentalViewModel> selectRentals() throws SQLException {
 		ArrayList<RentalViewModel> li = new ArrayList<>();
 		Connection conn = null;
 		Statement stmt = null;
 		ResultSet rs = null;
-		try  {
+		try {
 			conn = DriverManager.getConnection(CONNECTION_STRING, "root", "password");
 			stmt = conn.createStatement();
 			String sql = "SELECT r.rental_id, a.address, f.title, c.first_name, c.last_name, "
 					+ "p.amount, f.rental_rate, sta.first_name, sta.last_name, r.rental_date, r.return_date, "
-					+ "p.payment_id, r.inventory_id, r.customer_id, r.staff_id, f.rental_duration "
-					+ "FROM rental r  "
+					+ "p.payment_id, r.inventory_id, r.customer_id, r.staff_id, f.rental_duration " + "FROM rental r  "
 					+ "LEFT JOIN payment p on r.rental_id = p.rental_id  "
 					+ "LEFT JOIN customer c on r.customer_id = c.customer_id "
 					+ "LEFT JOIN staff sta ON r.staff_id = sta.staff_id "
 					+ "LEFT JOIN inventory i ON r.inventory_id = i.inventory_id "
-					+ "LEFT JOIN film f ON i.film_id = f.film_id "
-					+ "LEFT JOIN store s ON i.store_id = s.store_id "
-					+ "LEFT JOIN address a ON s.address_id = a.address_id "
-					+ "ORDER BY r.rental_id";
+					+ "LEFT JOIN film f ON i.film_id = f.film_id " + "LEFT JOIN store s ON i.store_id = s.store_id "
+					+ "LEFT JOIN address a ON s.address_id = a.address_id " + "ORDER BY r.rental_id";
 			rs = stmt.executeQuery(sql);
 
 			while (rs.next()) {
@@ -661,9 +692,12 @@ public class MySqlSakilaDatabase implements SakilaDatabase {
 			rs.close();
 		} finally {
 			try {
-				if (conn != null) conn.close();
-				if (stmt != null) stmt.close();
-				if (rs != null) rs.close();
+				if (conn != null)
+					conn.close();
+				if (stmt != null)
+					stmt.close();
+				if (rs != null)
+					rs.close();
 			} catch (SQLException e) {
 				System.out.println("Error closing DB resources");
 				e.printStackTrace();
@@ -673,22 +707,17 @@ public class MySqlSakilaDatabase implements SakilaDatabase {
 	}
 
 	@Override
-	public List<InventoryViewModel> selectInventories() throws SQLException
-	{
+	public List<InventoryViewModel> selectInventories() throws SQLException {
 		ArrayList<InventoryViewModel> li = new ArrayList<>();
 		Connection conn = null;
 		Statement stmt = null;
 		ResultSet rs = null;
-		try  {
+		try {
 			conn = DriverManager.getConnection(CONNECTION_STRING, "root", "password");
 			stmt = conn.createStatement();
-			String sql = "SELECT s.inventory_id, f.title, f.rental_duration, f.rental_rate FROM "
-					+"( "
+			String sql = "SELECT s.inventory_id, f.title, f.rental_duration, f.rental_rate FROM " + "( "
 					+ "SELECT i.inventory_id, i.film_id, ROW_NUMBER() OVER (PARTITION BY i.film_id ORDER BY i.film_id) AS rn "
-					+ "From inventory i " 
-					+ ") s "
-					+ "INNER JOIN film f "
-					+ "ON s.film_id = f.film_id "
+					+ "From inventory i " + ") s " + "INNER JOIN film f " + "ON s.film_id = f.film_id "
 					+ "WHERE s.rn = 1";
 			rs = stmt.executeQuery(sql);
 
@@ -703,9 +732,12 @@ public class MySqlSakilaDatabase implements SakilaDatabase {
 			rs.close();
 		} finally {
 			try {
-				if (conn != null) conn.close();
-				if (stmt != null) stmt.close();
-				if (rs != null) rs.close();
+				if (conn != null)
+					conn.close();
+				if (stmt != null)
+					stmt.close();
+				if (rs != null)
+					rs.close();
 			} catch (SQLException e) {
 				System.out.println("Error closing DB resources");
 				e.printStackTrace();
@@ -715,8 +747,7 @@ public class MySqlSakilaDatabase implements SakilaDatabase {
 	}
 
 	@Override
-	public void insertRental(RentalViewModel rental) throws SQLException
-	{
+	public void insertRental(RentalViewModel rental) throws SQLException {
 
 		Connection conn = null;
 		PreparedStatement stmtRental = null, stmtPayment = null;
@@ -726,106 +757,107 @@ public class MySqlSakilaDatabase implements SakilaDatabase {
 			conn.setAutoCommit(false);
 
 			// use location for 47 MySakila Drive record
-			String sqlRental = "INSERT INTO rental(inventory_id, customer_id, staff_id, rental_date, return_date) " +
-				"VALUES(?,?,1,NOW(), DATE_ADD(now(), INTERVAL ? DAY))";
+			String sqlRental = "INSERT INTO rental(inventory_id, customer_id, staff_id, rental_date, return_date) "
+					+ "VALUES(?,?,1,NOW(), DATE_ADD(now(), INTERVAL ? DAY))";
 			stmtRental = conn.prepareStatement(sqlRental, Statement.RETURN_GENERATED_KEYS);
 			stmtRental.setInt(1, rental.getInventoryId());
 			stmtRental.setInt(2, rental.getCustomerId());
 			stmtRental.setInt(3, rental.getFilmRentalDuration());
 			stmtRental.executeUpdate();
-			
+
 			rsId = stmtRental.getGeneratedKeys();
 			if (rsId.next()) {
 				int rentalId = rsId.getInt(1);
-				String sqlPayment = "INSERT INTO payment(rental_id, amount, customer_id, staff_id, payment_date)" +
-					"VALUES(?,?,?,1,NOW())";
+				String sqlPayment = "INSERT INTO payment(rental_id, amount, customer_id, staff_id, payment_date)"
+						+ "VALUES(?,?,?,1,NOW())";
 				stmtPayment = conn.prepareStatement(sqlPayment);
 				stmtPayment.setInt(1, rentalId);
 				stmtPayment.setBigDecimal(2, rental.getPaymentAmount());
 				stmtPayment.setInt(3, rental.getCustomerId());
 				if (stmtPayment.executeUpdate() == 1) {
 					conn.commit();
-				}
-				else {
+				} else {
 					throw new SQLException("Payment was not added - invalid number of rows affected!");
 				}
-			}
-			else {
+			} else {
 				throw new SQLException("Rental was not added - invalid number of rows affected!");
 			}
 		} catch (SQLException e) {
-			if (conn != null) conn.rollback();
+			if (conn != null)
+				conn.rollback();
 			throw e;
 		} finally {
 			try {
-				if (conn != null) conn.close();
-				if (stmtRental != null) stmtRental.close();
-				if (stmtPayment != null) stmtPayment.close();
-				if (rsId != null) rsId.close();
+				if (conn != null)
+					conn.close();
+				if (stmtRental != null)
+					stmtRental.close();
+				if (stmtPayment != null)
+					stmtPayment.close();
+				if (rsId != null)
+					rsId.close();
 			} catch (SQLException e) {
 				System.out.println("Error closing DB resources");
 				e.printStackTrace();
 			}
 		}
-		
+
 	}
 
 	@Override
-	public void deleteRental(RentalViewModel rental) throws SQLException
-	{
+	public void deleteRental(RentalViewModel rental) throws SQLException {
 		Connection conn = null;
 		PreparedStatement stmtRental = null, stmtPayment = null;
 		try {
 			conn = DriverManager.getConnection(CONNECTION_STRING, "root", "password");
 			conn.setAutoCommit(false);
-			
+
 			stmtRental = conn.prepareStatement("DELETE FROM rental WHERE rental_id = ?");
 			stmtRental.setInt(1, rental.rentalId);
-			
-			if(stmtRental.executeUpdate() == 1) {
+
+			if (stmtRental.executeUpdate() == 1) {
 				stmtPayment = conn.prepareStatement("DELETE FROM payment WHERE payment_id = ?");
 				stmtPayment.setInt(1, rental.getPaymentId());
-				
+
 				if (stmtPayment.executeUpdate() == 1) {
 					conn.commit();
-				}
-				else {
+				} else {
 					throw new SQLException("Payment was not deleted - invalid number of rows affected!");
 				}
-			}
-			else { 
+			} else {
 				throw new SQLException("Rental was not deleted - invalid number of rows affected!");
 			}
 		} finally {
 			try {
-				if (conn != null) conn.close();
-				if (stmtRental != null) stmtRental.close();
-				if (stmtPayment != null) stmtPayment.close();
+				if (conn != null)
+					conn.close();
+				if (stmtRental != null)
+					stmtRental.close();
+				if (stmtPayment != null)
+					stmtPayment.close();
 			} catch (SQLException e) {
 				System.out.println("Error closing DB resources");
 				e.printStackTrace();
 			}
 		}
 	}
-	//end of Rental operation
+
+	// end of Rental operation
 	public List<StoreViewModel> selectStores() throws SQLException {
 		ArrayList<StoreViewModel> list = new ArrayList<>();
-		
+
 		Connection conn = null;
 		Statement stmt = null;
 		ResultSet rs = null;
 		try {
 			conn = DriverManager.getConnection(CONNECTION_STRING, "root", "password");
 			stmt = conn.createStatement();
-			
-			rs = stmt.executeQuery(
-					"SELECT s.store_id, c.city, u.country "
-					+ "FROM store s "
+
+			rs = stmt.executeQuery("SELECT s.store_id, c.city, u.country " + "FROM store s "
 					+ "INNER JOIN address a ON s.address_id = a.address_id "
 					+ "INNER JOIN city c ON a.city_id = c.city_id "
-					+ "INNER JOIN country u ON c.country_id = u.country_id"
-				);
-			
+					+ "INNER JOIN country u ON c.country_id = u.country_id");
+
 			while (rs.next()) {
 				StoreViewModel vm = new StoreViewModel();
 				vm.setStoreId(rs.getInt(1));
@@ -835,55 +867,54 @@ public class MySqlSakilaDatabase implements SakilaDatabase {
 			}
 		} finally {
 			try {
-				if (conn != null) conn.close();
-				if (stmt != null) stmt.close();
-				if (rs != null) rs.close();
+				if (conn != null)
+					conn.close();
+				if (stmt != null)
+					stmt.close();
+				if (rs != null)
+					rs.close();
 			} catch (SQLException e) {
 				System.out.println("Error closing DB resources");
 				e.printStackTrace();
 			}
 		}
-		
+
 		return list;
 	}
-	
+
 	public List<StoreReportViewModel> getSalesByStore(List<Integer> stores) throws SQLException {
 		ArrayList<StoreReportViewModel> list = new ArrayList<>();
-		
+
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
-		
-		String sql = 				
-			"SELECT s.store_id, CONCAT(c.city, ', ', u.country), SUM(p.amount) "
-			+ "FROM payment p "
-			+ "INNER JOIN rental r ON p.rental_id = r.rental_id "
-			+ "INNER JOIN inventory i ON r.inventory_id = i.inventory_id "
-			+ "INNER JOIN store s ON i.store_id = s.store_id "
-			+ "INNER JOIN address a ON s.address_id = a.address_id "
-			+ "INNER JOIN city c ON a.city_id = c.city_id "
-			+ "INNER JOIN country u ON c.country_id = u.country_id "
-			+ "WHERE s.store_id IN (";
 
-		if (stores.size() == 0) throw new SQLException("No Stores Selected");
+		String sql = "SELECT s.store_id, CONCAT(c.city, ', ', u.country), SUM(p.amount) " + "FROM payment p "
+				+ "INNER JOIN rental r ON p.rental_id = r.rental_id "
+				+ "INNER JOIN inventory i ON r.inventory_id = i.inventory_id "
+				+ "INNER JOIN store s ON i.store_id = s.store_id "
+				+ "INNER JOIN address a ON s.address_id = a.address_id " + "INNER JOIN city c ON a.city_id = c.city_id "
+				+ "INNER JOIN country u ON c.country_id = u.country_id " + "WHERE s.store_id IN (";
+
+		if (stores.size() == 0)
+			throw new SQLException("No Stores Selected");
 		String paramList = "";
 		for (int i = 0; i < stores.size(); ++i) {
 			paramList += "?,";
 		}
 		sql += paramList.substring(0, paramList.length() - 1);
-		sql += ") GROUP BY s.store_id, c.city, u.country "
-				+ "ORDER BY 3 DESC";
+		sql += ") GROUP BY s.store_id, c.city, u.country " + "ORDER BY 3 DESC";
 		try {
 			conn = DriverManager.getConnection(CONNECTION_STRING, "root", "password");
 			stmt = conn.prepareStatement(sql);
-			
+
 			for (int i = 0; i < stores.size(); ++i) {
-				stmt.setInt(i+1, stores.get(i));
+				stmt.setInt(i + 1, stores.get(i));
 			}
-			
+
 			rs = stmt.executeQuery();
-			
-			while (rs.next() ) {
+
+			while (rs.next()) {
 				StoreReportViewModel vm = new StoreReportViewModel();
 				vm.storeId = rs.getInt(1);
 				vm.storeLocation = rs.getString(2);
@@ -892,9 +923,12 @@ public class MySqlSakilaDatabase implements SakilaDatabase {
 			}
 		} finally {
 			try {
-				if (conn != null) conn.close();
-				if (stmt != null) stmt.close();
-				if (rs != null) rs.close();
+				if (conn != null)
+					conn.close();
+				if (stmt != null)
+					stmt.close();
+				if (rs != null)
+					rs.close();
 			} catch (SQLException e) {
 				System.out.println("Error closing DB resources");
 				e.printStackTrace();
@@ -902,42 +936,39 @@ public class MySqlSakilaDatabase implements SakilaDatabase {
 		}
 		return list;
 	}
-	
+
 	public List<CategoryReportViewModel> getSalesByCategory(List<Integer> categories) throws SQLException {
 		ArrayList<CategoryReportViewModel> list = new ArrayList<>();
-		
+
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
-		
-		String sql = 				
-			"SELECT c.category_id, c.name, SUM(p.amount) "
-			+ "FROM payment p "
-			+ "INNER JOIN rental r ON p.rental_id = r.rental_id "
-			+ "INNER JOIN inventory i ON r.inventory_id = i.inventory_id "
-			+ "INNER JOIN film_category f ON i.film_id = f.film_id "
-			+ "INNER JOIN category c ON f.category_id = c.category_id "
-			+ "WHERE c.category_id IN (";
 
-		if (categories.size() == 0) throw new SQLException("No Categories Selected");
+		String sql = "SELECT c.category_id, c.name, SUM(p.amount) " + "FROM payment p "
+				+ "INNER JOIN rental r ON p.rental_id = r.rental_id "
+				+ "INNER JOIN inventory i ON r.inventory_id = i.inventory_id "
+				+ "INNER JOIN film_category f ON i.film_id = f.film_id "
+				+ "INNER JOIN category c ON f.category_id = c.category_id " + "WHERE c.category_id IN (";
+
+		if (categories.size() == 0)
+			throw new SQLException("No Categories Selected");
 		String paramList = "";
 		for (int i = 0; i < categories.size(); ++i) {
 			paramList += "?,";
 		}
 		sql += paramList.substring(0, paramList.length() - 1);
-		sql += ") GROUP BY c.category_id, c.name "
-				+ "ORDER BY 3 DESC";
+		sql += ") GROUP BY c.category_id, c.name " + "ORDER BY 3 DESC";
 		try {
 			conn = DriverManager.getConnection(CONNECTION_STRING, "root", "password");
 			stmt = conn.prepareStatement(sql);
-			
+
 			for (int i = 0; i < categories.size(); ++i) {
-				stmt.setInt(i+1, categories.get(i));
+				stmt.setInt(i + 1, categories.get(i));
 			}
-			
+
 			rs = stmt.executeQuery();
-			
-			while (rs.next() ) {
+
+			while (rs.next()) {
 				CategoryReportViewModel vm = new CategoryReportViewModel();
 				vm.categoryId = rs.getInt(1);
 				vm.categoryName = rs.getString(2);
@@ -946,9 +977,12 @@ public class MySqlSakilaDatabase implements SakilaDatabase {
 			}
 		} finally {
 			try {
-				if (conn != null) conn.close();
-				if (stmt != null) stmt.close();
-				if (rs != null) rs.close();
+				if (conn != null)
+					conn.close();
+				if (stmt != null)
+					stmt.close();
+				if (rs != null)
+					rs.close();
 			} catch (SQLException e) {
 				System.out.println("Error closing DB resources");
 				e.printStackTrace();
@@ -956,40 +990,37 @@ public class MySqlSakilaDatabase implements SakilaDatabase {
 		}
 		return list;
 	}
-	
+
 	public List<CustomerReportViewModel> getSalesByCustomer(List<Integer> customers) throws SQLException {
-ArrayList<CustomerReportViewModel> list = new ArrayList<>();
-		
+		ArrayList<CustomerReportViewModel> list = new ArrayList<>();
+
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
-		
-		String sql = 				
-			"SELECT c.customer_id, CONCAT(c.first_name, ' ', c.last_name), SUM(p.amount) "
-			+ "FROM payment p "
-			+ "INNER JOIN rental r ON p.rental_id = r.rental_id "
-			+ "INNER JOIN customer c ON r.customer_id = c.customer_id "
-			+ "WHERE c.customer_id IN (";
 
-		if (customers.size() == 0) throw new SQLException("No Categories Selected");
+		String sql = "SELECT c.customer_id, CONCAT(c.first_name, ' ', c.last_name), SUM(p.amount) " + "FROM payment p "
+				+ "INNER JOIN rental r ON p.rental_id = r.rental_id "
+				+ "INNER JOIN customer c ON r.customer_id = c.customer_id " + "WHERE c.customer_id IN (";
+
+		if (customers.size() == 0)
+			throw new SQLException("No Categories Selected");
 		String paramList = "";
 		for (int i = 0; i < customers.size(); ++i) {
 			paramList += "?,";
 		}
 		sql += paramList.substring(0, paramList.length() - 1);
-		sql += ") GROUP BY c.customer_id, c.first_name, c.last_name "
-				+ "ORDER BY 3 DESC";
+		sql += ") GROUP BY c.customer_id, c.first_name, c.last_name " + "ORDER BY 3 DESC";
 		try {
 			conn = DriverManager.getConnection(CONNECTION_STRING, "root", "password");
 			stmt = conn.prepareStatement(sql);
-			
+
 			for (int i = 0; i < customers.size(); ++i) {
-				stmt.setInt(i+1, customers.get(i));
+				stmt.setInt(i + 1, customers.get(i));
 			}
-			
+
 			rs = stmt.executeQuery();
-			
-			while (rs.next() ) {
+
+			while (rs.next()) {
 				CustomerReportViewModel vm = new CustomerReportViewModel();
 				vm.customerId = rs.getInt(1);
 				vm.customerName = rs.getString(2);
@@ -998,9 +1029,12 @@ ArrayList<CustomerReportViewModel> list = new ArrayList<>();
 			}
 		} finally {
 			try {
-				if (conn != null) conn.close();
-				if (stmt != null) stmt.close();
-				if (rs != null) rs.close();
+				if (conn != null)
+					conn.close();
+				if (stmt != null)
+					stmt.close();
+				if (rs != null)
+					rs.close();
 			} catch (SQLException e) {
 				System.out.println("Error closing DB resources");
 				e.printStackTrace();
@@ -1008,95 +1042,99 @@ ArrayList<CustomerReportViewModel> list = new ArrayList<>();
 		}
 		return list;
 	}
-	
+
 	public List<DateReportViewModel> getSalesByDate(Timestamp startDate, Timestamp endDate) throws SQLException {
 		ArrayList<DateReportViewModel> list = new ArrayList<>();
-		
+
 		Connection conn = null;
 		PreparedStatement stmtTotals = null, stmtTopCust = null, stmtTopCat = null, stmtTopFilm = null;
 		ResultSet rsTotals = null, rsTopCust = null, rsTopCat = null, rsTopFilm = null;
-		
+
 		try {
 			conn = DriverManager.getConnection(CONNECTION_STRING, "root", "password");
-			stmtTotals = conn.prepareStatement("SELECT COUNT(*), SUM(p.amount) "
-					+ "FROM payment p "
+			stmtTotals = conn.prepareStatement("SELECT COUNT(*), SUM(p.amount) " + "FROM payment p "
 					+ "INNER JOIN rental r ON p.rental_id = r.rental_id "
 					+ "WHERE r.rental_date > ? AND r.rental_date < ?");
 			stmtTotals.setTimestamp(1, startDate);
 			stmtTotals.setTimestamp(2, endDate);
-			
-			stmtTopCust = conn.prepareStatement("SELECT CONCAT(c.first_name, ' ', c.last_name) "
-					+ "FROM payment p "
+
+			stmtTopCust = conn.prepareStatement("SELECT CONCAT(c.first_name, ' ', c.last_name) " + "FROM payment p "
 					+ "INNER JOIN rental r ON p.rental_id = r.rental_id "
 					+ "INNER JOIN customer c ON r.customer_id = c.customer_id "
 					+ "WHERE r.rental_date > ? AND r.rental_date < ? "
 					+ "GROUP BY c.customer_id ORDER BY SUM(p.amount) DESC LIMIT 1");
 			stmtTopCust.setTimestamp(1, startDate);
 			stmtTopCust.setTimestamp(2, endDate);
-			
-			stmtTopCat = conn.prepareStatement("SELECT c.name "
-					+ "FROM payment p "
-					+ "INNER JOIN rental r ON p.rental_id = r.rental_id "
-					+ "INNER JOIN inventory i ON r.inventory_id = i.inventory_id "
-					+ "INNER JOIN film_category f ON i.film_id = f.film_id  "
-					+ "INNER JOIN category c ON f.category_id = c.category_id "
-					+ "WHERE r.rental_date > ? AND r.rental_date < ? "
-					+ "GROUP BY c.category_id ORDER BY SUM(p.amount) DESC LIMIT 1");
+
+			stmtTopCat = conn.prepareStatement(
+					"SELECT c.name " + "FROM payment p " + "INNER JOIN rental r ON p.rental_id = r.rental_id "
+							+ "INNER JOIN inventory i ON r.inventory_id = i.inventory_id "
+							+ "INNER JOIN film_category f ON i.film_id = f.film_id  "
+							+ "INNER JOIN category c ON f.category_id = c.category_id "
+							+ "WHERE r.rental_date > ? AND r.rental_date < ? "
+							+ "GROUP BY c.category_id ORDER BY SUM(p.amount) DESC LIMIT 1");
 			stmtTopCat.setTimestamp(1, startDate);
 			stmtTopCat.setTimestamp(2, endDate);
-			
-			stmtTopFilm = conn.prepareStatement("SELECT f.title "
-					+ "FROM payment p "
+
+			stmtTopFilm = conn.prepareStatement("SELECT f.title " + "FROM payment p "
 					+ "INNER JOIN rental r ON p.rental_id = r.rental_id "
 					+ "INNER JOIN inventory i ON r.inventory_id = i.inventory_id "
-					+ "INNER JOIN film f ON i.film_id = f.film_id  "
-					+ "WHERE r.rental_date > ? AND r.rental_date < ? "
+					+ "INNER JOIN film f ON i.film_id = f.film_id  " + "WHERE r.rental_date > ? AND r.rental_date < ? "
 					+ "GROUP BY f.film_id ORDER BY SUM(p.amount) DESC LIMIT 1");
 			stmtTopFilm.setTimestamp(1, startDate);
 			stmtTopFilm.setTimestamp(2, endDate);
-			
+
 			DateReportViewModel vm = new DateReportViewModel();
-			
+
 			rsTotals = stmtTotals.executeQuery();
-			while (rsTotals.next() ) {
+			while (rsTotals.next()) {
 				vm.rentalsCount = rsTotals.getInt(1);
 				vm.salesAmount = rsTotals.getBigDecimal(2);
 			}
-			
+
 			rsTopCust = stmtTopCust.executeQuery();
 			while (rsTopCust.next()) {
 				vm.topCustomer = rsTopCust.getString(1);
 			}
-			
+
 			rsTopCat = stmtTopCat.executeQuery();
-			while (rsTopCat.next() ) {
+			while (rsTopCat.next()) {
 				vm.topCategory = rsTopCat.getString(1);
 			}
-			
+
 			rsTopFilm = stmtTopFilm.executeQuery();
 			while (rsTopFilm.next()) {
 				vm.topFilm = rsTopFilm.getString(1);
 			}
-			
+
 			list.add(vm);
 
 		} finally {
 			try {
-				if (conn != null) conn.close();
-				if (stmtTotals != null) stmtTotals.close();
-				if (stmtTopCust != null) stmtTopCust.close();
-				if (stmtTopCat != null) stmtTopCat.close();
-				if (stmtTopFilm != null) stmtTopFilm.close();
-				if (rsTotals != null) rsTotals.close();
-				if (rsTopCust != null) rsTopCust.close();
-				if (rsTopCat != null) rsTopCat.close();
-				if (rsTopFilm != null) rsTopFilm.close();
+				if (conn != null)
+					conn.close();
+				if (stmtTotals != null)
+					stmtTotals.close();
+				if (stmtTopCust != null)
+					stmtTopCust.close();
+				if (stmtTopCat != null)
+					stmtTopCat.close();
+				if (stmtTopFilm != null)
+					stmtTopFilm.close();
+				if (rsTotals != null)
+					rsTotals.close();
+				if (rsTopCust != null)
+					rsTopCust.close();
+				if (rsTopCat != null)
+					rsTopCat.close();
+				if (rsTopFilm != null)
+					rsTopFilm.close();
 			} catch (SQLException e) {
 				System.out.println("Error closing DB resources");
 				e.printStackTrace();
 			}
 		}
-		
+
 		return list;
 	}
 }
