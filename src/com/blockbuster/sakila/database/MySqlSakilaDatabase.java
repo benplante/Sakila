@@ -277,7 +277,7 @@ public class MySqlSakilaDatabase implements SakilaDatabase {
 			stmtRental.setInt(1, customer.customerId);
 			stmtRental.executeUpdate();
 			
-			stmtCustomer = conn.prepareStatement("DELETE from customer WHERE customer_id = ");
+			stmtCustomer = conn.prepareStatement("DELETE from customer WHERE customer_id = ?");
 			stmtCustomer.setInt(1, customer.customerId);
 			
 			if(stmtCustomer.executeUpdate() == 1) {
