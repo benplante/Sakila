@@ -73,7 +73,7 @@ public class FilmController
 	
 	public void openAddFilmForm() {
 		filmListViewPanel.setEnabled(false);
-		filmFormFrame.setName("Add Film");
+		filmFormFrame.setTitle("Add Film");
 		filmFormFrame.setVisible(true);
 	}
 	

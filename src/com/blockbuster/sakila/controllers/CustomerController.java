@@ -67,7 +67,7 @@ public class CustomerController {
 
 	public void openAddCustomerForm() {
 		customerListViewPanel.setEnabled(false);
-		customerFormFrame.setName("Add Customer");
+		customerFormFrame.setTitle("Add Customer");
 		customerFormFrame.setCustomer(null);
 		customerFormFrame.setVisible(true);
 	}
@@ -78,7 +78,7 @@ public class CustomerController {
 			return;
 		}
 		customerListViewPanel.setEnabled(false);
-		customerFormFrame.setName("Update Customer");
+		customerFormFrame.setTitle("Update Customer");
 		customerFormFrame.setCustomer(vm);
 		customerFormFrame.setVisible(true);
 	}

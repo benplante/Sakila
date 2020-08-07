@@ -82,7 +82,7 @@ public class RentalController
 
 	public void openAddRentalForm() {
 		rentalListViewPanel.setEnabled(false);
-		rentalFormFrame.setName("Add Rental");
+		rentalFormFrame.setTitle("Add Rental");
 		rentalFormFrame.setRental();
 		rentalFormFrame.setVisible(true);
 	}
