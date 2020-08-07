@@ -29,11 +29,20 @@ public class ActorController {
 
 	public ActorController(SakilaDatabase db) {
 		this.db = db;
+	
 		actorListViewPanel = new ActorListView(this);
 		actorFormFrame = new ActorForm(this);
-
+		
 		model = new TableViewModel<ActorViewModel>(getActorsFromDB(), ActorViewModel.class);
 		actorListViewPanel.setActorList(model);
+	}
+	
+	public JPanel getPanel() {
+		return actorListViewPanel;
+	}
+	
+	public void refreshDB() {
+
 	}
 	
 	private List<ActorViewModel> getActorsFromDB() {
@@ -45,10 +54,6 @@ public class ActorController {
 					"Error loading customers", JOptionPane.ERROR_MESSAGE);
 			return new ArrayList<>();
 		}
-	}
-
-	public JPanel getPanel() {
-		return actorListViewPanel;
 	}
 
 	public void openAddActorForm() {

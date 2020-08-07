@@ -28,19 +28,20 @@ public class FilmController
 	private FilmListView filmListViewPanel;
 	private FilmForm filmFormFrame;
 	private TableViewModel<FilmViewModel> model;
-	private TableViewModel<ActorViewModel> actorModel;
-	private TableViewModel<CategoryViewModel> categoryModel;
 
 	public FilmController(SakilaDatabase db) {
 		this.db = db;
+		
 		filmListViewPanel = new FilmListView(this);
 		filmFormFrame = new FilmForm(this);	
+
 		model = new TableViewModel<FilmViewModel>(getFilmsFromDB(), FilmViewModel.class);
 		filmListViewPanel.setFilmList(model);
-		actorModel = new TableViewModel<ActorViewModel>(getActorsFromDB(), ActorViewModel.class);
+	}
+	
+	public void refreshDB() {
 		filmFormFrame.setActors(getActorsFromDB());
-		categoryModel = new TableViewModel<CategoryViewModel>(getCategoriesFromDB(),CategoryViewModel.class);
-	  filmFormFrame.setCategories(getCategoriesFromDB());
+		filmFormFrame.setCategories(getCategoriesFromDB());
 	}
 	
 	private List<FilmViewModel> getFilmsFromDB() {

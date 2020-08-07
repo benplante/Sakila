@@ -18,8 +18,7 @@ public class SuperController extends JFrame {
 	 *         Main controller for all UI elements. Holds all functionality in a
 	 *         tabbed panel
 	 */
-	private static final long SERIAL_VERSION_UID = 1L;
-
+	
 	public SuperController() {
 		super("Sakila Store Management");
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -45,7 +44,13 @@ public class SuperController extends JFrame {
 		ReportController reportController = new ReportController(MySqlSakilaDatabase.getInstance());
 		container.addTab("Report", reportController.getPanel());
 		
-		
+		container.addChangeListener(e -> {
+			actorController.refreshDB();
+			customerController.refreshDB();
+			filmController.refreshDB();
+			rentalController.refreshDB();
+			reportController.refreshDB();
+		});
 
 		this.add(container);
 
@@ -55,7 +60,5 @@ public class SuperController extends JFrame {
 		this.setSize(900, 700);
 
 		this.setVisible(true);
-
 	}
-
 }

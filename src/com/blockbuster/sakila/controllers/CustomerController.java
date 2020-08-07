@@ -33,9 +33,12 @@ public class CustomerController {
 
 		customerListViewPanel = new CustomerListView(this);
 		customerFormFrame = new CustomerForm(this);
-
+		
 		model = new TableViewModel<>(getCustomersFromDB(), CustomerViewModel.class);
 		customerListViewPanel.setCustomerList(model);
+	}
+	
+	public void refreshDB() {
 		customerFormFrame.setCities(getCitiesFromDB());
 	}
 	

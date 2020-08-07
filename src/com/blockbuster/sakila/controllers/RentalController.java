@@ -35,12 +35,16 @@ public class RentalController
 
 		rentalListViewPanel = new RentalListView(this);
 		rentalFormFrame = new RentalForm(this);
+		
 		model = new TableViewModel<>(getRentalsFromDB(), RentalViewModel.class);
 		rentalListViewPanel.setRentalList(model);
+	}
+
+	public void refreshDB() {
 		rentalFormFrame.setInventories(getInventoriesFromDB());
 		rentalFormFrame.setCustomers(getCustomersFromDB());
 	}
-
+	
 	public JPanel getPanel() {
 		return rentalListViewPanel;
 	}
