@@ -11,6 +11,7 @@ import com.blockbuster.sakila.ui.FilmListView;
 import com.blockbuster.sakila.ui.utils.TableViewModel;
 import com.blockbuster.sakila.viewmodels.ActorViewModel;
 import com.blockbuster.sakila.viewmodels.CategoryViewModel;
+import com.blockbuster.sakila.viewmodels.CustomerViewModel;
 import com.blockbuster.sakila.viewmodels.FilmViewModel;
 
 /**
@@ -87,14 +88,27 @@ public class FilmController
 		if(vm == null) {
 			return;
 		}
-		String type = "Add";
 		try {
 			db.insertFilm(vm);
-			JOptionPane.showMessageDialog(filmFormFrame, type + " film succeeded!");
+			JOptionPane.showMessageDialog(filmFormFrame,"Add film succeeded!");
 			filmFormFrame.setVisible(false);
 			model.setData(getFilmsFromDB());
 		} catch (SQLException e) {
-			JOptionPane.showMessageDialog(filmFormFrame,  "Error: " + e.getMessage(), type + " failed!", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(filmFormFrame,  "Error: " + e.getMessage(), "Add failed!", JOptionPane.ERROR_MESSAGE);
+		}
+	}
+	
+	public void deleteFilm() {
+		FilmViewModel vm = filmListViewPanel.getSelectedFilm();
+		if (vm == null) {
+			return;
+		}
+		try {
+			db.deleteFilm(vm);
+			JOptionPane.showMessageDialog(filmFormFrame, "Delete film succeeded!");
+			model.setData(getFilmsFromDB());
+		} catch (SQLException e) {
+			JOptionPane.showMessageDialog(filmFormFrame,  "Error: " + e.getMessage(), "Delete failed!", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 }

@@ -36,6 +36,8 @@ public interface SakilaDatabase {
 
 	// Film
 	public void insertFilm(FilmViewModel film) throws SQLException;
+	
+	public void deleteFilm(FilmViewModel film) throws SQLException;
 
 	public List<CategoryViewModel> selectCategories() throws SQLException;
 

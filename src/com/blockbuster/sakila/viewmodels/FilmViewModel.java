@@ -13,6 +13,7 @@ public class FilmViewModel {
 	private int categoryId;
 	private int actorId;
 	private int languageId;
+	private int inventoryId;
 	
 	@ColumnName(columnName = "Film #")
   public int filmId;
