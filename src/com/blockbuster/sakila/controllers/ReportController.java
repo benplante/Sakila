@@ -46,6 +46,7 @@ public class ReportController
 	 *  Method Name: refreshDB
 	 *  Purpose: Refreshes ReportListView data on every tab change.
 	 *  				 Is essential if data from other tabs is deleted.
+	 *  				 Will also populate ReportListView's ComboCheckBoxModels.
 	 *  Accepts: Nothing.
 	 *  Returns: Nothing.
 	 */
@@ -68,8 +69,9 @@ public class ReportController
 	
 	/** 
 	 * Method Name: getStoresFromDB
-	 * Purpose: Gets the stores from the database.
-	 * 					Used to refresh ReportListView and used in ReportListView's setStores.
+	 * Purpose: Gets the stores from the database 
+	 * 					and populates ReportListView's ComboCheckBoxModel storeModel
+	 * 					in refreshDB.
 	 * Accepts: Nothing.
 	 * Return: A list of StoreViewModel objects.
 	 */
@@ -87,8 +89,9 @@ public class ReportController
 	
 	/** 
 	 * Method Name: getCategoriesFromDB
-	 * Purpose: Gets the categories from the database.
-	 * 					Used to refresh ReportListView and used in ReportListView's setCategories.
+	 * Purpose: Gets the categories from the database
+	 * 					and populates ReportListView's ComboCheckBoxModel categoriesModel
+	 * 					in refreshDB.
 	 * Accepts: Nothing.
 	 * Return: A list of CategoryViewModel objects.
 	 */
@@ -106,8 +109,9 @@ public class ReportController
 	
 	/** 
 	 * Method Name: getCustomersFromDB
-	 * Purpose: Gets the customers from the database.
-	 * 					Used to refresh ReportListView and used in ReportListView's setCustomer.
+	 * Purpose: Gets the customers from the database
+	 * 					and populates ReportListView's ComboCheckBoxModel customersModel
+	 * 					in refreshDB.
 	 * Accepts: Nothing.
 	 * Return: A list of CustomerViewModel objects.
 	 */
@@ -126,7 +130,7 @@ public class ReportController
 	/** 
 	 * Method Name: generateStoreReport
 	 * Purpose: Actions to be performed when user selects 'Generate' on ReportListView
-	 * 					when 'Rental Income by Store' is selected
+	 * 					when 'Rental Income by Store' is selected.
 	 * Accepts: Nothing.
 	 * Return: Nothing.
 	 */
@@ -143,7 +147,7 @@ public class ReportController
 	/** 
 	 * Method Name: generateCategoryReport
 	 * Purpose: Actions to be performed when user selects 'Generate' on ReportListView
-	 * 					when 'Rental Income by Category' is selected
+	 * 					when 'Rental Income by Category' is selected.
 	 * Accepts: Nothing.
 	 * Return: Nothing.
 	 */
@@ -160,7 +164,7 @@ public class ReportController
 	/** 
 	 * Method Name: generateCustomerReport
 	 * Purpose: Actions to be performed when user selects 'Generate' on ReportListView
-	 * 					when 'Top Customers' is selected
+	 * 					when 'Top Customers' is selected.
 	 * Accepts: Nothing.
 	 * Return: Nothing.
 	 */
@@ -177,7 +181,7 @@ public class ReportController
 	/** 
 	 * Method Name: generateDateReport
 	 * Purpose: Actions to be performed when user selects 'Generate' on ReportListView
-	 * 					when 'Rental Income to Date' is selected
+	 * 					when 'Rental Income to Date' is selected.
 	 * Accepts: Nothing.
 	 * Return: Nothing.
 	 */
