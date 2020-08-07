@@ -53,7 +53,7 @@ public class ActorController {
 
 	public void openAddActorForm() {
 		actorListViewPanel.setEnabled(false);
-		actorFormFrame.setName("Add Actor");
+		actorFormFrame.setTitle("Add Actor");
 		actorFormFrame.setActor(null);
 		actorFormFrame.setVisible(true);
 	}
@@ -64,7 +64,7 @@ public class ActorController {
 			return;
 		}
 		actorListViewPanel.setEnabled(false);
-		actorFormFrame.setName("Update Actor");
+		actorFormFrame.setTitle("Update Actor");
 		actorFormFrame.setActor(vm);
 		actorFormFrame.setVisible(true);
 	}
