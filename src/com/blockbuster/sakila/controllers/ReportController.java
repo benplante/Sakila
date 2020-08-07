@@ -26,26 +26,53 @@ import com.blockbuster.sakila.viewmodels.StoreViewModel;
 
 public class ReportController
 {
-
+	// ReportController members
 	private SakilaDatabase db;
 	private ReportListView reportListViewPanel;
 
+	/**
+	 * Method Name: ReportController
+	 * Purpose: ReportController is instantiated in SuperController with a Singleton instance of MySqlSakilaDatabase.
+	 * 					RentalListView is instantiated and passed this controller for listener events.
+	 * Accepts: A SakilaDatabase object.
+	 * Returns: A RentalController object.
+	 */
 	public ReportController(SakilaDatabase db) {
 		this.db = db;
-
 		reportListViewPanel = new ReportListView(this);
 	}
 	
+	/**
+	 *  Method Name: refreshDB
+	 *  Purpose: Refreshes ReportListView data on every tab change.
+	 *  				 Is essential if data from other tabs is deleted.
+	 *  Accepts: Nothing.
+	 *  Returns: Nothing.
+	 */
 	public void refreshDB() {
 		reportListViewPanel.setStores(getStoresFromDB());
 		reportListViewPanel.setCategories(getCategoriesFromDB());
 		reportListViewPanel.setCustomers(getCustomersFromDB());
 	}
 	
+	/** 
+	 * Method Name: getPanel
+	 * Purpose: Gets ReportController's ReportListView.
+	 * 					Is used when adding a tab to the SuperController.
+	 * Accepts: Nothing.
+	 * Return: A RentalListView object.
+	 */
 	public JPanel getPanel() {
 		return reportListViewPanel;
 	}
 	
+	/** 
+	 * Method Name: getStoresFromDB
+	 * Purpose: Gets the stores from the database.
+	 * 					Used to refresh ReportListView and used in ReportListView's setStores.
+	 * Accepts: Nothing.
+	 * Return: A list of StoreViewModel objects.
+	 */
 	private List<StoreViewModel> getStoresFromDB() {
 		try {
 			return db.selectStores();
@@ -58,6 +85,13 @@ public class ReportController
 		}
 	}
 	
+	/** 
+	 * Method Name: getCategoriesFromDB
+	 * Purpose: Gets the categories from the database.
+	 * 					Used to refresh ReportListView and used in ReportListView's setCategories.
+	 * Accepts: Nothing.
+	 * Return: A list of CategoryViewModel objects.
+	 */
 	private List<CategoryViewModel> getCategoriesFromDB() {
 		try {
 			return db.selectCategories();
@@ -70,6 +104,13 @@ public class ReportController
 		}
 	}
 	
+	/** 
+	 * Method Name: getCustomersFromDB
+	 * Purpose: Gets the customers from the database.
+	 * 					Used to refresh ReportListView and used in ReportListView's setCustomer.
+	 * Accepts: Nothing.
+	 * Return: A list of CustomerViewModel objects.
+	 */
 	private List<CustomerViewModel> getCustomersFromDB() {
 		try {
 			return db.selectCustomers();
@@ -82,6 +123,13 @@ public class ReportController
 		}
 	}
 	
+	/** 
+	 * Method Name: generateStoreReport
+	 * Purpose: Actions to be performed when user selects 'Generate' on ReportListView
+	 * 					when 'Rental Income by Store' is selected
+	 * Accepts: Nothing.
+	 * Return: Nothing.
+	 */
 	public void generateStoreReport() {
 		var stores = reportListViewPanel.getSelectedStores();
 		try {
@@ -92,6 +140,13 @@ public class ReportController
 		}
 	}
 
+	/** 
+	 * Method Name: generateCategoryReport
+	 * Purpose: Actions to be performed when user selects 'Generate' on ReportListView
+	 * 					when 'Rental Income by Category' is selected
+	 * Accepts: Nothing.
+	 * Return: Nothing.
+	 */
 	public void generateCategoryReport() {
 		var categories = reportListViewPanel.getSelectedCategories();
 		try {
@@ -102,6 +157,13 @@ public class ReportController
 		}
 	}
 	
+	/** 
+	 * Method Name: generateCustomerReport
+	 * Purpose: Actions to be performed when user selects 'Generate' on ReportListView
+	 * 					when 'Top Customers' is selected
+	 * Accepts: Nothing.
+	 * Return: Nothing.
+	 */
 	public void generateCustomerReport() {
 		var customers = reportListViewPanel.getSelectedCustomers();
 		try {
@@ -112,6 +174,13 @@ public class ReportController
 		}
 	}
 	
+	/** 
+	 * Method Name: generateDateReport
+	 * Purpose: Actions to be performed when user selects 'Generate' on ReportListView
+	 * 					when 'Rental Income to Date' is selected
+	 * Accepts: Nothing.
+	 * Return: Nothing.
+	 */
 	public void generateDateReport() {
 		try {
 			var startDate = new Timestamp(reportListViewPanel.getStartDate().getTime());

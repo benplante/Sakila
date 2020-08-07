@@ -48,7 +48,7 @@ public class RentalController
 
 	/**
 	 *  Method Name: refreshDB
-	 *  Purpose: Refreshes RentalForm data on every tab change.
+	 *  Purpose: Refreshes RentalForm and RentalListView data on every tab change.
 	 *  				 Is essential if data from other tabs is deleted.
 	 *  Accepts: Nothing.
 	 *  Returns: Nothing.
