@@ -13,6 +13,14 @@ import com.blockbuster.sakila.controllers.FilmController;
 import com.blockbuster.sakila.ui.utils.TableViewModel;
 import com.blockbuster.sakila.viewmodels.FilmViewModel;
 
+/**
+ * @author Saja Alhadeethi, Colin Manliclic, Dahye Min, Ben Plante
+ *
+ *         Panel for viewing a list of all Films in the database Displays
+ *         films in a JTable and contains buttons to add, update and delete a
+ *         film
+ */
+
 public class FilmListView extends JPanel
 {
 	private JTable filmTable;

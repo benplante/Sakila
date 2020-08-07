@@ -21,9 +21,9 @@ import com.blockbuster.sakila.viewmodels.CityViewModel;
 import com.blockbuster.sakila.viewmodels.CustomerViewModel;
 
 /**
- * @author Ben Plante
+ * @author Saja Alhadeethi, Colin Manliclic, Dahye Min, Ben Plante
  *
- *         Actor Add/Update form in a JFrame contains text fields for an actors
+ *         Customer Add/Update form in a JFrame contains text fields for a customers
  *         first and last name
  */
 public class CustomerForm extends JFrame {

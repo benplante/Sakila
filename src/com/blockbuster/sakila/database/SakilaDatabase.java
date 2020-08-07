@@ -5,7 +5,7 @@ import java.util.List;
 import com.blockbuster.sakila.viewmodels.*;
 
 /**
- * @author Ben Plante
+ *  @author Saja Alhadeethi, Colin Manliclic, Dahye Min, Ben Plante
  *
  *         Database interface for inversion of control and unit testing
  * 

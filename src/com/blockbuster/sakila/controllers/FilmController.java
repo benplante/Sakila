@@ -13,6 +13,13 @@ import com.blockbuster.sakila.viewmodels.ActorViewModel;
 import com.blockbuster.sakila.viewmodels.CategoryViewModel;
 import com.blockbuster.sakila.viewmodels.FilmViewModel;
 
+/**
+ * @author Saja Alhadeethi, Colin Manliclic, Dahye Min, Ben Plante
+ *
+ *         Film controller. Interacts with FilmForm, FilmListView and SakilaDatabase.
+ */
+
+
 public class FilmController
 {
 

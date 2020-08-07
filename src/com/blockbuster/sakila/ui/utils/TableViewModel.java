@@ -7,7 +7,7 @@ import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
 /**
- * @author Ben Plante
+ * @author Saja Alhadeethi, Colin Manliclic, Dahye Min, Ben Plante
  *
  *         Concrete implementation of AbstractTableModel using a generic List as
  *         the collection type. Reflection is used to access specific cells in

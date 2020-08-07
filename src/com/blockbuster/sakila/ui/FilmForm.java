@@ -22,6 +22,13 @@ import com.blockbuster.sakila.viewmodels.CategoryViewModel;
 import com.blockbuster.sakila.viewmodels.CityViewModel;
 import com.blockbuster.sakila.viewmodels.FilmViewModel;
 
+/**
+ * @author Saja Alhadeethi, Colin Manliclic, Dahye Min, Ben Plante
+ *
+ *         Film Add/Update form in a JFrame contains text fields for a films
+ *         first and last name
+ */
+
 public class FilmForm extends JFrame {
 	
 	
@@ -162,6 +169,7 @@ public class FilmForm extends JFrame {
 		
 	  film.setLanguageId((int) cmbLanguages.getSelectedIndex()+1);
 
+	  // decide rental rate based on its release year
 		if(film.releaseYear > 2001) {
 			film.rentalRate = 4.99;
 		}

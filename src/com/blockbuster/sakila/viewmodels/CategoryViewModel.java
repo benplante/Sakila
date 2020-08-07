@@ -1,5 +1,11 @@
 package com.blockbuster.sakila.viewmodels;
 
+/**
+ * @author Saja Alhadeethi, Colin Manliclic, Dahye Min, Ben Plante
+ *
+ *         View Model for a Category.
+ */
+
 public class CategoryViewModel {
 
 	private int categoryId;
