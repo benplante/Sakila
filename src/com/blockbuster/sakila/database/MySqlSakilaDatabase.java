@@ -264,16 +264,43 @@ public class MySqlSakilaDatabase implements SakilaDatabase {
 	@Override
 	public void deleteCustomer(CustomerViewModel customer) throws SQLException {
 		Connection conn = null;
-		PreparedStatement stmt = null;
+		PreparedStatement stmtPayment = null, stmtRental = null, stmtCustomer = null, stmtAddress = null;
 		try {
 			conn = DriverManager.getConnection(CONNECTION_STRING, "root", "password");
-			stmt = conn.prepareStatement("DELETE FROM customer WHERE customer_id = ?");
-			stmt.setInt(1, customer.customerId);
-			stmt.executeUpdate();
+			conn.setAutoCommit(false);
+			
+			stmtPayment = conn.prepareStatement("DELETE FROM payment WHERE customer_id = ?");
+			stmtPayment.setInt(1, customer.customerId);
+			stmtPayment.executeUpdate();
+			
+			stmtRental = conn.prepareStatement("DELETE FROM rental WHERE customer_id = ?");
+			stmtRental.setInt(1, customer.customerId);
+			stmtRental.executeUpdate();
+			
+			stmtCustomer = conn.prepareStatement("DELETE from customer WHERE customer_id = ");
+			stmtCustomer.setInt(1, customer.customerId);
+			
+			if(stmtCustomer.executeUpdate() == 1) {
+				stmtAddress = conn.prepareStatement("DELETE FROM address WHERE address_id = ?");
+				stmtAddress.setInt(1, customer.getAddressId());
+				
+				if (stmtAddress.executeUpdate() == 1) {
+					conn.commit();
+				}
+				else {
+					throw new SQLException("Address was not deleted - invalid number of rows affected!");
+				}
+			}
+			else {
+				throw new SQLException("Customer was not deleted - invalid number of rows affected!");
+			}
 		} finally {
 			try {
 				if (conn != null) conn.close();
-				if (stmt != null) stmt.close();
+				if (stmtPayment != null) stmtPayment.close();
+				if (stmtRental != null) stmtRental.close();
+				if (stmtCustomer != null) stmtCustomer.close();
+				if (stmtAddress != null) stmtAddress.close();
 			} catch (SQLException e) {
 				System.out.println("Error closing DB resources");
 				e.printStackTrace();
