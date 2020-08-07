@@ -32,21 +32,25 @@ import com.blockbuster.sakila.viewmodels.RentalViewModel;
  */
 
 public class RentalForm extends JFrame {
+	// RentalForm members
 	private JTextField txtAmountPaid, txtRentalRate, txtRentalDuration;
 	private JComboBox<InventoryViewModel> cmbInventories;
 	private JComboBox<CustomerViewModel> cmbCustomers;
 	private JButton btnConfirm, btnCancel;
-	
 	private RentalViewModel rental;
 	private InventoryViewModel[] inventories;
 	private CustomerViewModel[] customers;
 	
+	/** 
+	 * Method Name: RentalForm
+	 * Purpose: RentalForm is a JFrame for user input.
+	 * Accepts: RentalController to handle for listener events. 
+	 * Return: A RentalForm object.
+	 */
 	public RentalForm(RentalController controller) {
 		super();
-		
-		rental = new RentalViewModel();
-		
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		
 		JPanel wrapper = new JPanel();
 		txtAmountPaid = new JTextField();
 		txtRentalRate = new JTextField();
@@ -71,7 +75,7 @@ public class RentalForm extends JFrame {
 		btnConfirm.addActionListener(e -> controller.confirmAddRental());
 
 		btnCancel = new JButton("Cancel");
-		btnCancel.addActionListener(e -> controller.closeCustomerForm());
+		btnCancel.addActionListener(e -> controller.closeRentalForm());
 		
 		JPanel txtPanel = new JPanel();
 		txtPanel.setBorder(new EmptyBorder(10, 5, 10, 5));
@@ -103,6 +107,12 @@ public class RentalForm extends JFrame {
 		this.setLocationRelativeTo(null);
 	}
 	
+	/** 
+	 * Method Name: getRental
+	 * Purpose: To validate input and get RentalViewModel when user selects 'Confirm' in FilmForm.
+	 * Accepts: Nothing.
+	 * Returns: RentalViewModel object populated with user input.
+	 */
 	public RentalViewModel getRental() {
 		int inventoryIdx = cmbInventories.getSelectedIndex();		
 		int customerIdx = cmbCustomers.getSelectedIndex();
@@ -143,6 +153,13 @@ public class RentalForm extends JFrame {
 		return rental;
 	}
 	
+	/** 
+	 * Method Name: setRental
+	 * Purpose: Instantiates RentalForm's RentalViewModel and clears all fields 
+	 * 					when user selects 'Add' from RentalListView.
+	 * Accepts: Nothing.
+	 * Returns: Nothing.
+	 */
 	public void setRental() {
 			this.rental = new RentalViewModel();
 			cmbInventories.setSelectedIndex(-1);
@@ -152,6 +169,13 @@ public class RentalForm extends JFrame {
 			txtAmountPaid.setText("");
 	}
 
+	/** 
+	 * Method Name: setInventories
+	 * Purpose: Instantiates InventoryViewModel array
+	 * 					and sets the array to the JComboBox.
+	 * Accepts: A list of InventoryViewModel objects.
+	 * Returns: Nothing.
+	 */
 	public void setInventories(List<InventoryViewModel> list)
 	{
 		InventoryViewModel[] arr = new InventoryViewModel[list.size()];
@@ -160,6 +184,13 @@ public class RentalForm extends JFrame {
 		cmbInventories.setModel(new DefaultComboBoxModel<InventoryViewModel>(arr));
 	}
 
+	/** 
+	 * Method Name: setCustomers
+	 * Purpose: Instantiates CustomerViewModel array 
+	 * 					and sets the array to the JComboBox.
+	 * Accepts: A list of CustomerViewModel objects.
+	 * Returns: Nothing.
+	 */
 	public void setCustomers(List<CustomerViewModel> customers)
 	{
 		CustomerViewModel[] arr = new CustomerViewModel[customers.size()];

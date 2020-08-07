@@ -23,12 +23,18 @@ import com.blockbuster.sakila.viewmodels.RentalViewModel;
  */
 
 public class RentalListView extends JPanel {
+	// RentalListView members
 	private JTable rentalTable;
 	private JButton btnAdd;
 	private JButton btnDelete;
-
 	private TableViewModel<RentalViewModel> model;
 
+	/** 
+	 * Method Name: RentalListView
+	 * Purpose: RentalListView is a JPanel to show list of rentals and its attributes.
+	 * Accepts: RentalController to handle for listener events.
+	 * Return: A RentalListView object.
+	 */
 	public RentalListView(RentalController controller) {
 		super();
 
@@ -55,11 +61,24 @@ public class RentalListView extends JPanel {
 		this.setBorder(new EmptyBorder(10, 10, 10, 10));
 	}
 
+	/** 
+	 * Method Name: setRentalList
+	 * Purpose: To populate the RentalListView.
+	 * Accepts: A TableViewModel object of RentalViewModel objects. 
+	 * Return: Nothing.
+	 */
 	public void setRentalList(TableViewModel<RentalViewModel> model) {
 		this.model = model;
 		rentalTable.setModel(model);
 	}
 
+	/** 
+	 * Method Name: getSelectedRental
+	 * Purpose: To get the user selected row of the list. 
+	 * 					Used in RentalController's deleteRental().
+	 * Accepts: Nothing.
+	 * Return: The selected row's RentalViewModel.
+	 */
 	public RentalViewModel getSelectedRental() { 
 		if (rentalTable.getSelectedRow() == -1) {
 			JOptionPane.showMessageDialog(this, "Please select a rental.", "Selection Failed!",
