@@ -14,10 +14,10 @@ import com.blockbuster.sakila.ui.utils.TableViewModel;
 import com.blockbuster.sakila.viewmodels.CustomerViewModel;
 
 /**
- * @author Ben Plante
+ * @author Saja Alhadeethi, Colin Manliclic, Dahye Min, Ben Plante
  *
  *         Panel for viewing a list of all Customers in the database Displays
- *         actors in a JTable and contains buttons to add, update and delete a
+ *         customers in a JTable and contains buttons to add, update and delete a
  *         customer
  */
 public class CustomerListView extends JPanel {

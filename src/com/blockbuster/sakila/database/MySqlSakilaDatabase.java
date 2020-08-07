@@ -20,7 +20,7 @@ import com.blockbuster.sakila.viewmodels.StoreReportViewModel;
 import com.blockbuster.sakila.viewmodels.StoreViewModel;
 
 /**
- * @author Ben Plante
+ * @author Saja Alhadeethi, Colin Manliclic, Dahye Min, Ben Plante
  *
  *         Sakila Database implentation using JDBC and MySql. Uses the singleton
  *         pattern to avoid instancing problems

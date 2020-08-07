@@ -25,6 +25,12 @@ import com.blockbuster.sakila.viewmodels.CityViewModel;
 import com.blockbuster.sakila.viewmodels.StoreReportViewModel;
 import com.blockbuster.sakila.viewmodels.StoreViewModel;
 
+/**
+ * @author Saja Alhadeethi, Colin Manliclic, Dahye Min, Ben Plante
+ *     
+ */
+
+
 public class ReportListView extends JPanel {
 	private enum ReportType {
 		BY_STORE("Rental Income by Store"), 

@@ -7,6 +7,10 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
 
+/*
+ *  @author Saja Alhadeethi, Colin Manliclic, Dahye Min, Ben Plante
+ */
+
 public class ComboCheckBoxRenderer<T> implements ListCellRenderer<Checkable<T>> {
 
 	private JCheckBox chkItem;

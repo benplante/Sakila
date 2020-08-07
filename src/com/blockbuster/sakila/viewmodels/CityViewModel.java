@@ -1,5 +1,11 @@
 package com.blockbuster.sakila.viewmodels;
 
+/**
+ * @author Saja Alhadeethi, Colin Manliclic, Dahye Min, Ben Plante
+ *
+ *         View Model for a City.
+ */
+
 public class CityViewModel {
 
 	private int cityId;

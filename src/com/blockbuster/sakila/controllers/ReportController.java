@@ -9,6 +9,13 @@ import com.blockbuster.sakila.database.SakilaDatabase;
 import com.blockbuster.sakila.ui.ReportListView;
 import com.blockbuster.sakila.ui.utils.TableViewModel;
 
+/**
+ * @author Saja Alhadeethi, Colin Manliclic, Dahye Min, Ben Plante
+ *
+ *         Report controller. Interacts with ReportForm, ReportListView and SakilaDatabase.
+ */
+
+
 public class ReportController
 {
 

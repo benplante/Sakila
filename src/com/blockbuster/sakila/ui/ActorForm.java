@@ -16,7 +16,7 @@ import com.blockbuster.sakila.controllers.ActorController;
 import com.blockbuster.sakila.viewmodels.ActorViewModel;
 
 /**
- * @author Ben Plante
+ *  @author Saja Alhadeethi, Colin Manliclic, Dahye Min, Ben Plante
  *
  *         Actor Add/Update form in a JFrame contains text fields for an actors
  *         first and last name

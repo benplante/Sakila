@@ -13,6 +13,13 @@ import com.blockbuster.sakila.ui.ActorListView;
 import com.blockbuster.sakila.ui.utils.TableViewModel;
 import com.blockbuster.sakila.viewmodels.ActorViewModel;
 
+/**
+ * @author Saja Alhadeethi, Colin Manliclic, Dahye Min, Ben Plante
+ *
+ *         Actor controller. Interacts with ActorForm, ActorListView and SakilaDatabase.
+ */
+
+
 public class ActorController {
 	private SakilaDatabase db;
 	private ActorListView actorListViewPanel;

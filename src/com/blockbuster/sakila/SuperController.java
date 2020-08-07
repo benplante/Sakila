@@ -13,7 +13,7 @@ import com.blockbuster.sakila.database.MySqlSakilaDatabase;
 public class SuperController extends JFrame {
 
 	/**
-	 * @author Ben Plante
+	 * @author Saja Alhadeethi, Colin Manliclic, Dahye Min, Ben Plante
 	 * 
 	 *         Main controller for all UI elements. Holds all functionality in a
 	 *         tabbed panel
