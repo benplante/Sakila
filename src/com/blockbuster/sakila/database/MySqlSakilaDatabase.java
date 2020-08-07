@@ -531,7 +531,8 @@ public class MySqlSakilaDatabase implements SakilaDatabase {
 											stmtFilmActor = null,
 											stmtFilmCategory = null,
 											stmtInventory = null,
-											stmtRental = null;
+											stmtRental = null,
+											stmtPayment = null;
 		try {
 			conn = DriverManager.getConnection(CONNECTION_STRING, "root", "password");
 			conn.setAutoCommit(false);
@@ -543,6 +544,13 @@ public class MySqlSakilaDatabase implements SakilaDatabase {
 			stmtFilmCategory = conn.prepareStatement("DELETE FROM film_category WHERE film_id = ?");
 			stmtFilmCategory.setInt(1, film.filmId);
 			stmtFilmCategory.executeUpdate();
+			
+			stmtPayment = conn.prepareStatement("DELETE p FROM payment p "
+																				+ "INNER JOIN rental r ON p.rental_id = r.rental_id "
+																				+ "INNER JOIN inventory i ON r.inventory_id = i.inventory_id "
+																				+ "WHERE i.film_id = ?");
+			stmtPayment.setInt(1, film.filmId);
+			stmtPayment.executeUpdate();
 			
 			stmtRental = conn.prepareStatement("DELETE r FROM rental r INNER JOIN inventory i ON r.inventory_id = i.inventory_id where i.film_id = ?");
 			stmtRental.setInt(1, film.filmId);
