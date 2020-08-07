@@ -22,13 +22,19 @@ import com.blockbuster.sakila.viewmodels.ActorViewModel;
  *         actor
  */
 public class ActorListView extends JPanel {
+	// ActorListView members
 	private JTable tblActors;
 	private JButton btnAdd;
 	private JButton btnUpdate;
 	private JButton btnDelete;
-
 	private TableViewModel<ActorViewModel> model;
 
+	/** 
+	 * Method Name: ActorListView
+	 * Purpose: ActorListView is a JPanel to show list of actors and its attributes.
+	 * Accepts: ActorController to handle for listener events.
+	 * Return: An ActorListView object.
+	 */
 	public ActorListView(ActorController controller) {
 		super();
 
@@ -57,12 +63,24 @@ public class ActorListView extends JPanel {
 		this.add(btnPanel);
 		this.setBorder(new EmptyBorder(10, 10, 10, 10));
 	}
-
+	
+	/** 
+	 * Method Name: setActorList
+	 * Purpose: To populate the ActorListView.
+	 * Accepts: A TableViewModel object of ActorViewModel objects. 
+	 * Return: Nothing.
+	 */
 	public void setActorList(TableViewModel<ActorViewModel> model) {
 		this.model = model;
 		tblActors.setModel(model);
 	}
 
+	/** 
+	 * Method Name: getSelectedActor
+	 * Purpose: To get the user selected row of the list. Used in ActorController's deleteActor() & openUpdateActorForm().
+	 * Accepts: Nothing.
+	 * Return: The selected row's ActorViewModel.
+	 */
 	public ActorViewModel getSelectedActor() {
 		if (tblActors.getSelectedRow() == -1) {
 			JOptionPane.showMessageDialog(this, "Please select an actor.", "Selection Failed!",
