@@ -20,8 +20,11 @@ import com.blockbuster.sakila.controllers.ReportController;
 import com.blockbuster.sakila.ui.utils.ComboCheckBox;
 import com.blockbuster.sakila.ui.utils.ComboCheckBoxModel;
 import com.blockbuster.sakila.ui.utils.TableViewModel;
+import com.blockbuster.sakila.viewmodels.CategoryReportViewModel;
 import com.blockbuster.sakila.viewmodels.CategoryViewModel;
 import com.blockbuster.sakila.viewmodels.CityViewModel;
+import com.blockbuster.sakila.viewmodels.CustomerViewModel;
+import com.blockbuster.sakila.viewmodels.CustomerReportViewModel;
 import com.blockbuster.sakila.viewmodels.StoreReportViewModel;
 import com.blockbuster.sakila.viewmodels.StoreViewModel;
 
@@ -46,13 +49,11 @@ public class ReportListView extends JPanel {
 	private JTable reportTable;
 	private JPanel parametersCard;
 	private JComboBox<ReportType> cmbReportType;
-	private JButton generateReportButton;
 	private DefaultComboBoxModel<ReportType> reportTypes;
 	
 	private ComboCheckBoxModel<StoreViewModel> storeModel;
 	private ComboCheckBoxModel<CategoryViewModel> categoriesModel;
-	
-	private TableViewModel<StoreReportViewModel> model;
+	private ComboCheckBoxModel<CustomerViewModel> customersModel;
 	
 	public ReportListView(ReportController controller) {
 		super();
@@ -62,18 +63,15 @@ public class ReportListView extends JPanel {
 		
 		storeModel = new ComboCheckBoxModel<>();
 		categoriesModel = new ComboCheckBoxModel<>();
-		model = new TableViewModel<>(StoreReportViewModel.class);		
+		customersModel = new ComboCheckBoxModel<>();
 		
-		reportTable = new JTable(model);
+		reportTable = new JTable();
 		JScrollPane scrollPane = new JScrollPane(reportTable);
-				
-		generateReportButton = new JButton("Generate Report");
-		
+						
 		CardLayout layout = new CardLayout();
 		
 		parametersCard = new JPanel();
 		parametersCard.setLayout(layout);
-		
 		
 		JPanel byStorePanel = new JPanel();
 		byStorePanel.add(new ComboCheckBox<StoreViewModel>(storeModel, "Stores"));
@@ -83,11 +81,19 @@ public class ReportListView extends JPanel {
 		
 		JPanel byCategoryPanel = new JPanel();
 		byCategoryPanel.add(new ComboCheckBox<CategoryViewModel>(categoriesModel, "Categories"));
-		byCategoryPanel.add(new JButton("Generate"));
+		JButton btn2 = new JButton("Generate");
+		btn2.addActionListener(e -> controller.generateCategoryReport());
+		byCategoryPanel.add(btn2);
 		
+		JPanel topCustomersPanel = new JPanel();;
+		topCustomersPanel.add(new ComboCheckBox<CustomerViewModel>(customersModel, "Customers"));
+		JButton btn3 = new JButton("Generate");
+		btn3.addActionListener(e -> controller.generateCustomerReport());
+		topCustomersPanel.add(btn3);
 		
 		parametersCard.add(byStorePanel, ReportType.BY_STORE.toString());
 		parametersCard.add(byCategoryPanel, ReportType.BY_CATEOGRY.toString());
+		parametersCard.add(topCustomersPanel, ReportType.TOP_CUSTOMERS.toString());
 		
 		cmbReportType.addItemListener(i -> {
 			layout.show(parametersCard, i.getItem().toString());
@@ -101,7 +107,15 @@ public class ReportListView extends JPanel {
 	}
 	
 	public void setSalesReport(List<StoreReportViewModel> report) {
-		this.model.setData(report);
+		reportTable.setModel(new TableViewModel<>(report, StoreReportViewModel.class));
+	}
+	
+	public void setCategoriesReport(List<CategoryReportViewModel> report) {
+		reportTable.setModel(new TableViewModel<>(report, CategoryReportViewModel.class));
+	}
+	
+	public void setCustomerReport(List<CustomerReportViewModel> report) {
+		reportTable.setModel(new TableViewModel<>(report, CustomerReportViewModel.class));
 	}
 	
 	public void setStores(List<StoreViewModel> stores) {
@@ -114,5 +128,17 @@ public class ReportListView extends JPanel {
 	
 	public void setCategories(List<CategoryViewModel> categories) {
 		categoriesModel.setItems(categories);
+	}
+	
+	public List<CategoryViewModel> getSelectedCategories() {
+		return categoriesModel.getAllSelected();
+	}
+	
+	public void setCustomers(List<CustomerViewModel> customers) {
+		customersModel.setItems(customers);
+	}
+	
+	public List<CustomerViewModel> getSelectedCustomers() {
+		return customersModel.getAllSelected();
 	}
 }

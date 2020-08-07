@@ -52,5 +52,8 @@ public interface SakilaDatabase {
 	
 	public List<StoreReportViewModel> getSalesByStore(List<Integer> stores) throws SQLException;
 	
+	public List<CategoryReportViewModel> getSalesByCategory(List<Integer> categories) throws SQLException;
+	
+	public List<CustomerReportViewModel> getSalesByCustomer(List<Integer> customers) throws SQLException;
 	
 }

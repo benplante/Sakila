@@ -21,11 +21,17 @@ public class ReportController
 		reportListViewPanel = new ReportListView(this);
 		try {
 			reportListViewPanel.setStores(db.selectStores());
+			reportListViewPanel.setCategories(db.selectCategories());
+			reportListViewPanel.setCustomers(db.selectCustomers());
 		} catch(SQLException e) {
 			e.printStackTrace();
 		}
 	}
-
+	
+	public JPanel getPanel() {
+		return reportListViewPanel;
+	}
+	
 	public void generateStoreReport() {
 		var stores = reportListViewPanel.getSelectedStores();
 		try {
@@ -35,8 +41,24 @@ public class ReportController
 			e.printStackTrace();
 		}
 	}
+
+	public void generateCategoryReport() {
+		var categories = reportListViewPanel.getSelectedCategories();
+		try {
+			reportListViewPanel.setCategoriesReport(
+					db.getSalesByCategory(categories.stream().map(s -> s.getCategoryId()).collect(Collectors.toList())));
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 	
-	public JPanel getPanel() {
-		return reportListViewPanel;
+	public void generateCustomerReport() {
+		var customers = reportListViewPanel.getSelectedCustomers();
+		try {
+			reportListViewPanel.setCustomerReport(db.getSalesByCustomer(
+					customers.stream().map(c -> c.customerId).collect(Collectors.toList())));
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 }

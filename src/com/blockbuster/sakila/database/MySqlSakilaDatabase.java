@@ -10,9 +10,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.blockbuster.sakila.viewmodels.ActorViewModel;
+import com.blockbuster.sakila.viewmodels.CategoryReportViewModel;
 import com.blockbuster.sakila.viewmodels.CategoryViewModel;
 import com.blockbuster.sakila.viewmodels.CityViewModel;
 import com.blockbuster.sakila.viewmodels.CustomerViewModel;
+import com.blockbuster.sakila.viewmodels.CustomerReportViewModel;
 import com.blockbuster.sakila.viewmodels.FilmViewModel;
 import com.blockbuster.sakila.viewmodels.InventoryViewModel;
 import com.blockbuster.sakila.viewmodels.RentalViewModel;
@@ -786,6 +788,112 @@ public class MySqlSakilaDatabase implements SakilaDatabase {
 				StoreReportViewModel vm = new StoreReportViewModel();
 				vm.storeId = rs.getInt(1);
 				vm.storeLocation = rs.getString(2);
+				vm.salesAmount = rs.getBigDecimal(3);
+				list.add(vm);
+			}
+		} finally {
+			try {
+				if (conn != null) conn.close();
+				if (stmt != null) stmt.close();
+				if (rs != null) rs.close();
+			} catch (SQLException e) {
+				System.out.println("Error closing DB resources");
+				e.printStackTrace();
+			}
+		}
+		return list;
+	}
+	
+	public List<CategoryReportViewModel> getSalesByCategory(List<Integer> categories) throws SQLException {
+		ArrayList<CategoryReportViewModel> list = new ArrayList<>();
+		
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		
+		String sql = 				
+			"SELECT c.category_id, c.name, SUM(p.amount) "
+			+ "FROM payment p "
+			+ "INNER JOIN rental r ON p.rental_id = r.rental_id "
+			+ "INNER JOIN inventory i ON r.inventory_id = i.inventory_id "
+			+ "INNER JOIN film_category f ON i.film_id = f.film_id "
+			+ "INNER JOIN category c ON f.category_id = c.category_id "
+			+ "WHERE c.category_id IN (";
+
+		if (categories.size() == 0) throw new SQLException("No Categories Selected");
+		String paramList = "";
+		for (int i = 0; i < categories.size(); ++i) {
+			paramList += "?,";
+		}
+		sql += paramList.substring(0, paramList.length() - 1);
+		sql += ") GROUP BY c.category_id, c.name "
+				+ "ORDER BY 3 DESC";
+		try {
+			conn = DriverManager.getConnection(CONNECTION_STRING, "root", "password");
+			stmt = conn.prepareStatement(sql);
+			
+			for (int i = 0; i < categories.size(); ++i) {
+				stmt.setInt(i+1, categories.get(i));
+			}
+			
+			rs = stmt.executeQuery();
+			
+			while (rs.next() ) {
+				CategoryReportViewModel vm = new CategoryReportViewModel();
+				vm.categoryId = rs.getInt(1);
+				vm.categoryName = rs.getString(2);
+				vm.salesAmount = rs.getBigDecimal(3);
+				list.add(vm);
+			}
+		} finally {
+			try {
+				if (conn != null) conn.close();
+				if (stmt != null) stmt.close();
+				if (rs != null) rs.close();
+			} catch (SQLException e) {
+				System.out.println("Error closing DB resources");
+				e.printStackTrace();
+			}
+		}
+		return list;
+	}
+	
+	public List<CustomerReportViewModel> getSalesByCustomer(List<Integer> customers) throws SQLException {
+ArrayList<CustomerReportViewModel> list = new ArrayList<>();
+		
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		
+		String sql = 				
+			"SELECT c.customer_id, CONCAT(c.first_name, ' ', c.last_name), SUM(p.amount) "
+			+ "FROM payment p "
+			+ "INNER JOIN rental r ON p.rental_id = r.rental_id "
+			+ "INNER JOIN customer c ON r.customer_id = c.customer_id "
+			+ "WHERE c.customer_id IN (";
+
+		if (customers.size() == 0) throw new SQLException("No Categories Selected");
+		String paramList = "";
+		for (int i = 0; i < customers.size(); ++i) {
+			paramList += "?,";
+		}
+		sql += paramList.substring(0, paramList.length() - 1);
+		sql += ") GROUP BY c.customer_id, c.first_name, c.last_name "
+				+ "ORDER BY 3 DESC";
+		try {
+			conn = DriverManager.getConnection(CONNECTION_STRING, "root", "password");
+			stmt = conn.prepareStatement(sql);
+			
+			for (int i = 0; i < customers.size(); ++i) {
+				stmt.setInt(i+1, customers.get(i));
+			}
+			
+			rs = stmt.executeQuery();
+			
+			while (rs.next() ) {
+				CustomerReportViewModel vm = new CustomerReportViewModel();
+				vm.customerId = rs.getInt(1);
+				vm.customerName = rs.getString(2);
 				vm.salesAmount = rs.getBigDecimal(3);
 				list.add(vm);
 			}
