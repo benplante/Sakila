@@ -87,18 +87,18 @@ public class MySqlSakilaDatabase implements SakilaDatabase {
 	@Override
 	public void deleteActor(ActorViewModel actor) throws SQLException {
 		Connection conn = null;
-		PreparedStatement stmtActor = null, stmtFilm_Actor = null;
+		PreparedStatement stmtFilm_Actor = null, stmtActor = null;
 		try {
 			conn = DriverManager.getConnection(CONNECTION_STRING, "root", "password");
 			conn.setAutoCommit(false);
 			
+			stmtFilm_Actor = conn.prepareStatement("DELETE FROM film_actor WHERE actor_id = ?");
+			stmtFilm_Actor.setInt(1, actor.actorId); 
+			stmtFilm_Actor.executeUpdate();
+			
 			stmtActor = conn.prepareStatement("DELETE FROM actor WHERE actor_id = ?");
 			stmtActor.setInt(1, actor.actorId);
-			
-			if(stmtActor.executeUpdate() == 1) {
-				stmtFilm_Actor = conn.prepareStatement("DELETE FROM film_actor WHERE actor_id = ?");
-				stmtFilm_Actor.setInt(1, actor.actorId); 
-				stmtFilm_Actor.executeUpdate();
+			if (stmtActor.executeUpdate() == 1) {
 				conn.commit();
 			}
 			else { 
@@ -107,8 +107,8 @@ public class MySqlSakilaDatabase implements SakilaDatabase {
 		} finally {
 			try {
 				if (conn != null) conn.close();
-				if (stmtActor != null) stmtActor.close();
 				if (stmtFilm_Actor != null) stmtFilm_Actor.close();
+				if (stmtActor != null) stmtActor.close();
 			} catch (SQLException e) {
 				System.out.println("Error closing DB resources");
 				e.printStackTrace();
