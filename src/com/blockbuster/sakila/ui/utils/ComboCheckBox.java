@@ -35,9 +35,9 @@ public class ComboCheckBox<E> extends JComboBox<Checkable<E>> {
 	@Override
 	public void setSelectedItem(Object anObject) {
         if (anObject != null) {
-
             model.setSelectedItem(anObject);
 
+            // Copied from JComboBox source
             if (selectedItemReminder != model.getSelectedItem()) {
                 selectedItemChanged();
             }
@@ -47,16 +47,25 @@ public class ComboCheckBox<E> extends JComboBox<Checkable<E>> {
 	
 	@Override
 	public void setPopupVisible(boolean visible) {
+		// Doesn't dismiss the ComboBox when a user selects a checkable item
 		if (visible) {
 			super.setPopupVisible(visible);
 		}
 	}
 	
+	/**
+	 * Sets the items of the model
+	 * @param items Items to set
+	 */
 	public void setItems(List<E> items) {
 		this.model.setItems(items);
 		this.setModel(this.model);
 	}
 	
+	/**
+	 * Get all selected items from the model
+	 * @return List of selected items
+	 */
 	public List<E> getSelectedItems() {
 		return model.getAllSelected();
 	}

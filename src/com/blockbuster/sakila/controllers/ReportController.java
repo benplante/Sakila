@@ -85,7 +85,7 @@ public class ReportController
 	public void generateStoreReport() {
 		var stores = reportListViewPanel.getSelectedStores();
 		try {
-			reportListViewPanel.setSalesReport(
+			reportListViewPanel.setStoreReport(
 					db.getSalesByStore(stores.stream().map(s -> s.getStoreId()).collect(Collectors.toList())));
 		} catch (SQLException e) {
 			JOptionPane.showMessageDialog(reportListViewPanel, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);

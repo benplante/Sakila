@@ -7,6 +7,8 @@ import java.util.List;
  * @author Saja Alhadeethi, Colin Manliclic, Dahye Min, Ben Plante
  *     
  * Checkable wrapper to allow for toggleable items
+ * 
+ * @param <E> type of the checkable item
  */
 
 public class Checkable<E> {
@@ -39,6 +41,15 @@ public class Checkable<E> {
 		return data.toString();
 	}
 	
+	/**
+	 * 
+	 * @author Saja Alhadeethi, Colin Manliclic, Dahye Min, Ben Plante
+	 * 
+	 * Special sub-type of Checkable that has no data but shows as 
+	 * "Select All". used to provide a checkbox to select all items
+	 *
+	 * @param <E> type of the checkable item
+	 */
 	public static class SelectAll<E> extends Checkable<E> {
 		public SelectAll() {
 			super(null);

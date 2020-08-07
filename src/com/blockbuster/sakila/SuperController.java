@@ -46,7 +46,6 @@ public class SuperController extends JFrame {
 		
 		// Refreshes each view's data on every tab change
 		container.addChangeListener(e -> {
-			actorController.refreshDB();
 			customerController.refreshDB();
 			filmController.refreshDB();
 			rentalController.refreshDB();

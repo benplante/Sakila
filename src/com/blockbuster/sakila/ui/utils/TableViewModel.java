@@ -55,9 +55,6 @@ public class TableViewModel<T> extends AbstractTableModel {
 			return f.getName();
 	}
 
-	/**
-	 * Gets a cell value
-	 */
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		Field[] fields = type.getFields();

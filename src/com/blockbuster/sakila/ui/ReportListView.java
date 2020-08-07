@@ -43,6 +43,12 @@ import com.blockbuster.sakila.viewmodels.StoreViewModel;
 
 
 public class ReportListView extends JPanel {
+	
+	/**
+	 * @author Saja Alhadeethi, Colin Manliclic, Dahye Min, Ben Plante
+	 *
+	 *	Enum type to hold what report type the user has selected
+	 */
 	private enum ReportType {
 		BY_STORE("Rental Income by Store"), 
 		BY_CATEOGRY("Rental Income by Category"),
@@ -89,30 +95,35 @@ public class ReportListView extends JPanel {
 		
 		reportTable = new JTable();
 		JScrollPane scrollPane = new JScrollPane(reportTable);
-						
+		
+		// use a card layout to change the report parameters input
 		CardLayout layout = new CardLayout();
 		
 		parametersCard = new JPanel();
 		parametersCard.setLayout(layout);
 		
+		// controls for By Store report
 		JPanel byStorePanel = new JPanel();
 		byStorePanel.add(new ComboCheckBox<StoreViewModel>(storeModel, "Stores"));
 		JButton btn1 = new JButton("Generate");
 		btn1.addActionListener(e -> controller.generateStoreReport());
 		byStorePanel.add(btn1);
 		
+		// controls for By Category report
 		JPanel byCategoryPanel = new JPanel();
 		byCategoryPanel.add(new ComboCheckBox<CategoryViewModel>(categoriesModel, "Categories"));
 		JButton btn2 = new JButton("Generate");
 		btn2.addActionListener(e -> controller.generateCategoryReport());
 		byCategoryPanel.add(btn2);
 		
+		// controls for Best Customers report
 		JPanel topCustomersPanel = new JPanel();
 		topCustomersPanel.add(new ComboCheckBox<CustomerViewModel>(customersModel, "Customers"));
 		JButton btn3 = new JButton("Generate");
 		btn3.addActionListener(e -> controller.generateCustomerReport());
 		topCustomersPanel.add(btn3);
 		
+		// controls for Date Ranged report
 		JPanel toDatePanel = new JPanel();
 		JPanel startDate = new JPanel();
 		startDate.setLayout(new BoxLayout(startDate, BoxLayout.PAGE_AXIS));
@@ -146,50 +157,100 @@ public class ReportListView extends JPanel {
 		this.setBorder(new EmptyBorder(10, 10, 10, 10));
 	}
 	
-	public void setSalesReport(List<StoreReportViewModel> report) {
+	/**
+	 * Set data returned from by store report
+	 * @param report Report data
+	 */
+	public void setStoreReport(List<StoreReportViewModel> report) {
 		reportTable.setModel(new TableViewModel<>(report, StoreReportViewModel.class));
 	}
 	
+	/**
+	 * Set data returned from by category report
+	 * @param report Report data
+	 */
 	public void setCategoriesReport(List<CategoryReportViewModel> report) {
 		reportTable.setModel(new TableViewModel<>(report, CategoryReportViewModel.class));
 	}
 	
+	/**
+	 * Set data returned from by customer report
+	 * @param report Report data
+	 */
 	public void setCustomerReport(List<CustomerReportViewModel> report) {
 		reportTable.setModel(new TableViewModel<>(report, CustomerReportViewModel.class));
 	}
 	
+	/**
+	 * Set data returned from date ranged report
+	 * @param report Report data
+	 */
 	public void setDateReport(List<DateReportViewModel> report) {
 		reportTable.setModel(new TableViewModel<>(report, DateReportViewModel.class));
 	}
 	
+	/**
+	 * Set all stores to the combo box
+	 * @param stores
+	 */
 	public void setStores(List<StoreViewModel> stores) {
 		storeModel.setItems(stores);
 	}
 	
+	/**
+	 * Get all selected stores
+	 * @return list of selected stores
+	 */
 	public List<StoreViewModel> getSelectedStores() {
 		return storeModel.getAllSelected();
 	}
 	
+	/**
+	 * Set categories to the combo box
+	 * @param categories
+	 */
 	public void setCategories(List<CategoryViewModel> categories) {
 		categoriesModel.setItems(categories);
 	}
 	
+	/**
+	 * Get all selected categories
+	 * @return list of selected categories
+	 */
 	public List<CategoryViewModel> getSelectedCategories() {
 		return categoriesModel.getAllSelected();
 	}
 	
+	/**
+	 * Set customers in the combo box
+	 * @param customers 
+	 */
 	public void setCustomers(List<CustomerViewModel> customers) {
 		customersModel.setItems(customers);
 	}
 	
+	/**
+	 * Get all selected customers
+	 * @return list of selected customers
+	 */
 	public List<CustomerViewModel> getSelectedCustomers() {
 		return customersModel.getAllSelected();
 	}
 	
+	/**
+	 * Get entered start date
+	 * @return start date
+	 * @throws ParseException if the date couldn't be parsed
+	 */
 	public Date getStartDate() throws ParseException {
 		return new SimpleDateFormat("yyyy-MM-dd").parse(txtStartDate.getText());
 	}
 	
+	/**
+	 * Get entered end date
+	 * @return end date
+	 * @throws ParseException if the date couldn't be parsed
+	 */
 	public Date getEndDate() throws ParseException {
 		return new SimpleDateFormat("yyyy-MM-dd").parse(txtEndDate.getText());
 	}

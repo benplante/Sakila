@@ -41,10 +41,6 @@ public class ActorController {
 		return actorListViewPanel;
 	}
 	
-	public void refreshDB() {
-
-	}
-	
 	private List<ActorViewModel> getActorsFromDB() {
 		try {
 			return db.selectActors();
