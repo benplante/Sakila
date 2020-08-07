@@ -8,6 +8,8 @@ import java.util.stream.Stream;
 import javax.swing.AbstractListModel;
 import javax.swing.ComboBoxModel;
 
+import com.blockbuster.sakila.ui.utils.Checkable.SelectAll;
+
 public class ComboCheckBoxModel<E> extends AbstractListModel<Checkable<E>> implements ComboBoxModel<Checkable<E>> {
 	
 	private List<Checkable<E>> items;
@@ -51,7 +53,9 @@ public class ComboCheckBoxModel<E> extends AbstractListModel<Checkable<E>> imple
 	}
 	
 	public List<E> getItems() {
-		return this.items.parallelStream().map(i -> i.getData()).collect(Collectors.toList());
+		return this.items.parallelStream()
+				.filter(i -> !(i instanceof SelectAll))
+				.map(i -> i.getData()).collect(Collectors.toList());
 	}
 	
 	public void setItems(List<E> items) {
@@ -63,7 +67,10 @@ public class ComboCheckBoxModel<E> extends AbstractListModel<Checkable<E>> imple
 	}
 	
 	public List<E> getAllSelected() {
-		return items.parallelStream().filter(c -> c.isSelected()).map(i -> i.getData()).collect(Collectors.toList());
+		return items.parallelStream()
+				.filter(c -> c.isSelected() && !(c instanceof SelectAll))
+				.map(i -> i.getData())
+				.collect(Collectors.toList());
 	}
 
 	@Override
