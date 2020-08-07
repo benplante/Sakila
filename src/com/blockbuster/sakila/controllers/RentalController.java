@@ -56,6 +56,7 @@ public class RentalController
 	public void refreshDB() {
 		rentalFormFrame.setInventories(getInventoriesFromDB());
 		rentalFormFrame.setCustomers(getCustomersFromDB());
+		model.setData(getRentalsFromDB());
 	}
 	
 	/** 
