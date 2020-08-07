@@ -23,13 +23,18 @@ import com.blockbuster.sakila.viewmodels.FilmViewModel;
  *         film
  */
 
-public class FilmListView extends JPanel
-{
+public class FilmListView extends JPanel {
+	// FilmListView members
 	private JTable filmTable;
 	private JButton btnAdd, btnDelete;
-
 	private TableViewModel<FilmViewModel> model;
 	
+	/** 
+	 * Method Name: FilmListView
+	 * Purpose: FilmListView is a JPanel to show list of films and its attributes.
+	 * Accepts: FilmController to handle for listener events.
+	 * Return: A FilmListView object.
+	 */
 	public FilmListView(FilmController controller) {
 		super();
 
@@ -56,11 +61,24 @@ public class FilmListView extends JPanel
 		this.setBorder(new EmptyBorder(10, 10, 10, 10));
 	}
 
+	/** 
+	 * Method Name: setFilmList
+	 * Purpose: To populate the FilmListView.
+	 * Accepts: A TableViewModel object of FilmViewModel objects. 
+	 * Return: Nothing.
+	 */
 	public void setFilmList(TableViewModel<FilmViewModel> model) {
 		this.model = model;
 		filmTable.setModel(model);
 	}
 	
+	/** 
+	 * Method Name: getSelectedFilm
+	 * Purpose: To get the user selected row of the list. 
+	 * 					Used in FilmController's deleteFilm().
+	 * Accepts: Nothing.
+	 * Return: The selected row's FilmViewModel.
+	 */
 	public FilmViewModel getSelectedFilm() {
 		if (filmTable.getSelectedRow() == -1) {
 			JOptionPane.showMessageDialog(this, "Please select a film.", "Selection Failed!",

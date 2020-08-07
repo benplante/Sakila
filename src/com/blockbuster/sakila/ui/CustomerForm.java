@@ -38,7 +38,7 @@ public class CustomerForm extends JFrame {
 	 * Method Name: CustomerForm
 	 * Purpose: CustomerForm is a JFrame for user input.
 	 * Accepts: CustomerController to handle for listener events. 
-	 * Return: An CustomerForm object.
+	 * Return: A CustomerForm object.
 	 */
 	public CustomerForm(CustomerController controller) {
 		super();

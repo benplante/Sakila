@@ -46,7 +46,10 @@ public class CustomerController {
 	}
 	
 	/**
-	 *  Refreshes CustomerFormFrame data on every tab change. Is essential if data from other tabs is deleted.
+	 *  Method Name: refreshDB
+	 *  Purpose: Refreshes CustomerFormFrame data on every tab change. Is essential if data from other tabs is deleted.
+	 *  Accepts: Nothing.
+	 *  Returns: Nothing.
 	 */
 	public void refreshDB() {
 		customerFormFrame.setCities(getCitiesFromDB());

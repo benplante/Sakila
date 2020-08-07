@@ -32,9 +32,8 @@ import com.blockbuster.sakila.viewmodels.FilmViewModel;
  */
 
 public class FilmForm extends JFrame {
-
-	// components of film form
-	private JTextField txtTitle, txtDescription, txtReleaseYear, txtRentalRate, txtReplacementCost, txtLength;
+	// FilmForm members
+	private JTextField txtTitle, txtDescription, txtReleaseYear, txtReplacementCost, txtLength;
 	private JButton btnConfirm, btnCancel;
 	private ComboCheckBox<ActorViewModel> cmbActors;
 	private ActorViewModel[] actors;
@@ -44,19 +43,26 @@ public class FilmForm extends JFrame {
 	private JComboBox<String> cmbLanguages;
 	private JComboBox<String> cmbSpecialFeature;
 	private JComboBox<String> cmbRating;
+	private FilmViewModel film;
 
+	/** 
+	 * Method Name: FilmForm
+	 * Purpose: FilmForm is a JFrame for user input.
+	 * Accepts: FilmController to handle for listener events. 
+	 * Return: A FilmForm object.
+	 */
 	public FilmForm(FilmController controller) {
-
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		
 		JPanel wrapper = new JPanel();
 		txtTitle = new JTextField();
 		txtDescription = new JTextField();
 		txtReleaseYear = new JTextField();
-		txtRentalRate = new JTextField();
 		txtLength = new JTextField();
 		txtReplacementCost = new JTextField();
 		cmbActors = new ComboCheckBox<>("Actors");
 		cmbCategories = new JComboBox<CategoryViewModel>();
+		
 		// loading combo boxes with data base information
 		cmbDurations = new JComboBox<Integer>();
 		Integer[] durationArr = { 3, 4, 5, 6, 7 };
@@ -124,22 +130,13 @@ public class FilmForm extends JFrame {
 		this.setLocationRelativeTo(null);
 	}
 
-	public void setActors(List<ActorViewModel> actors) {
-		ActorViewModel[] arr = new ActorViewModel[actors.size()];
-		actors.toArray(arr);
-		this.actors = arr;
-		cmbActors.setItems(actors);
-	}
-
-	public void setCategories(List<CategoryViewModel> categories) {
-		CategoryViewModel[] arr = new CategoryViewModel[categories.size()];
-		categories.toArray(arr);
-		this.categories = arr;
-		cmbCategories.setModel(new DefaultComboBoxModel<CategoryViewModel>(arr));
-	}
-
+	/** 
+	 * Method Name: getFilm
+	 * Purpose: To validate input and get FilmViewModel when user selects 'Confirm' in FilmForm.
+	 * Accepts: Nothing.
+	 * Returns: FilmViewModel object populated with user input.
+	 */
 	public FilmViewModel getFilm() {
-		FilmViewModel film = new FilmViewModel();
 		if (txtTitle.getText().isEmpty()) {
 			JOptionPane.showMessageDialog(new JFrame(), "Please enter a title", "Invalid", JOptionPane.WARNING_MESSAGE);
 			txtTitle.requestFocus();
@@ -200,5 +197,55 @@ public class FilmForm extends JFrame {
 		film.setCategoryId(categories[cmbCategories.getSelectedIndex()].getCategoryId());
 		film.specialFeatures = (String) cmbSpecialFeature.getSelectedItem();
 		return film;
+	}
+	
+	/** 
+	 * Method Name: setFilm
+	 * Purpose: Instantiates FilmViewModel and clears all fields 
+	 * 					when user selects 'Add' from FilmListView.
+	 * Accepts: Nothing.
+	 * Returns: Nothing.
+	 */
+	public void setFilm() {
+		this.film = new FilmViewModel();
+		this.txtTitle.setText("");
+		this.txtDescription.setText("");
+		this.cmbCategories.setSelectedIndex(0);
+		this.cmbLanguages.setSelectedIndex(0);
+		this.cmbActors.setSelectedIndex(-1);
+		this.txtReleaseYear.setText("");
+		this.cmbDurations.setSelectedIndex(0);
+		this.txtLength.setText("");
+		this.txtReplacementCost.setText("");
+		this.cmbRating.setSelectedIndex(0);
+		this.cmbSpecialFeature.setSelectedIndex(0);
+	}
+	
+	/** 
+	 * Method Name: setActors
+	 * Purpose: Instantiates ActorViewModel array from database 
+	 * 					and sets the array to the ComboCheckBox.
+	 * Accepts: A list of ActorViewModel objects.
+	 * Returns: Nothing.
+	 */
+	public void setActors(List<ActorViewModel> actors) {
+		ActorViewModel[] arr = new ActorViewModel[actors.size()];
+		actors.toArray(arr);
+		this.actors = arr;
+		cmbActors.setItems(actors);
+	}
+
+	/** 
+	 * Method Name: setCities
+	 * Purpose: Instantiates CategoryViewModel array from database 
+	 * 					and sets the array to the JComboBox.
+	 * Accepts: A list of CategoryViewModel objects.
+	 * Returns: Nothing.
+	 */
+	public void setCategories(List<CategoryViewModel> categories) {
+		CategoryViewModel[] arr = new CategoryViewModel[categories.size()];
+		categories.toArray(arr);
+		this.categories = arr;
+		cmbCategories.setModel(new DefaultComboBoxModel<CategoryViewModel>(arr));
 	}
 }

@@ -30,7 +30,7 @@ public class CustomerListView extends JPanel {
 
 	/** 
 	 * Method Name: CustomerListView
-	 * Purpose: CustomerListView is a JPanel to show list of actors and its attributes.
+	 * Purpose: CustomerListView is a JPanel to show list of customers and its attributes.
 	 * Accepts: CustomerController to handle for listener events.
 	 * Return: A CustomerListView object.
 	 */
