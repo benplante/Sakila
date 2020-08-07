@@ -149,7 +149,8 @@ public class MySqlSakilaDatabase implements SakilaDatabase {
 		}
 		return li;
 	}
-
+// end of Actor Crud operation
+	
 	@Override
 	public void insertCustomer(CustomerViewModel customer) throws SQLException {
 
@@ -400,6 +401,9 @@ public class MySqlSakilaDatabase implements SakilaDatabase {
 		return li;
 	}
 	
+	//End of customer
+	
+	//loading categories form sakila datbase
 	@Override
 	public List<CategoryViewModel> selectCategories() throws SQLException {
 	 	ArrayList<CategoryViewModel> li = new ArrayList<>();
@@ -434,7 +438,7 @@ public class MySqlSakilaDatabase implements SakilaDatabase {
     }
     return li;
   }
-	    
+	 //displaying sakila films in film form   
 	@Override
 	public List<FilmViewModel> selectFilms() throws SQLException {
 		ArrayList<FilmViewModel> li = new ArrayList<>();
@@ -495,7 +499,6 @@ public class MySqlSakilaDatabase implements SakilaDatabase {
 			conn = DriverManager.getConnection(CONNECTION_STRING, "root", "password");
 			conn.setAutoCommit(false);
 
-			// use location for 47 MySakila Drive record
 			String sqlFilm = "INSERT INTO film(title, description, release_year, language_id, rental_duration, "
 																			+ "rental_rate, length , replacement_cost, rating , special_features) " +
 																				"VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -507,7 +510,7 @@ public class MySqlSakilaDatabase implements SakilaDatabase {
 			stmtFilm.setInt(4, film.getLanguageId());
 			stmtFilm.setInt(5, film.rentalDuration);
 			stmtFilm.setDouble(6, film.rentalRate);
-      stmtFilm.setInt(7, film.length);
+            stmtFilm.setInt(7, film.length);
 			stmtFilm.setDouble(8, film.replacementCost);
 			stmtFilm.setString(9, film.rating);
 			stmtFilm.setString(10, film.specialFeatures);
@@ -609,7 +612,7 @@ public class MySqlSakilaDatabase implements SakilaDatabase {
 			}
 		}	
 	}
-
+//End of film CRUD operation
 	@Override
 	public List<RentalViewModel> selectRentals() throws SQLException
 	{
@@ -804,7 +807,7 @@ public class MySqlSakilaDatabase implements SakilaDatabase {
 			}
 		}
 	}
-	
+	//end of Rental operation
 	public List<StoreViewModel> selectStores() throws SQLException {
 		ArrayList<StoreViewModel> list = new ArrayList<>();
 		

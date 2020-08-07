@@ -91,7 +91,7 @@ public class RentalForm extends JFrame {
 		btnPanel.setBorder(new EmptyBorder(10, 5, 10, 5));
 		btnPanel.setLayout(new BoxLayout(btnPanel, BoxLayout.LINE_AXIS));
 		btnPanel.add(btnConfirm);
-		btnPanel.add(Box.createHorizontalStrut(10));
+		btnPanel.add(Box.createHorizontalStrut(80));
 		btnPanel.add(btnCancel);
 		
 		wrapper.setLayout(new BoxLayout(wrapper, BoxLayout.PAGE_AXIS));
