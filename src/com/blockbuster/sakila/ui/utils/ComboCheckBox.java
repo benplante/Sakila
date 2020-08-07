@@ -5,8 +5,11 @@ import java.util.List;
 
 import javax.swing.JComboBox;
 
-/*
+/**
  *  @author Saja Alhadeethi, Colin Manliclic, Dahye Min, Ben Plante
+ *  
+ *  ComboBox extension to hold a dropdown list of checkboxes 
+ *  to allow for multiple selections
  */
 
 

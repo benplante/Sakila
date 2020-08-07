@@ -20,7 +20,7 @@ import com.blockbuster.sakila.viewmodels.StoreViewModel;
 /**
  * @author Saja Alhadeethi, Colin Manliclic, Dahye Min, Ben Plante
  *
- *         Report controller. Interacts with ReportForm, ReportListView and SakilaDatabase.
+ *         Report controller
  */
 
 

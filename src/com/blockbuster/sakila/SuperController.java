@@ -44,6 +44,7 @@ public class SuperController extends JFrame {
 		ReportController reportController = new ReportController(MySqlSakilaDatabase.getInstance());
 		container.addTab("Report", reportController.getPanel());
 		
+		// Refreshes each view's data on every tab change
 		container.addChangeListener(e -> {
 			actorController.refreshDB();
 			customerController.refreshDB();

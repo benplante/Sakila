@@ -10,8 +10,10 @@ import javax.swing.ComboBoxModel;
 
 import com.blockbuster.sakila.ui.utils.Checkable.SelectAll;
 
-/*
+/**
  *  @author Saja Alhadeethi, Colin Manliclic, Dahye Min, Ben Plante
+ *  
+ *  CheckBoxModel to hold a list of checkable items
  */
 
 public class ComboCheckBoxModel<E> extends AbstractListModel<Checkable<E>> implements ComboBoxModel<Checkable<E>> {

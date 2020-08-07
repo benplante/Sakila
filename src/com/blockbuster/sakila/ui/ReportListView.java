@@ -38,6 +38,7 @@ import com.blockbuster.sakila.viewmodels.StoreViewModel;
 /**
  * @author Saja Alhadeethi, Colin Manliclic, Dahye Min, Ben Plante
  *     
+ * Table view for displaying reports  
  */
 
 

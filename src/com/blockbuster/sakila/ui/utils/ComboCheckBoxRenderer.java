@@ -7,8 +7,11 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
 
-/*
+/**
  *  @author Saja Alhadeethi, Colin Manliclic, Dahye Min, Ben Plante
+ *  
+ *  Renderer class to show a dropdown list of checkboxes. 
+ *  Top of the list is a title string.
  */
 
 public class ComboCheckBoxRenderer<T> implements ListCellRenderer<Checkable<T>> {

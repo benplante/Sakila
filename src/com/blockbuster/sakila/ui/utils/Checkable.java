@@ -6,6 +6,7 @@ import java.util.List;
 /**
  * @author Saja Alhadeethi, Colin Manliclic, Dahye Min, Ben Plante
  *     
+ * Checkable wrapper to allow for toggleable items
  */
 
 public class Checkable<E> {

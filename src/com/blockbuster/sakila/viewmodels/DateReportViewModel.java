@@ -4,6 +4,11 @@ import java.math.BigDecimal;
 
 import com.blockbuster.sakila.ui.utils.ColumnName;
 
+/**
+ * @author Saja Alhadeethi, Colin Manliclic, Dahye Min, Ben Plante
+ *
+ * View Model for Date ranged report
+ */
 public class DateReportViewModel {
 	@ColumnName(columnName = "# of Rentals")
 	public int rentalsCount;

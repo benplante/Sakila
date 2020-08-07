@@ -39,6 +39,10 @@ public class TableViewModel<T> extends AbstractTableModel {
 		return type.getFields().length;
 	}
 
+	/**
+	 * Uses reflection to get the column name from the
+	 * annoted ColumnName of the member
+	 */
 	@Override
 	public String getColumnName(int column) {
 		Field f = type.getFields()[column];
@@ -51,6 +55,9 @@ public class TableViewModel<T> extends AbstractTableModel {
 			return f.getName();
 	}
 
+	/**
+	 * Gets a cell value
+	 */
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		Field[] fields = type.getFields();
@@ -59,15 +66,25 @@ public class TableViewModel<T> extends AbstractTableModel {
 		try {
 			return fields[columnIndex].get(row);
 		} catch (IllegalArgumentException | IllegalAccessException e) {
-			System.out.println(e.toString());
+			e.printStackTrace();
 			return null;
 		}
 	}
 
+	/**
+	 * Get the view model for the specified row
+	 * 
+	 * @param rowIndex row index
+	 * @return View Model
+	 */
 	public T getAtRow(int rowIndex) {
 		return data.get(rowIndex);
 	}
 
+	/**
+	 * Resets the data in the model
+	 * @param data list to set
+	 */
 	public void setData(List<T> data) {
 		this.data = data;
 		this.fireTableDataChanged();
