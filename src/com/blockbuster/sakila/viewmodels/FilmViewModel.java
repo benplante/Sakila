@@ -2,11 +2,18 @@ package com.blockbuster.sakila.viewmodels;
 
 import com.blockbuster.sakila.ui.utils.ColumnName;
 
+/**
+ * @author Saja Alhadeethi, Colin Manliclic, Dahye Min, Ben Plante
+ *
+ *         View Model for a Film.
+ */
+
 public class FilmViewModel {
 
 	private int categoryId;
 	private int actorId;
 	private int languageId;
+	private int inventoryId;
 	
 	@ColumnName(columnName = "Film #")
   public int filmId;

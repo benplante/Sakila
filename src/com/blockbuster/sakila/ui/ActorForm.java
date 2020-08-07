@@ -1,5 +1,7 @@
 package com.blockbuster.sakila.ui;
 
+import java.awt.GridLayout;
+
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -14,7 +16,7 @@ import com.blockbuster.sakila.controllers.ActorController;
 import com.blockbuster.sakila.viewmodels.ActorViewModel;
 
 /**
- * @author Ben Plante
+ *  @author Saja Alhadeethi, Colin Manliclic, Dahye Min, Ben Plante
  *
  *         Actor Add/Update form in a JFrame contains text fields for an actors
  *         first and last name
@@ -42,7 +44,7 @@ public class ActorForm extends JFrame {
 
 		JPanel txtPanel = new JPanel();
 		txtPanel.setBorder(new EmptyBorder(10, 5, 10, 5));
-		txtPanel.setLayout(new BoxLayout(txtPanel, BoxLayout.PAGE_AXIS));
+		txtPanel.setLayout(new GridLayout(0, 1, 0, 5));
 		txtPanel.add(new JLabel("First Name:"));
 		txtPanel.add(txtFirstName);
 		txtPanel.add(new JLabel("Last Name:"));

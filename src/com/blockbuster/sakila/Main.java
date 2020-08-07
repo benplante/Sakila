@@ -1,7 +1,7 @@
 package com.blockbuster.sakila;
 
 /**
- * @author Ben Plante
+ * @author Saja Alhadeethi, Colin Manliclic, Dahye Min, Ben Plante
  *
  *         Main method to create controller JFrame
  */

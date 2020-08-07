@@ -4,6 +4,12 @@ import java.math.BigDecimal;
 
 import com.blockbuster.sakila.ui.utils.ColumnName;
 
+/**
+ * @author Saja Alhadeethi, Colin Manliclic, Dahye Min, Ben Plante
+ *
+ *         View Model for a Store Report.
+ */
+
 public class StoreReportViewModel {
 
 	@ColumnName(columnName = "Store #")

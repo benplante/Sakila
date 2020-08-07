@@ -15,7 +15,7 @@ import com.blockbuster.sakila.ui.utils.TableViewModel;
 import com.blockbuster.sakila.viewmodels.ActorViewModel;
 
 /**
- * @author Ben Plante
+ * @author Saja Alhadeethi, Colin Manliclic, Dahye Min, Ben Plante
  *
  *         Panel for viewing a list of all Actors in the database Displays
  *         actors in a JTable and contains buttons to add, update and delete an

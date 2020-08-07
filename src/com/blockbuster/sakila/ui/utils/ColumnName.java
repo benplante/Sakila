@@ -4,7 +4,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 /**
- * @author Ben Plante
+ *  @author Saja Alhadeethi, Colin Manliclic, Dahye Min, Ben Plante
  *
  *         Annotation used to decorate fields with a Column Name for use in a
  *         TableModel

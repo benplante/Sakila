@@ -5,7 +5,7 @@ import java.util.List;
 import com.blockbuster.sakila.viewmodels.*;
 
 /**
- * @author Ben Plante
+ *  @author Saja Alhadeethi, Colin Manliclic, Dahye Min, Ben Plante
  *
  *         Database interface for inversion of control and unit testing
  * 
@@ -36,6 +36,8 @@ public interface SakilaDatabase {
 
 	// Film
 	public void insertFilm(FilmViewModel film) throws SQLException;
+	
+	public void deleteFilm(FilmViewModel film) throws SQLException;
 
 	public List<CategoryViewModel> selectCategories() throws SQLException;
 

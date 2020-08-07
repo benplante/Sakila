@@ -14,6 +14,13 @@ import com.blockbuster.sakila.ui.utils.TableViewModel;
 import com.blockbuster.sakila.viewmodels.CityViewModel;
 import com.blockbuster.sakila.viewmodels.CustomerViewModel;
 
+/**
+ * @author Saja Alhadeethi, Colin Manliclic, Dahye Min, Ben Plante
+ *
+ *         Customer controller. Interacts with CustomerForm, CustomerListView and SakilaDatabase.
+ */
+
+
 public class CustomerController {
 	private SakilaDatabase db;
 	private CustomerListView customerListViewPanel;

@@ -3,7 +3,7 @@ package com.blockbuster.sakila.viewmodels;
 import com.blockbuster.sakila.ui.utils.ColumnName;
 
 /**
- * @author Ben Plante
+ * @author Saja Alhadeethi, Colin Manliclic, Dahye Min, Ben Plante
  *
  *         View Model for an Actor. All fields are public and annotated with a
  *         column name.

@@ -22,7 +22,7 @@ import com.blockbuster.sakila.viewmodels.StoreReportViewModel;
 import com.blockbuster.sakila.viewmodels.StoreViewModel;
 
 /**
- * @author Ben Plante
+ * @author Saja Alhadeethi, Colin Manliclic, Dahye Min, Ben Plante
  *
  *         Sakila Database implentation using JDBC and MySql. Uses the singleton
  *         pattern to avoid instancing problems
@@ -87,16 +87,28 @@ public class MySqlSakilaDatabase implements SakilaDatabase {
 	@Override
 	public void deleteActor(ActorViewModel actor) throws SQLException {
 		Connection conn = null;
-		PreparedStatement stmt = null;
+		PreparedStatement stmtActor = null, stmtFilm_Actor = null;
 		try {
 			conn = DriverManager.getConnection(CONNECTION_STRING, "root", "password");
-			stmt = conn.prepareStatement("DELETE FROM actor WHERE actor_id = ?");
-			stmt.setInt(1, actor.actorId);
-			stmt.executeUpdate();
+			conn.setAutoCommit(false);
+			
+			stmtActor = conn.prepareStatement("DELETE FROM actor WHERE actor_id = ?");
+			stmtActor.setInt(1, actor.actorId);
+			
+			if(stmtActor.executeUpdate() == 1) {
+				stmtFilm_Actor = conn.prepareStatement("DELETE FROM film_actor WHERE actor_id = ?");
+				stmtFilm_Actor.setInt(1, actor.actorId); 
+				stmtFilm_Actor.executeUpdate();
+				conn.commit();
+			}
+			else { 
+				throw new SQLException("Actor was not deleted - invalid number of rows affected!");
+			}
 		} finally {
 			try {
 				if (conn != null) conn.close();
-				if (stmt != null) stmt.close();
+				if (stmtActor != null) stmtActor.close();
+				if (stmtFilm_Actor != null) stmtFilm_Actor.close();
 			} catch (SQLException e) {
 				System.out.println("Error closing DB resources");
 				e.printStackTrace();
@@ -404,10 +416,11 @@ public class MySqlSakilaDatabase implements SakilaDatabase {
 		try {
 			conn = DriverManager.getConnection(CONNECTION_STRING, "root", "password");
 			String sql = "SELECT f.film_id, f.title, f.description, f.release_year,"
-					+ " f.rental_duration, f.rental_rate,f.length, f.replacement_cost, f.rating, "
-			        + "f.special_features ,  c.name"
-					+ " FROM sakila.film f LEFT OUTER JOIN sakila.film_category fc ON f.film_id = fc.film_id" + 
-					" LEFT OUTER JOIN sakila.category c ON fc.category_id = c.category_id;";
+											 + " f.rental_duration, f.rental_rate,f.length, f.replacement_cost,"
+											 + " f.rating, f.special_features , c.name"
+											 + " FROM sakila.film f"
+											 + " LEFT OUTER JOIN sakila.film_category fc ON f.film_id = fc.film_id"
+											 + " LEFT OUTER JOIN sakila.category c ON fc.category_id = c.category_id;";
 			stmt = conn.createStatement();
 			
 			rs = stmt.executeQuery(sql);
@@ -455,8 +468,8 @@ public class MySqlSakilaDatabase implements SakilaDatabase {
 
 			// use location for 47 MySakila Drive record
 			String sqlFilm = "INSERT INTO film(title, description, release_year, language_id, rental_duration, "
-					+ "rental_rate, length , replacement_cost, rating , special_features) " +
-				"VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+																			+ "rental_rate, length , replacement_cost, rating , special_features) " +
+																				"VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 			stmtFilm = conn.prepareStatement(sqlFilm, Statement.RETURN_GENERATED_KEYS);
 			stmtFilm.setString(1, film.title);
@@ -474,15 +487,13 @@ public class MySqlSakilaDatabase implements SakilaDatabase {
 			rsId = stmtFilm.getGeneratedKeys();
 			if (rsId.next()) {
 				int filmId = rsId.getInt(1);
-				String sqlFilmActor = "INSERT INTO film_actor(actor_id, film_id) "
-						+ "VALUES(?, ?)";
+				String sqlFilmActor = "INSERT INTO film_actor(actor_id, film_id) VALUES(?, ?)";
 				stmtFilmActor = conn.prepareStatement(sqlFilmActor, Statement.RETURN_GENERATED_KEYS);
 				stmtFilmActor.setInt(1, film.getActorId());
 				stmtFilmActor.setInt(2, filmId);
 				stmtFilmActor.executeUpdate();
 				
-				String sqlFilmCategory = "INSERT INTO film_category(film_id, category_id) "
-						+ "VALUES(?, ?)";
+				String sqlFilmCategory = "INSERT INTO film_category(film_id, category_id) VALUES(?, ?)";
 				stmtFilmCategory = conn.prepareStatement(sqlFilmCategory, Statement.RETURN_GENERATED_KEYS);
 				stmtFilmCategory.setInt(1, filmId);
 				stmtFilmCategory.setInt(2, film.getCategoryId());
@@ -512,6 +523,54 @@ public class MySqlSakilaDatabase implements SakilaDatabase {
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	@Override
+	public void deleteFilm(FilmViewModel film) throws SQLException
+	{
+		Connection conn = null;
+		PreparedStatement stmtFilm = null,
+											stmtFilmActor = null,
+											stmtFilmCategory = null,
+											stmtInventory = null,
+											stmtRental = null;
+		try {
+			conn = DriverManager.getConnection(CONNECTION_STRING, "root", "password");
+			conn.setAutoCommit(false);
+			
+			stmtFilmActor = conn.prepareStatement("DELETE FROM film_actor WHERE film_id = ?");
+			stmtFilmActor.setInt(1, film.filmId);
+			stmtFilmActor.executeUpdate();
+			
+			stmtFilmCategory = conn.prepareStatement("DELETE FROM film_category WHERE film_id = ?");
+			stmtFilmCategory.setInt(1, film.filmId);
+			stmtFilmCategory.executeUpdate();
+			
+			stmtRental = conn.prepareStatement("DELETE r FROM rental r INNER JOIN inventory i ON r.inventory_id = i.inventory_id where i.film_id = ?");
+			stmtRental.setInt(1, film.filmId);
+			stmtRental.executeUpdate();
+			
+			stmtInventory = conn.prepareStatement("DELETE FROM inventory WHERE film_id = ?");
+			stmtInventory.setInt(1, film.filmId);
+			stmtInventory.executeUpdate();
+			
+			stmtFilm = conn.prepareStatement("DELETE FROM film WHERE film_id = ?");
+			stmtFilm.setInt(1, film.filmId);
+			if(stmtFilm.executeUpdate() == 1) {
+				conn.commit();
+			}
+		} finally {
+			try {
+				if (conn != null) conn.close();
+				if (stmtFilm != null) stmtFilm.close();
+				if (stmtFilmActor != null) stmtFilmActor.close();
+				if (stmtFilmCategory != null) stmtFilmCategory.close();
+				if (stmtInventory != null) stmtInventory.close();
+			} catch (SQLException e) {
+				System.out.println("Error closing DB resources");
+				e.printStackTrace();
+			}
+		}	
 	}
 
 	@Override

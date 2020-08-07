@@ -5,6 +5,11 @@ import java.util.List;
 
 import javax.swing.JComboBox;
 
+/*
+ *  @author Saja Alhadeethi, Colin Manliclic, Dahye Min, Ben Plante
+ */
+
+
 public class ComboCheckBox<E> extends JComboBox<Checkable<E>> {
 	
 	private ComboCheckBoxModel<E> model;
