@@ -1,6 +1,7 @@
 package com.blockbuster.sakila.database;
 
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.List;
 import com.blockbuster.sakila.viewmodels.*;
 
@@ -58,4 +59,5 @@ public interface SakilaDatabase {
 	
 	public List<CustomerReportViewModel> getSalesByCustomer(List<Integer> customers) throws SQLException;
 	
+	public List<DateReportViewModel> getSalesByDate(Timestamp startDate, Timestamp endDate) throws SQLException;
 }

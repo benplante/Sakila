@@ -1,8 +1,11 @@
 package com.blockbuster.sakila.controllers;
 
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.text.ParseException;
 import java.util.stream.Collectors;
 
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import com.blockbuster.sakila.database.SakilaDatabase;
@@ -64,6 +67,22 @@ public class ReportController
 		try {
 			reportListViewPanel.setCustomerReport(db.getSalesByCustomer(
 					customers.stream().map(c -> c.customerId).collect(Collectors.toList())));
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void generateDateReport() {
+		try {
+			var startDate = new Timestamp(reportListViewPanel.getStartDate().getTime());
+			var endDate = new Timestamp(reportListViewPanel.getEndDate().getTime());
+			reportListViewPanel.setDateReport(db.getSalesByDate(startDate, endDate));
+		} catch (ParseException e) {
+			JOptionPane.showMessageDialog(reportListViewPanel, 
+					"Dates must be formatted as YYYY-MM-DD", 
+					"Date Format Error", 
+					JOptionPane.ERROR_MESSAGE
+				);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

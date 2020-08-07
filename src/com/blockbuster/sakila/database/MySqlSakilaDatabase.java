@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +15,7 @@ import com.blockbuster.sakila.viewmodels.CategoryReportViewModel;
 import com.blockbuster.sakila.viewmodels.CategoryViewModel;
 import com.blockbuster.sakila.viewmodels.CityViewModel;
 import com.blockbuster.sakila.viewmodels.CustomerViewModel;
+import com.blockbuster.sakila.viewmodels.DateReportViewModel;
 import com.blockbuster.sakila.viewmodels.CustomerReportViewModel;
 import com.blockbuster.sakila.viewmodels.FilmViewModel;
 import com.blockbuster.sakila.viewmodels.InventoryViewModel;
@@ -1001,6 +1003,97 @@ ArrayList<CustomerReportViewModel> list = new ArrayList<>();
 				e.printStackTrace();
 			}
 		}
+		return list;
+	}
+	
+	public List<DateReportViewModel> getSalesByDate(Timestamp startDate, Timestamp endDate) throws SQLException {
+		ArrayList<DateReportViewModel> list = new ArrayList<>();
+		
+		Connection conn = null;
+		PreparedStatement stmtTotals = null, stmtTopCust = null, stmtTopCat = null, stmtTopFilm = null;
+		ResultSet rsTotals = null, rsTopCust = null, rsTopCat = null, rsTopFilm = null;
+		
+		try {
+			conn = DriverManager.getConnection(CONNECTION_STRING, "root", "password");
+			stmtTotals = conn.prepareStatement("SELECT COUNT(*), SUM(p.amount) "
+					+ "FROM payment p "
+					+ "INNER JOIN rental r ON p.rental_id = r.rental_id "
+					+ "WHERE r.rental_date > ? AND r.rental_date < ?");
+			stmtTotals.setTimestamp(1, startDate);
+			stmtTotals.setTimestamp(2, endDate);
+			
+			stmtTopCust = conn.prepareStatement("SELECT CONCAT(c.first_name, ' ', c.last_name) "
+					+ "FROM payment p "
+					+ "INNER JOIN rental r ON p.rental_id = r.rental_id "
+					+ "INNER JOIN customer c ON r.customer_id = c.customer_id "
+					+ "WHERE r.rental_date > ? AND r.rental_date < ? "
+					+ "GROUP BY c.customer_id ORDER BY SUM(p.amount) DESC LIMIT 1");
+			stmtTopCust.setTimestamp(1, startDate);
+			stmtTopCust.setTimestamp(2, endDate);
+			
+			stmtTopCat = conn.prepareStatement("SELECT c.name "
+					+ "FROM payment p "
+					+ "INNER JOIN rental r ON p.rental_id = r.rental_id "
+					+ "INNER JOIN inventory i ON r.inventory_id = i.inventory_id "
+					+ "INNER JOIN film_category f ON i.film_id = f.film_id  "
+					+ "INNER JOIN category c ON f.category_id = c.category_id "
+					+ "WHERE r.rental_date > ? AND r.rental_date < ? "
+					+ "GROUP BY c.category_id ORDER BY SUM(p.amount) DESC LIMIT 1");
+			stmtTopCat.setTimestamp(1, startDate);
+			stmtTopCat.setTimestamp(2, endDate);
+			
+			stmtTopFilm = conn.prepareStatement("SELECT f.title "
+					+ "FROM payment p "
+					+ "INNER JOIN rental r ON p.rental_id = r.rental_id "
+					+ "INNER JOIN inventory i ON r.inventory_id = i.inventory_id "
+					+ "INNER JOIN film f ON i.film_id = f.film_id  "
+					+ "WHERE r.rental_date > ? AND r.rental_date < ? "
+					+ "GROUP BY f.film_id ORDER BY SUM(p.amount) DESC LIMIT 1");
+			stmtTopFilm.setTimestamp(1, startDate);
+			stmtTopFilm.setTimestamp(2, endDate);
+			
+			DateReportViewModel vm = new DateReportViewModel();
+			
+			rsTotals = stmtTotals.executeQuery();
+			while (rsTotals.next() ) {
+				vm.rentalsCount = rsTotals.getInt(1);
+				vm.salesAmount = rsTotals.getBigDecimal(2);
+			}
+			
+			rsTopCust = stmtTopCust.executeQuery();
+			while (rsTopCust.next()) {
+				vm.topCustomer = rsTopCust.getString(1);
+			}
+			
+			rsTopCat = stmtTopCat.executeQuery();
+			while (rsTopCat.next() ) {
+				vm.topCategory = rsTopCat.getString(1);
+			}
+			
+			rsTopFilm = stmtTopFilm.executeQuery();
+			while (rsTopFilm.next()) {
+				vm.topFilm = rsTopFilm.getString(1);
+			}
+			
+			list.add(vm);
+
+		} finally {
+			try {
+				if (conn != null) conn.close();
+				if (stmtTotals != null) stmtTotals.close();
+				if (stmtTopCust != null) stmtTopCust.close();
+				if (stmtTopCat != null) stmtTopCat.close();
+				if (stmtTopFilm != null) stmtTopFilm.close();
+				if (rsTotals != null) rsTotals.close();
+				if (rsTopCust != null) rsTopCust.close();
+				if (rsTopCat != null) rsTopCat.close();
+				if (rsTopFilm != null) rsTopFilm.close();
+			} catch (SQLException e) {
+				System.out.println("Error closing DB resources");
+				e.printStackTrace();
+			}
+		}
+		
 		return list;
 	}
 }
