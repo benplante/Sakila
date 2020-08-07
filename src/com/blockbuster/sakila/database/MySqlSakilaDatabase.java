@@ -85,16 +85,28 @@ public class MySqlSakilaDatabase implements SakilaDatabase {
 	@Override
 	public void deleteActor(ActorViewModel actor) throws SQLException {
 		Connection conn = null;
-		PreparedStatement stmt = null;
+		PreparedStatement stmtActor = null, stmtFilm_Actor = null;
 		try {
 			conn = DriverManager.getConnection(CONNECTION_STRING, "root", "password");
-			stmt = conn.prepareStatement("DELETE FROM actor WHERE actor_id = ?");
-			stmt.setInt(1, actor.actorId);
-			stmt.executeUpdate();
+			conn.setAutoCommit(false);
+			
+			stmtActor = conn.prepareStatement("DELETE FROM actor WHERE actor_id = ?");
+			stmtActor.setInt(1, actor.actorId);
+			
+			if(stmtActor.executeUpdate() == 1) {
+				stmtFilm_Actor = conn.prepareStatement("DELETE FROM film_actor WHERE actor_id = ?");
+				stmtFilm_Actor.setInt(1, actor.actorId); 
+				stmtFilm_Actor.executeUpdate();
+				conn.commit();
+			}
+			else { 
+				throw new SQLException("Actor was not deleted - invalid number of rows affected!");
+			}
 		} finally {
 			try {
 				if (conn != null) conn.close();
-				if (stmt != null) stmt.close();
+				if (stmtActor != null) stmtActor.close();
+				if (stmtFilm_Actor != null) stmtFilm_Actor.close();
 			} catch (SQLException e) {
 				System.out.println("Error closing DB resources");
 				e.printStackTrace();
