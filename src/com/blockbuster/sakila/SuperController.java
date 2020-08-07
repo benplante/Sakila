@@ -22,25 +22,25 @@ public class SuperController extends JFrame {
 	public SuperController() {
 		super("Sakila Store Management");
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-
 		JTabbedPane container = new JTabbedPane();
-		// Actor
+		
+		// Actor Tab
 		ActorController actorController = new ActorController(MySqlSakilaDatabase.getInstance());
 		container.addTab("Actor Maintenance", actorController.getPanel());
 
-		// Customer
+		// Customer Tab
 		CustomerController customerController = new CustomerController(MySqlSakilaDatabase.getInstance());
 		container.addTab("Customer Maintenance", customerController.getPanel());
 		
-		// Film 
+		// Film Tab
 		FilmController filmController = new FilmController(MySqlSakilaDatabase.getInstance());
 		container.addTab("Film Maintenance", filmController.getPanel());
 		
-		// Rental 
+		// Rental Tab
 		RentalController rentalController = new RentalController(MySqlSakilaDatabase.getInstance());
 		container.addTab("Rental Maintenance", rentalController.getPanel());
 		
-		// Report
+		// Report Tab
 		ReportController reportController = new ReportController(MySqlSakilaDatabase.getInstance());
 		container.addTab("Report", reportController.getPanel());
 		
@@ -53,12 +53,10 @@ public class SuperController extends JFrame {
 		});
 
 		this.add(container);
-
 		this.pack();
 		this.setResizable(false);
 		this.setLocationRelativeTo(null);
 		this.setSize(900, 700);
-
 		this.setVisible(true);
 	}
 }
