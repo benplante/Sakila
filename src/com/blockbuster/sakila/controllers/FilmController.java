@@ -32,7 +32,7 @@ public class FilmController
 		actorModel = new TableViewModel<ActorViewModel>(getActorsFromDB(), ActorViewModel.class);
 		filmFormFrame.setActors(getActorsFromDB());
 		categoryModel = new TableViewModel<CategoryViewModel>(getCategoriesFromDB(),CategoryViewModel.class);
-	    filmFormFrame.setCategories(getCategoriesFromDB());
+	  filmFormFrame.setCategories(getCategoriesFromDB());
 	}
 	
 	private List<FilmViewModel> getFilmsFromDB() {
@@ -52,11 +52,11 @@ public class FilmController
 	}
 	
 	private List<CategoryViewModel> getCategoriesFromDB() {
-      try {
-          return db.selectCategories();
-      } catch (SQLException e) {
-          return new ArrayList<>();
-      }
+		try {
+	    return db.selectCategories();
+		} catch (SQLException e) {
+	    return new ArrayList<>();
+		}
   }
 	
 	public JPanel getPanel() {

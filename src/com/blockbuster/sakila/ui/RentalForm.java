@@ -50,8 +50,7 @@ public class RentalForm extends JFrame {
 		cmbInventories.addActionListener(new ActionListener() {
 
 			@Override
-			public void actionPerformed(ActionEvent e)
-			{
+			public void actionPerformed(ActionEvent e) {
 				if (cmbInventories.getSelectedIndex() > -1) {
 					txtRentalRate.setText("$" + inventories[cmbInventories.getSelectedIndex()].getRentalRate().toString());
 				}
@@ -117,8 +116,7 @@ public class RentalForm extends JFrame {
 			amountPaid = new BigDecimal(txtAmountPaid.getText());
 			rentalRate = inventories[inventoryIdx].getRentalRate();
 			
-			if (amountPaid.compareTo(rentalRate) < 0 || amountPaid.compareTo(new BigDecimal(999.99)) > 0)
-			{
+			if (amountPaid.compareTo(rentalRate) < 0 || amountPaid.compareTo(new BigDecimal(999.99)) > 0) {
 				throw new Exception();
 			}
 			
@@ -151,16 +149,14 @@ public class RentalForm extends JFrame {
 			txtRentalRate.setText("Please select a film.");	
 	}
 
-	public void setInventories(List<InventoryViewModel> list)
-	{
+	public void setInventories(List<InventoryViewModel> list) {
 		InventoryViewModel[] arr = new InventoryViewModel[list.size()];
 		list.toArray(arr);
 		this.inventories = arr;
 		cmbInventories.setModel(new DefaultComboBoxModel<InventoryViewModel>(arr));
 	}
 
-	public void setCustomers(List<CustomerViewModel> customers)
-	{
+	public void setCustomers(List<CustomerViewModel> customers) {
 		CustomerViewModel[] arr = new CustomerViewModel[customers.size()];
 		customers.toArray(arr);
 		this.customers = arr;

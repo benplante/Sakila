@@ -85,8 +85,7 @@ public class CustomerController {
 	public void confirmAddCustomer() {
 		customerListViewPanel.setEnabled(true);
 		CustomerViewModel vm = customerFormFrame.getCustomer();
-		if (vm == null)
-		{
+		if (vm == null) {
 			return;
 		}
 		String type = "";

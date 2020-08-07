@@ -91,62 +91,51 @@ public class RentalViewModel {
 		this.paymentId = paymentId;
 	}
 	
-	public Timestamp getRentalDate()
-	{
+	public Timestamp getRentalDate() {
 		return rentalDate;
 	}
 
-	public void setRentalDate(Timestamp rentalDate) 
-	{
+	public void setRentalDate(Timestamp rentalDate) {
 		this.rentalDate = rentalDate;
 		this.rentalDateStr = rentalDate != null ? new SimpleDateFormat("MMM dd, ''yy").format(rentalDate) : "N/A";
 	}
 
-	public Timestamp getReturnDate()
-	{
+	public Timestamp getReturnDate() {
 		return returnDate;
 	}
 
-	public void setReturnDate(Timestamp returnDate)
-	{
+	public void setReturnDate(Timestamp returnDate) {
 		this.returnDate = returnDate;
 		this.returnDateStr = returnDate != null ? new SimpleDateFormat("MMM dd, ''yy").format(returnDate) : "N/A";
 	}
 
-	public BigDecimal getPaymentAmount()
-	{
+	public BigDecimal getPaymentAmount() {
 		return paymentAmount;
 	}
 
-	public void setPaymentAmount(BigDecimal paymentAmount)
-	{
+	public void setPaymentAmount(BigDecimal paymentAmount) {
 		this.paymentAmount = paymentAmount;
 		this.paymentAmountStr = "$" + paymentAmount.toString();
 	}
 
-	public BigDecimal getRentalRate()
-	{
+	public BigDecimal getRentalRate() {
 		return rentalRate;
 	}
 
-	public void setRentalRate(BigDecimal rentalRate)
-	{
+	public void setRentalRate(BigDecimal rentalRate) {
 		this.rentalRate = rentalRate;
 		this.rentalRateStr = "$" + rentalRate.toString();
 	}
-	
 	
 	public RentalViewModel() {
 		this.rentalId = -1;
 	}
 
-	public int getFilmRentalDuration()
-	{
+	public int getFilmRentalDuration() {
 		return filmRentalDuration;
 	}
 
-	public void setFilmRentalDuration(int filmRentalDuration)
-	{
+	public void setFilmRentalDuration(int filmRentalDuration) {
 		this.filmRentalDuration = filmRentalDuration;
 	}
 }

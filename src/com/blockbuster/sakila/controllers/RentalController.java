@@ -39,8 +39,7 @@ public class RentalController
 		return rentalListViewPanel;
 	}
 
-	private List<InventoryViewModel> getInventoriesFromDB()
-	{
+	private List<InventoryViewModel> getInventoriesFromDB() {
 		try {
 			return db.selectInventories();
 		} catch (SQLException e) {
@@ -51,8 +50,7 @@ public class RentalController
 		}
 	}
 
-	private List<CustomerViewModel> getCustomersFromDB()
-	{
+	private List<CustomerViewModel> getCustomersFromDB() {
 		try {
 			List<CustomerViewModel> customersFromStore1 = db.selectCustomers();
 			customersFromStore1.removeIf(c -> c.getStoreId() > 1);
@@ -65,8 +63,6 @@ public class RentalController
 		}
 	}
 
-
-
 	private List<RentalViewModel> getRentalsFromDB() {
 		try {
 			return db.selectRentals();
@@ -78,27 +74,23 @@ public class RentalController
 		}
 	}
 
-	public void openAddRentalForm()
-	{
+	public void openAddRentalForm() {
 		rentalListViewPanel.setEnabled(false);
 		rentalFormFrame.setName("Add Rental");
 		rentalFormFrame.setRental();
 		rentalFormFrame.setVisible(true);
 	}
 	
-	public void closeCustomerForm()
-	{
+	public void closeCustomerForm() {
 		rentalListViewPanel.setEnabled(true);
 		rentalFormFrame.setVisible(false);
 	}
 
 
-	public void confirmAddRental()
-	{
+	public void confirmAddRental() {
 		rentalListViewPanel.setEnabled(true);
 		RentalViewModel vm = rentalFormFrame.getRental();
-		if (vm == null)
-		{
+		if (vm == null) {
 			return;
 		}
 		try {

@@ -12,48 +12,39 @@ public class InventoryViewModel
 	
 	private BigDecimal rentalRate;
 
-	public int getInventoryId()
-	{
+	public int getInventoryId() {
 		return inventoryId;
 	}
 
-	public void setInventoryId(int inventoryId)
-	{
+	public void setInventoryId(int inventoryId) {
 		this.inventoryId = inventoryId;
 	}
 
-	public String getFilmTitle()
-	{
+	public String getFilmTitle() {
 		return filmTitle;
 	}
 
-	public void setFilmTitle(String filmTitle)
-	{
+	public void setFilmTitle(String filmTitle) {
 		this.filmTitle = filmTitle;
 	}
 	
-	public int getFilmRentalDuration()
-	{
+	public int getFilmRentalDuration() {
 		return filmRentalDuration;
 	}
 
-	public void setFilmRentalDuration(int filmRentalDuration)
-	{
+	public void setFilmRentalDuration(int filmRentalDuration) {
 		this.filmRentalDuration = filmRentalDuration;
 	}
 	
-	public String toString()
-	{
+	public String toString() {
 		return this.filmTitle;
 	}
 
-	public BigDecimal getRentalRate()
-	{
+	public BigDecimal getRentalRate() {
 		return rentalRate;
 	}
 
-	public void setRentalRate(BigDecimal rentalRate)
-	{
+	public void setRentalRate(BigDecimal rentalRate) {
 		this.rentalRate = rentalRate;
 	}
 	

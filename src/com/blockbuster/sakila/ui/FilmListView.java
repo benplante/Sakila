@@ -42,8 +42,7 @@ public class FilmListView extends JPanel
 		this.setBorder(new EmptyBorder(10, 10, 10, 10));
 	}
 
-	public void setFilmList(TableViewModel<FilmViewModel> model)
-	{
+	public void setFilmList(TableViewModel<FilmViewModel> model) {
 		this.model = model;
 		filmTable.setModel(model);
 	}

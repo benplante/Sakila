@@ -357,41 +357,40 @@ public class MySqlSakilaDatabase implements SakilaDatabase {
 		return li;
 	}
 	
-	   @Override
-	    public List<CategoryViewModel> selectCategories() throws SQLException {
-	        ArrayList<CategoryViewModel> li = new ArrayList<>();
-	        
-	        Connection conn = null;
-	        Statement stmt = null;
-	        ResultSet rs = null;
-	        try {
-	            conn = DriverManager.getConnection(CONNECTION_STRING, "root", "password");
-	            String sql = "SELECT Category_id, name "
-	                    + "FROM category ";
-	            stmt = conn.createStatement();
-	            
-	            rs = stmt.executeQuery(sql);
-	            
-	            while (rs.next()) {
-	              CategoryViewModel vm = new CategoryViewModel();
-	                vm.setCategoryId(rs.getInt(1));
-	                vm.setCategoryName(rs.getString(2));
-	                
-	                li.add(vm);
-	            }
-	        } finally {
-	            try {
-	                if (conn != null) conn.close();
-	                if (stmt != null) stmt.close();
-	                if (rs != null) rs.close();
-	            } catch (SQLException e) {
-	                System.out.println("Error closing DB resources");
-	                e.printStackTrace();
-	            }
-	        }
-	        
-	        return li;
-	    }
+	@Override
+	public List<CategoryViewModel> selectCategories() throws SQLException {
+	 	ArrayList<CategoryViewModel> li = new ArrayList<>();
+	     
+	 	Connection conn = null;
+	 	Statement stmt = null;
+	 	ResultSet rs = null;
+	 	try {
+      conn = DriverManager.getConnection(CONNECTION_STRING, "root", "password");
+      String sql = "SELECT Category_id, name "
+                  + "FROM category ";
+      stmt = conn.createStatement();
+          
+      rs = stmt.executeQuery(sql);
+          
+      while (rs.next()) {
+        CategoryViewModel vm = new CategoryViewModel();
+        vm.setCategoryId(rs.getInt(1));
+        vm.setCategoryName(rs.getString(2));
+              
+        li.add(vm);
+      }
+    } finally {
+      try {
+      	if (conn != null) conn.close();
+      	if (stmt != null) stmt.close();
+        if (rs != null) rs.close();
+      } catch (SQLException e) {
+          System.out.println("Error closing DB resources");
+          e.printStackTrace();
+      }
+    }
+    return li;
+  }
 	    
 	@Override
 	public List<FilmViewModel> selectFilms() throws SQLException {
@@ -402,14 +401,14 @@ public class MySqlSakilaDatabase implements SakilaDatabase {
 		ResultSet rs = null;
 		try {
 			conn = DriverManager.getConnection(CONNECTION_STRING, "root", "password");
-		String sql = "SELECT f.film_id, f.title, f.description, f.release_year,"
-				+ " f.rental_duration, f.rental_rate,f.length, f.replacement_cost, f.rating, "
-		        + "f.special_features ,  c.name"
-				+ " FROM sakila.film f LEFT OUTER JOIN sakila.film_category fc ON f.film_id = fc.film_id" + 
-				" LEFT OUTER JOIN sakila.category c ON fc.category_id = c.category_id;";
-		stmt = conn.createStatement();
-		
-		rs = stmt.executeQuery(sql);
+			String sql = "SELECT f.film_id, f.title, f.description, f.release_year,"
+					+ " f.rental_duration, f.rental_rate,f.length, f.replacement_cost, f.rating, "
+			        + "f.special_features ,  c.name"
+					+ " FROM sakila.film f LEFT OUTER JOIN sakila.film_category fc ON f.film_id = fc.film_id" + 
+					" LEFT OUTER JOIN sakila.category c ON fc.category_id = c.category_id;";
+			stmt = conn.createStatement();
+			
+			rs = stmt.executeQuery(sql);
 		
 			while (rs.next()) {
 				FilmViewModel vm = new FilmViewModel();
@@ -419,10 +418,10 @@ public class MySqlSakilaDatabase implements SakilaDatabase {
 				vm.setReleaseYear(rs.getInt(4));
 				vm.setRentalDuration(Integer.parseInt(rs.getString(5)));
 				vm.setRentalRate(Double.parseDouble(rs.getString(6)));
-                vm.setLength((rs.getInt(7)));
+        vm.setLength((rs.getInt(7)));
 				vm.setReplacementCost(Double.parseDouble(rs.getString(8)));
 				vm.setRating(rs.getString(9));
-                vm.setSpecialFeatures(rs.getString(10));
+        vm.setSpecialFeatures(rs.getString(10));
 				vm.setCategoryName(rs.getString(11));
 				li.add(vm);
 			}
@@ -464,7 +463,7 @@ public class MySqlSakilaDatabase implements SakilaDatabase {
 			stmtFilm.setInt(4, film.getLanguageId());
 			stmtFilm.setInt(5, film.rentalDuration);
 			stmtFilm.setDouble(6, film.rentalRate);
-	        stmtFilm.setInt(7, film.length);
+      stmtFilm.setInt(7, film.length);
 			stmtFilm.setDouble(8, film.replacementCost);
 			stmtFilm.setString(9, film.rating);
 			stmtFilm.setString(10, film.specialFeatures);
@@ -502,6 +501,9 @@ public class MySqlSakilaDatabase implements SakilaDatabase {
 			try {
 				if (conn != null) conn.close();
 				if (stmtFilm != null) stmtFilm.close();
+				if (stmtFilmActor != null) stmtFilmActor.close();
+				if (stmtFilmCategory != null) stmtFilmCategory.close();
+				if (stmtInventory != null) stmtInventory.close();
 				if (rsId != null) rsId.close();
 			} catch (SQLException e) {
 				System.out.println("Error closing DB resources");

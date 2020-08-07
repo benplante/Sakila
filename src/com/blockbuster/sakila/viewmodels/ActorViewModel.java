@@ -24,33 +24,27 @@ public class ActorViewModel {
 		actorId = -1;
 	}
 	
-	public int getActorId()
-	{
+	public int getActorId() {
 		return actorId;
 	}
 
-	public void setActorId(int actorId)
-	{
+	public void setActorId(int actorId) {
 		this.actorId = actorId;
 	}
 	
-	public String getFirstName()
-	{
+	public String getFirstName() {
 		return firstName;
 	}
 
-	public void setFirstName(String firstName)
-	{
+	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
 
-	public String getLastName()
-	{
+	public String getLastName() {
 		return lastName;
 	}
 
-	public void setLastName(String lastName)
-	{
+	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
 	

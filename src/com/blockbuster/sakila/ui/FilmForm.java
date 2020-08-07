@@ -22,7 +22,7 @@ import com.blockbuster.sakila.viewmodels.CategoryViewModel;
 import com.blockbuster.sakila.viewmodels.CityViewModel;
 import com.blockbuster.sakila.viewmodels.FilmViewModel;
 
-public class FilmForm extends JFrame{
+public class FilmForm extends JFrame {
 	
 	
 	private JTextField txtTitle, txtDescription, txtReleaseYear,
@@ -32,10 +32,10 @@ public class FilmForm extends JFrame{
 	private ActorViewModel[] actors;
 	private JComboBox<CategoryViewModel> cmbCategories;
 	private CategoryViewModel[] categories;
-	private JComboBox cmbDurations;
-	private JComboBox cmbLanguages;
-	private JComboBox cmbSpecialFeature;
-    private JComboBox cmbRating;
+	private JComboBox<Integer> cmbDurations;
+	private JComboBox<String> cmbLanguages;
+	private JComboBox<String> cmbSpecialFeature;
+  private JComboBox<String> cmbRating;
 
 
 	public FilmForm(FilmController controller) {
@@ -51,19 +51,19 @@ public class FilmForm extends JFrame{
 		cmbActors = new JComboBox<ActorViewModel>();
     cmbCategories = new JComboBox<CategoryViewModel>();
     
-    cmbDurations = new JComboBox();
+    cmbDurations = new JComboBox<Integer>();
     Integer[] durationArr = {3,4,5,6,7};
     cmbDurations.setModel(new DefaultComboBoxModel<Integer>(durationArr));
     
-    cmbLanguages = new JComboBox();
+    cmbLanguages = new JComboBox<String>();
     String[] langArr= {"English","Italian","Japanese","Mandarin","French","German"};
     cmbLanguages.setModel(new DefaultComboBoxModel<String>(langArr));
   
     String[] ratingArr = {"G","PG","PG-13","R","NC-17"};
-    cmbRating = new JComboBox();
+    cmbRating = new JComboBox<String>();
     cmbRating.setModel(new DefaultComboBoxModel<String>(ratingArr));
     
-    cmbSpecialFeature = new JComboBox();
+    cmbSpecialFeature = new JComboBox<String>();
     String[] specialFeaturesArr= {"Trailers","Commentaries","Deleted Scenes","Behind the Scenes"};
     cmbSpecialFeature.setModel(new DefaultComboBoxModel<String>(specialFeaturesArr));
 
@@ -132,12 +132,18 @@ public class FilmForm extends JFrame{
      cmbCategories.setModel(new DefaultComboBoxModel<CategoryViewModel>(arr));
     }
 
-	public FilmViewModel getFilm()
-	{
+	public FilmViewModel getFilm() {
 		FilmViewModel film = new FilmViewModel();
+		if(txtTitle.getText().isEmpty()) {
+			JOptionPane.showMessageDialog(new JFrame(), "Please enter a title", "Invalid",
+					JOptionPane.WARNING_MESSAGE);
+			txtTitle.requestFocus();
+			return null;
+		}
 		film.title = txtTitle.getText();
-
+		
 		film.description = txtDescription.getText();
+		
 		try {
 			film.releaseYear = Integer.parseInt(txtReleaseYear.getText());
 		

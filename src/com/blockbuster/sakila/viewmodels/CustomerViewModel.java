@@ -68,22 +68,20 @@ public class CustomerViewModel {
 		this.isActive = isActive;
 		this.isActiveStr = this.isActive ? "Yes" : "No";
 	}
+	
 	public CustomerViewModel() {
 		this.customerId = -1;
 	}
 	
-	public String toString()
-	{
+	public String toString() {
 		return this.firstName + " " +  this.lastName;
 	}
 
-	public int getStoreId()
-	{
+	public int getStoreId() {
 		return storeId;
 	}
 
-	public void setStoreId(int storeId)
-	{
+	public void setStoreId(int storeId) {
 		this.storeId = storeId;
 	}
 }

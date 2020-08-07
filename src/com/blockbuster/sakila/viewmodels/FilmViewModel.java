@@ -29,148 +29,120 @@ public class FilmViewModel {
 	@ColumnName(columnName = "Rating")
 	public String rating;
 	@ColumnName(columnName = "Special Features")
-     public String specialFeatures;
+  public String specialFeatures;
 	
-	public int getFilmId()
-	{
+	public int getFilmId() {
 		return filmId;
 	}
 
-	public void setFilmId(int filmId)
-	{
+	public void setFilmId(int filmId) {
 		this.filmId = filmId;
 	}
 
-	public String getTitle()
-	{
+	public String getTitle() {
 		return title;
 	}
 
-	public void setTitle(String title)
-	{
+	public void setTitle(String title) {
 		this.title = title;
 	}
 
-	public String getDescription()
-	{
+	public String getDescription() {
 		return description;
 	}
 
-	public void setDescription(String description)
-	{
+	public void setDescription(String description) {
 		this.description = description;
 	}
 
-	public String getCategoryName()
-	{
+	public String getCategoryName() {
 		return categoryName;
 	}
 
-	public void setCategoryName(String categoryName)
-	{
+	public void setCategoryName(String categoryName) {
 		this.categoryName = categoryName;
 	}
 
-	public int getReleaseYear()
-	{
+	public int getReleaseYear() {
 		return releaseYear;
 	}
 
-	public void setReleaseYear(int releaseYear)
-	{
+	public void setReleaseYear(int releaseYear) {
 		this.releaseYear = releaseYear;
 	}
 
-	public int getRentalDuration()
-	{
+	public int getRentalDuration() {
 		return rentalDuration;
 	}
 
-	public void setRentalDuration(int rentalDuration)
-	{
+	public void setRentalDuration(int rentalDuration) {
 		this.rentalDuration = rentalDuration;
 	}
 
-	public double getRentalRate()
-	{
+	public double getRentalRate() {
 		return rentalRate;
 	}
 
-	public void setRentalRate(double rentalRate)
-	{
+	public void setRentalRate(double rentalRate) {
 		this.rentalRate = rentalRate;
 	}
 
-	public double getReplacementCost()
-	{
+	public double getReplacementCost() {
 		return replacementCost;
 	}
 
-	public void setReplacementCost(double replacementCost)
-	{
+	public void setReplacementCost(double replacementCost) {
 		this.replacementCost = replacementCost;
 	}
 
-	public String getRating()
-	{
+	public String getRating() {
 		return rating;
 	}
 
-	public void setRating(String rating)
-	{
+	public void setRating(String rating) {
 		this.rating = rating;
 	}
 
-    public int getCategoryId() {
-        return categoryId;
-    }
-    
-    public int getLength()
-   {
-    return length;
-   }
+  public int getCategoryId() {
+      return categoryId;
+  }
+  
+  public int getLength() {
+  	return length;
+  }
 
-  public void setLength(int length)
-  {
+  public void setLength(int length) {
     this.length = length;
   }
 
-  public String getSpecialFeatures()
-  {
+  public String getSpecialFeatures() {
     return specialFeatures;
   }
 
-   public void setSpecialFeatures(String specialFeatures)
-  {
+  public void setSpecialFeatures(String specialFeatures) {
     this.specialFeatures = specialFeatures;
   }
 
-   public void setCategoryId(int categoryId)
-   {
-    this.categoryId = categoryId;
-   }
+  public void setCategoryId(int categoryId) {
+  	this.categoryId = categoryId;
+  }
   
-	public int getActorId()
-	{
+	public int getActorId() {
 		return actorId;
 	}
 
-	public void setActorId(int actorId)
-	{
+	public void setActorId(int actorId) {
 		this.actorId = actorId;
 	}
 	
-	public void setLanguageId(int languageId)
-	{
+	public void setLanguageId(int languageId) {
 	  this.languageId = languageId;
 	}
 	
-	public int getLanguageId()
-	{
+	public int getLanguageId() {
 	  return  languageId;
 	}
-	public String toString()
-	{
+	public String toString() {
 		return this.title;
 	}
 }
