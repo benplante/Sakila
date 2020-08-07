@@ -35,7 +35,7 @@ public class CustomerViewModel {
 	@ColumnName(columnName = "Country")
 	public String country;
 
-	@ColumnName(columnName = "Address Line 1")
+	@ColumnName(columnName = "Address")
 	public String addressLine1;
 
 	@ColumnName(columnName = "Post Code")

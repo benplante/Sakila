@@ -2,6 +2,7 @@ package com.blockbuster.sakila.ui;
 
 import java.awt.GridLayout;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -30,10 +31,10 @@ public class CustomerForm extends JFrame {
 	private JTextField txtFirstName, txtLastName, txtEmail, txtAddress, txtDistrict, txtPostalCode, txtPhone;
 	private JComboBox<CityViewModel> cmbCities;
 	private JButton btnConfirm, btnCancel;
-
+	
 	private CustomerViewModel customer;
 	private CityViewModel[] cities;
-
+	
 	public CustomerForm(CustomerController controller) {
 		super();
 
@@ -93,23 +94,74 @@ public class CustomerForm extends JFrame {
 	}
 
 	public CustomerViewModel getCustomer() {
-		customer.addressLine1 = txtAddress.getText();
-		customer.district = txtDistrict.getText();
-		customer.email = txtEmail.getText();
-		customer.firstName = txtFirstName.getText();
-		customer.lastName = txtLastName.getText();
-		customer.phone = txtPhone.getText();
-		customer.postalCode = txtPostalCode.getText();
+		String firstName = txtFirstName.getText();
+		String lastName = txtLastName.getText();
+		String email = txtEmail.getText();
 		int selectedIndex = cmbCities.getSelectedIndex();
-		if(selectedIndex == -1) {
-			JOptionPane.showMessageDialog(new JFrame(), "Please select a city.", "Ivalid",
+		String address = txtAddress.getText();
+		String district = txtDistrict.getText();
+		String postalCode = txtPostalCode.getText();
+		String phone = txtPhone.getText();
+				
+		if(firstName.isBlank()) {
+			JOptionPane.showMessageDialog(this, "Please enter a first name.", "First Name Failed!",
+					JOptionPane.WARNING_MESSAGE);
+			txtFirstName.requestFocus();
+			return null;
+		}
+		else if (lastName.isBlank()) {
+			JOptionPane.showMessageDialog(this, "Please enter a last name.", "Last Name Failed!",
+					JOptionPane.WARNING_MESSAGE);
+			txtLastName.requestFocus();
+			return null;
+		}
+		else if (email.isBlank()) {
+			JOptionPane.showMessageDialog(this, "Please enter an email.", "Email Failed!",
+					JOptionPane.WARNING_MESSAGE);
+			txtEmail.requestFocus();
+			return null;
+		}
+		else if(selectedIndex == -1) {
+			JOptionPane.showMessageDialog(this, "Please select a city.", "City Failed!",
 					JOptionPane.WARNING_MESSAGE);
 			cmbCities.requestFocus();
 			return null;
 		}
+		else if (address.isBlank()) {
+			JOptionPane.showMessageDialog(this, "Please enter an address.", "Address Failed!",
+					JOptionPane.WARNING_MESSAGE);
+			txtAddress.requestFocus();
+			return null;
+		}
+		else if (district.isBlank()) {
+			JOptionPane.showMessageDialog(this, "Please enter a district.", "District Failed!",
+					JOptionPane.WARNING_MESSAGE);
+			txtDistrict.requestFocus();
+			return null;
+		}
+		else if (postalCode.isBlank()) {
+			JOptionPane.showMessageDialog(this, "Please enter a postal code.", "Postal Code Failed!",
+					JOptionPane.WARNING_MESSAGE);
+			txtPostalCode.requestFocus();
+			return null;
+		}
+		else if (!Pattern.matches("^\\d{10,12}$", phone)) {
+			JOptionPane.showMessageDialog(this, "Please enter a valid phone number.\nPhone Number must be a length of 10-12 characters and contains no spaces or hyphens (-).", "Phone Number Failed!",
+					JOptionPane.WARNING_MESSAGE);
+			txtPhone.requestFocus();
+			return null;
+		}
+		
+		customer.firstName = firstName;
+		customer.lastName = lastName;
+		customer.email = email;
 		customer.setCityId(cities[selectedIndex].getCityId());
+		customer.addressLine1 = address;
+		customer.district = district;
+		customer.postalCode = postalCode;
+		customer.phone = phone;
 		customer.setIsActive(true);
-
+		
 		return customer;
 	}
 
