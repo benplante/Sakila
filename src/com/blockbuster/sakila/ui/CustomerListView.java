@@ -3,6 +3,7 @@ package com.blockbuster.sakila.ui;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -38,8 +39,7 @@ public class CustomerListView extends JPanel {
 		btnUpdate = new JButton("Update");
 		btnUpdate.addActionListener(e -> controller.openUpdateCustomerForm());
 		btnDelete = new JButton("Delete");
-		// NOTE: Need to create a deleteCustomer
-		// btnDelete.addActionListener(e -> controller.deleteCustomer());
+		btnDelete.addActionListener(e -> controller.deleteCustomer());
 
 		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 
@@ -63,6 +63,11 @@ public class CustomerListView extends JPanel {
 	}
 
 	public CustomerViewModel getSelectedCustomer() {
+		if (customerTable.getSelectedRow() == -1) {
+			JOptionPane.showMessageDialog(this, "Please select a customer.", "Selection Failed!",
+					JOptionPane.WARNING_MESSAGE);
+			return null;
+		}
 		return model.getAtRow(customerTable.getSelectedRow());
 	}
 }

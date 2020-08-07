@@ -10,6 +10,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
@@ -99,7 +100,14 @@ public class CustomerForm extends JFrame {
 		customer.lastName = txtLastName.getText();
 		customer.phone = txtPhone.getText();
 		customer.postalCode = txtPostalCode.getText();
-		customer.setCityId(cities[cmbCities.getSelectedIndex()].getCityId());
+		int selectedIndex = cmbCities.getSelectedIndex();
+		if(selectedIndex == -1) {
+			JOptionPane.showMessageDialog(new JFrame(), "Please select a city.", "Ivalid",
+					JOptionPane.WARNING_MESSAGE);
+			cmbCities.requestFocus();
+			return null;
+		}
+		customer.setCityId(cities[selectedIndex].getCityId());
 		customer.setIsActive(true);
 
 		return customer;

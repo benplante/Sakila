@@ -17,8 +17,6 @@ public class FilmListView extends JPanel
 {
 	private JTable filmTable;
 	private JButton btnAdd;
-	private JButton btnUpdate;
-	private JButton btnDelete;
 
 	private TableViewModel<FilmViewModel> model;
 	
@@ -30,21 +28,13 @@ public class FilmListView extends JPanel
 
 		btnAdd = new JButton("Add");
 		btnAdd.addActionListener(e -> controller.openAddFilmForm());
-		//btnUpdate = new JButton("Update");
-		// TODO: btnUpdate.addActionListener(e -> controller.openUpdateFilmForm());
-		//btnDelete = new JButton("Delete");
-		// TODO: btnDelete.addActionListener(e -> controller.deleteFilm ());
 		
-
 		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 
 		JPanel btnPanel = new JPanel();
 		btnPanel.setLayout(new BoxLayout(btnPanel, BoxLayout.LINE_AXIS));
 		btnPanel.add(btnAdd);
 		btnPanel.add(Box.createHorizontalStrut(10));
-//		btnPanel.add(btnUpdate);
-//		btnPanel.add(Box.createHorizontalStrut(10));
-//		btnPanel.add(btnDelete);
 
 		this.add(scrollPane);
 		this.add(Box.createVerticalStrut(10));

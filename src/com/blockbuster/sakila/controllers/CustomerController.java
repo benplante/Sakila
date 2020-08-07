@@ -66,9 +66,13 @@ public class CustomerController {
 	}
 
 	public void openUpdateCustomerForm() {
+		CustomerViewModel vm = customerListViewPanel.getSelectedCustomer();
+		if (vm == null) {
+			return;
+		}
 		customerListViewPanel.setEnabled(false);
 		customerFormFrame.setName("Update Customer");
-		customerFormFrame.setCustomer(customerListViewPanel.getSelectedCustomer());
+		customerFormFrame.setCustomer(vm);
 		customerFormFrame.setVisible(true);
 	}
 
@@ -81,6 +85,10 @@ public class CustomerController {
 	public void confirmAddCustomer() {
 		customerListViewPanel.setEnabled(true);
 		CustomerViewModel vm = customerFormFrame.getCustomer();
+		if (vm == null)
+		{
+			return;
+		}
 		String type = "";
 		try {
 			if (vm.customerId == -1) {
@@ -95,6 +103,19 @@ public class CustomerController {
 			model.setData(getCustomersFromDB());
 		} catch (SQLException e) {
 			JOptionPane.showMessageDialog(customerFormFrame,  "Error: " + e.getMessage(), type + " failed!", JOptionPane.ERROR_MESSAGE);
+		}
+	}
+	public void deleteCustomer() {
+		CustomerViewModel vm = customerListViewPanel.getSelectedCustomer();
+		if (vm == null) {
+			return;
+		}
+		try {
+			db.deleteCustomer(vm);
+			JOptionPane.showMessageDialog(customerFormFrame, "Delete customer succeeded!");
+			model.setData(getCustomersFromDB());
+		} catch (SQLException e) {
+			JOptionPane.showMessageDialog(customerFormFrame,  "Error: " + e.getMessage(), "Delete failed!", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 }

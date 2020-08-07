@@ -18,7 +18,6 @@ import com.blockbuster.sakila.viewmodels.RentalViewModel;
 public class RentalListView extends JPanel {
 	private JTable rentalTable;
 	private JButton btnAdd;
-	private JButton btnUpdate;
 	private JButton btnDelete;
 
 	private TableViewModel<RentalViewModel> model;
@@ -31,8 +30,6 @@ public class RentalListView extends JPanel {
 
 		btnAdd = new JButton("Add");
 		btnAdd.addActionListener(e -> controller.openAddRentalForm());
-		//btnUpdate = new JButton("Update");
-	  	//btnUpdate.addActionListener(e -> controller.openUpdateRentalForm());
 		btnDelete = new JButton("Delete");
 		btnDelete.addActionListener(e -> controller.deleteRental());
 
@@ -42,8 +39,6 @@ public class RentalListView extends JPanel {
 		JPanel btnPanel = new JPanel();
 		btnPanel.setLayout(new BoxLayout(btnPanel, BoxLayout.LINE_AXIS));
 		btnPanel.add(btnAdd);
-		//btnPanel.add(Box.createHorizontalStrut(10));
-		//btnPanel.add(btnUpdate);
 		btnPanel.add(Box.createHorizontalStrut(10));
 		btnPanel.add(btnDelete);
 
@@ -60,7 +55,7 @@ public class RentalListView extends JPanel {
 
 	public RentalViewModel getSelectedRental() { 
 		if (rentalTable.getSelectedRow() == -1) {
-			JOptionPane.showMessageDialog(new JFrame(), "Please select a rental.", "Invalid",
+			JOptionPane.showMessageDialog(this, "Please select a rental.", "Selection Failed!",
 					JOptionPane.WARNING_MESSAGE);
 			return null;
 		}

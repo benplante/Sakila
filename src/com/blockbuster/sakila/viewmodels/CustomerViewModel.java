@@ -24,7 +24,7 @@ public class CustomerViewModel {
 	public String email;
 
 	@ColumnName(columnName = "Is Active")
-	public String isActiveStr = isActive ? "Yes" : "No";
+	public String isActiveStr;
 
 	@ColumnName(columnName = "City")
 	public String city;
@@ -66,8 +66,8 @@ public class CustomerViewModel {
 
 	public void setIsActive(boolean isActive) {
 		this.isActive = isActive;
+		this.isActiveStr = this.isActive ? "Yes" : "No";
 	}
-
 	public CustomerViewModel() {
 		this.customerId = -1;
 	}

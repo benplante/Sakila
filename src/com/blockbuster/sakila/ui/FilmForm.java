@@ -1,6 +1,7 @@
 package com.blockbuster.sakila.ui;
 
 import java.awt.GridLayout;
+import java.time.Year;
 import java.util.List;
 
 import javax.swing.Box;
@@ -10,6 +11,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
@@ -24,13 +26,17 @@ public class FilmForm extends JFrame{
 	
 	
 	private JTextField txtTitle, txtDescription, txtReleaseYear,
-	txtRentalRate, txtReplacementCost, txtRating;
+	txtRentalRate, txtReplacementCost,txtLength;
 	private JButton btnConfirm, btnCancel;
 	private JComboBox<ActorViewModel> cmbActors;
 	private ActorViewModel[] actors;
 	private JComboBox<CategoryViewModel> cmbCategories;
 	private CategoryViewModel[] categories;
 	private JComboBox cmbDurations;
+	private JComboBox cmbLanguages;
+	private JComboBox cmbSpecialFeature;
+    private JComboBox cmbRating;
+
 
 	public FilmForm(FilmController controller) {
 
@@ -40,16 +46,29 @@ public class FilmForm extends JFrame{
 		txtDescription = new JTextField();
 		txtReleaseYear = new JTextField();
 		txtRentalRate = new JTextField();
+		txtLength =  new JTextField();
 		txtReplacementCost = new JTextField();
-		txtRating = new JTextField();
 		cmbActors = new JComboBox<ActorViewModel>();
-	  cmbCategories = new JComboBox<CategoryViewModel>();
-	  cmbDurations = new JComboBox();
-	  
-	  Integer[] durationArr = {3,4,5,6,7};
-	  cmbDurations.setModel(new DefaultComboBoxModel<Integer>(durationArr));
+    cmbCategories = new JComboBox<CategoryViewModel>();
+    
+    cmbDurations = new JComboBox();
+    Integer[] durationArr = {3,4,5,6,7};
+    cmbDurations.setModel(new DefaultComboBoxModel<Integer>(durationArr));
+    
+    cmbLanguages = new JComboBox();
+    String[] langArr= {"English","Italian","Japanese","Mandarin","French","German"};
+    cmbLanguages.setModel(new DefaultComboBoxModel<String>(langArr));
+  
+    String[] ratingArr = {"G","PG","PG-13","R","NC-17"};
+    cmbRating = new JComboBox();
+    cmbRating.setModel(new DefaultComboBoxModel<String>(ratingArr));
+    
+    cmbSpecialFeature = new JComboBox();
+    String[] specialFeaturesArr= {"Trailers","Commentaries","Deleted Scenes","Behind the Scenes"};
+    cmbSpecialFeature.setModel(new DefaultComboBoxModel<String>(specialFeaturesArr));
 
-		btnConfirm = new JButton("Confirm");
+
+    btnConfirm = new JButton("Confirm");
 		btnConfirm.addActionListener(e -> controller.confirmAddFilm());
 
 		btnCancel = new JButton("Cancel");
@@ -64,16 +83,22 @@ public class FilmForm extends JFrame{
 		txtPanel.add(txtDescription);
 	  txtPanel.add(new JLabel("Category:"));
 	  txtPanel.add(cmbCategories);
+	  txtPanel.add(new JLabel("Language:"));
+	  txtPanel.add(cmbLanguages);
 		txtPanel.add(new JLabel("Actor:"));
 		txtPanel.add(cmbActors);
-		txtPanel.add(new JLabel("Realse Year:"));
+		txtPanel.add(new JLabel("Release Year:"));
 		txtPanel.add(txtReleaseYear);
 		txtPanel.add(new JLabel("Rental Duration:"));
 		txtPanel.add(cmbDurations);
+		txtPanel.add(new JLabel("Length:"));
+    txtPanel.add(txtLength);
 		txtPanel.add(new JLabel("Replacement Cost:"));
 		txtPanel.add(txtReplacementCost);
 		txtPanel.add(new JLabel("Rating:"));
-		txtPanel.add(txtRating);
+		txtPanel.add((cmbRating));
+		txtPanel.add(new JLabel("Special Features:"));
+    txtPanel.add(cmbSpecialFeature);
 
 		JPanel btnPanel = new JPanel();
 		btnPanel.setBorder(new EmptyBorder(10, 5, 10, 5));
@@ -111,23 +136,62 @@ public class FilmForm extends JFrame{
 	{
 		FilmViewModel film = new FilmViewModel();
 		film.title = txtTitle.getText();
+
 		film.description = txtDescription.getText();
-		film.releaseYear = txtReleaseYear.getText();
-		if(Integer.parseInt(film.releaseYear) > 2001) {
+		try {
+			film.releaseYear = Integer.parseInt(txtReleaseYear.getText());
+		
+			int thisYear = Year.now().getValue();
+		
+			if(film.releaseYear < 1 || film.releaseYear > thisYear) {
+				throw new NumberFormatException();
+			}
+		}
+		catch (NumberFormatException ex) {
+			JOptionPane.showMessageDialog(new JFrame(), "Please enter a valid year.\nEx: 2020", "Invalid",
+					JOptionPane.WARNING_MESSAGE);
+			txtReleaseYear.requestFocus();
+			return null;
+		}
+		
+	  film.setLanguageId((int) cmbLanguages.getSelectedIndex()+1);
+
+		if(film.releaseYear > 2001) {
 			film.rentalRate = 4.99;
 		}
-		else if(Integer.parseInt(film.releaseYear) > 1991) {
+		else if(film.releaseYear > 1991) {
 			film.rentalRate = 2.99;
 		}
-		else if(Integer.parseInt(film.releaseYear) > 1981) {
+		else if(film.releaseYear > 1981) {
 			film.rentalRate = 0.99;
 		}
+		
+		try {
+			film.length = Integer.parseInt(txtLength.getText());
+		}
+		catch (NumberFormatException ex) {
+			JOptionPane.showMessageDialog(new JFrame(), "Please enter a valid length.", "Invalid",
+					JOptionPane.WARNING_MESSAGE);
+			txtLength.requestFocus();
+			return null;
+		}
+		
 		film.rentalDuration = (int) cmbDurations.getSelectedItem();
-		film.replacementCost = Double.parseDouble(txtReplacementCost.getText());
-		film.rating = txtRating.getText();
+		
+		try {
+			film.replacementCost = Double.parseDouble(txtReplacementCost.getText());
+		}
+		catch (NumberFormatException ex) {
+			JOptionPane.showMessageDialog(new JFrame(), "Please enter a valid amount.", "Invalid",
+					JOptionPane.WARNING_MESSAGE);
+			txtReplacementCost.requestFocus();
+			return null;
+		}
+		
+		film.rating = (String) cmbRating.getSelectedItem();
 		film.setActorId(actors[cmbActors.getSelectedIndex()].getActorId());
 		film.setCategoryId(categories[cmbCategories.getSelectedIndex()].getCategoryId());
-		
+		film.specialFeatures = (String) cmbSpecialFeature.getSelectedItem();
 		return film;
 	}
 }

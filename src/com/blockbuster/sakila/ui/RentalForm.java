@@ -75,7 +75,7 @@ public class RentalForm extends JFrame {
 		txtPanel.add(cmbCustomers);
 		txtPanel.add(new JLabel("Price:"));
 		txtPanel.add(txtRentalRate);
-		txtPanel.add(new JLabel("Amount ($):"));
+		txtPanel.add(new JLabel("Payment ($):"));
 		txtPanel.add(txtAmountPaid);
 		
 		JPanel btnPanel = new JPanel();
@@ -101,13 +101,13 @@ public class RentalForm extends JFrame {
 		BigDecimal rentalRate = null;
 		
 		if(inventoryIdx < 0) {
-			JOptionPane.showMessageDialog(new JFrame(), "Please select a film.", "Invalid",
+			JOptionPane.showMessageDialog(this, "Please select a film.", "Actor Selection Failed!",
 					JOptionPane.WARNING_MESSAGE);
 			cmbInventories.requestFocus();
 			return null;
 		}
 		else if(customerIdx < 0) {
-			JOptionPane.showMessageDialog(new JFrame(), "Please select a customer.", "Invalid",
+			JOptionPane.showMessageDialog(this, "Please select a customer.", "Customer Selection Failed!",
 					JOptionPane.WARNING_MESSAGE);
 			cmbCustomers.requestFocus();
 			return null;
@@ -124,13 +124,13 @@ public class RentalForm extends JFrame {
 			
 		}
 		catch (NumberFormatException ex) {
-			JOptionPane.showMessageDialog(new JFrame(), "Please enter a valid amount.", "Invalid",
+			JOptionPane.showMessageDialog(this, "Please enter a valid amount.", "Payment Failed!",
 					JOptionPane.WARNING_MESSAGE);
 			txtAmountPaid.requestFocus();
 			return null;
 		}
 		catch (Exception ex) {
-			JOptionPane.showMessageDialog(new JFrame(), "Amount must be greater than price \nand can not exceed 999.99.", "Invalid",
+			JOptionPane.showMessageDialog(this, "Amount must be greater than price \nand can not exceed $999.99.", "Payment Failed!",
 					JOptionPane.WARNING_MESSAGE);
 			txtAmountPaid.requestFocus();
 			return null;
@@ -143,35 +143,12 @@ public class RentalForm extends JFrame {
 		return rental;
 	}
 	
-	public void setRental(RentalViewModel rental) {
-		this.rental = rental;
-		if (rental != null) {
-			int inventoryIdx = 1;
-			for(int i = 0; i < inventories.length; ++i) {
-				if(inventories[i].getInventoryId() == rental.getInventoryId()) {
-					inventoryIdx = i;
-					break;
-				}
-			}
-			cmbInventories.setSelectedIndex(inventoryIdx);
-			
-			int customerIdx = 1;
-			for(int i = 0; i < customers.length; ++i) {
-				if(customers[i].customerId == rental.getCustomerId()) {
-					customerIdx = i;
-					break;
-				}
-			}
-			cmbCustomers.setSelectedIndex(customerIdx);
-			txtAmountPaid.setText(rental.getPaymentAmount().toString());
-		} else {
+	public void setRental() {
 			this.rental = new RentalViewModel();
 			cmbInventories.setSelectedIndex(-1);
 			cmbCustomers.setSelectedIndex(-1);
 			txtAmountPaid.setText("");
-			txtRentalRate.setText("");
-			
-		}
+			txtRentalRate.setText("Please select a film.");	
 	}
 
 	public void setInventories(List<InventoryViewModel> list)

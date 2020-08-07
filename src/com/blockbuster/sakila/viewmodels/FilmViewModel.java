@@ -6,6 +6,7 @@ public class FilmViewModel {
 
 	private int categoryId;
 	private int actorId;
+	private int languageId;
 	
 	@ColumnName(columnName = "Film #")
   public int filmId;
@@ -16,15 +17,19 @@ public class FilmViewModel {
 	@ColumnName(columnName = "Category Name")
 	public String categoryName;
 	@ColumnName(columnName = "Release year")
-	public String releaseYear;
+	public int releaseYear;
 	@ColumnName(columnName = "Rental Duration")
 	public int rentalDuration;
 	@ColumnName(columnName = "Rental Rate")
 	public double rentalRate;
-	@ColumnName(columnName = "Replacement Cost")
+	@ColumnName(columnName = "Length")
+  public int length;
+  @ColumnName(columnName = "Replacement Cost")
 	public double replacementCost;
 	@ColumnName(columnName = "Rating")
 	public String rating;
+	@ColumnName(columnName = "Special Features")
+     public String specialFeatures;
 	
 	public int getFilmId()
 	{
@@ -66,12 +71,12 @@ public class FilmViewModel {
 		this.categoryName = categoryName;
 	}
 
-	public String getReleaseYear()
+	public int getReleaseYear()
 	{
 		return releaseYear;
 	}
 
-	public void setReleaseYear(String releaseYear)
+	public void setReleaseYear(int releaseYear)
 	{
 		this.releaseYear = releaseYear;
 	}
@@ -116,13 +121,34 @@ public class FilmViewModel {
 		this.rating = rating;
 	}
 
-  public int getCategoryId() {
-    return categoryId;
+    public int getCategoryId() {
+        return categoryId;
+    }
+    
+    public int getLength()
+   {
+    return length;
+   }
+
+  public void setLength(int length)
+  {
+    this.length = length;
   }
 
-  public void setCategoryId(int categoryId) {
-    this.categoryId = categoryId;
+  public String getSpecialFeatures()
+  {
+    return specialFeatures;
   }
+
+   public void setSpecialFeatures(String specialFeatures)
+  {
+    this.specialFeatures = specialFeatures;
+  }
+
+   public void setCategoryId(int categoryId)
+   {
+    this.categoryId = categoryId;
+   }
   
 	public int getActorId()
 	{
@@ -134,6 +160,15 @@ public class FilmViewModel {
 		this.actorId = actorId;
 	}
 	
+	public void setLanguageId(int languageId)
+	{
+	  this.languageId = languageId;
+	}
+	
+	public int getLanguageId()
+	{
+	  return  languageId;
+	}
 	public String toString()
 	{
 		return this.title;
