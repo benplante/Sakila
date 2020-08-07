@@ -47,7 +47,7 @@ public class CustomerController {
 	
 	/**
 	 *  Method Name: refreshDB
-	 *  Purpose: Refreshes CustomerFormFrame data on every tab change. Is essential if data from other tabs is deleted.
+	 *  Purpose: Refreshes CustomerForm data on every tab change. Is essential if data from other tabs is deleted.
 	 *  Accepts: Nothing.
 	 *  Returns: Nothing.
 	 */

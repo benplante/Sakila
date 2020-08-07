@@ -236,7 +236,7 @@ public class FilmForm extends JFrame {
 	}
 
 	/** 
-	 * Method Name: setCities
+	 * Method Name: setCategories
 	 * Purpose: Instantiates CategoryViewModel array from database 
 	 * 					and sets the array to the JComboBox.
 	 * Accepts: A list of CategoryViewModel objects.

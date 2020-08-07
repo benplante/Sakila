@@ -48,7 +48,7 @@ public class FilmController
 		
 	/**
 	 *  Method Name: refreshDB
-	 *  Purpose: Refreshes CustomerFormFrame data on every tab change. Is essential if data from other tabs is deleted.
+	 *  Purpose: Refreshes FilmForm data on every tab change. Is essential if data from other tabs is deleted.
 	 *  Accepts: Nothing.
 	 *  Returns: Nothing.
 	 */
@@ -73,7 +73,7 @@ public class FilmController
 
 	/** 
 	 * Method Name: getActorsFromDB
-	 * Purpose: Gets the actors from the database. Used for FilmForm's JComboBox cmbActors.
+	 * Purpose: Gets the actors from the database. Used for FilmForm's ComboCheckBox cmbActors.
 	 * Accepts: Nothing.
 	 * Return: A list of ActorViewModel objects.
 	 */
