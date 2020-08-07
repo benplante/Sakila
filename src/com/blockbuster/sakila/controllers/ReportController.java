@@ -88,7 +88,7 @@ public class ReportController
 			reportListViewPanel.setSalesReport(
 					db.getSalesByStore(stores.stream().map(s -> s.getStoreId()).collect(Collectors.toList())));
 		} catch (SQLException e) {
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(reportListViewPanel, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
@@ -98,7 +98,7 @@ public class ReportController
 			reportListViewPanel.setCategoriesReport(
 					db.getSalesByCategory(categories.stream().map(s -> s.getCategoryId()).collect(Collectors.toList())));
 		} catch (SQLException e) {
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(reportListViewPanel, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 	
@@ -108,7 +108,7 @@ public class ReportController
 			reportListViewPanel.setCustomerReport(db.getSalesByCustomer(
 					customers.stream().map(c -> c.customerId).collect(Collectors.toList())));
 		} catch (SQLException e) {
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(reportListViewPanel, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 	
@@ -124,7 +124,7 @@ public class ReportController
 					JOptionPane.ERROR_MESSAGE
 				);
 		} catch (SQLException e) {
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(reportListViewPanel, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 }

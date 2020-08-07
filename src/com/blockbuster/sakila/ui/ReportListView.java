@@ -83,7 +83,9 @@ public class ReportListView extends JPanel {
 		customersModel = new ComboCheckBoxModel<>();
 		
 		txtStartDate = new JTextField(12);
+		txtStartDate.setToolTipText("Date as YYYY-MM-DD");
 		txtEndDate = new JTextField(12);
+		txtEndDate.setToolTipText("Date as YYYY-MM-DD");
 		
 		reportTable = new JTable();
 		JScrollPane scrollPane = new JScrollPane(reportTable);
