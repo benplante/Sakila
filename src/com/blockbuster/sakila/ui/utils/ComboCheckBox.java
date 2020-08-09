@@ -1,6 +1,5 @@
 package com.blockbuster.sakila.ui.utils;
 
-import java.awt.Dimension;
 import java.util.List;
 
 import javax.swing.JComboBox;
@@ -12,7 +11,7 @@ import javax.swing.JComboBox;
  *  to allow for multiple selections
  */
 
-
+@SuppressWarnings("serial")
 public class ComboCheckBox<E> extends JComboBox<Checkable<E>> {
 	
 	private ComboCheckBoxModel<E> model;

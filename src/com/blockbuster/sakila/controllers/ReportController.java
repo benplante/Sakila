@@ -12,7 +12,6 @@ import javax.swing.JPanel;
 
 import com.blockbuster.sakila.database.SakilaDatabase;
 import com.blockbuster.sakila.ui.ReportListView;
-import com.blockbuster.sakila.ui.utils.TableViewModel;
 import com.blockbuster.sakila.viewmodels.CategoryViewModel;
 import com.blockbuster.sakila.viewmodels.CustomerViewModel;
 import com.blockbuster.sakila.viewmodels.StoreViewModel;

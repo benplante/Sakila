@@ -2,19 +2,15 @@ package com.blockbuster.sakila.ui;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
-import java.awt.Dimension;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -28,7 +24,6 @@ import com.blockbuster.sakila.ui.utils.ComboCheckBoxModel;
 import com.blockbuster.sakila.ui.utils.TableViewModel;
 import com.blockbuster.sakila.viewmodels.CategoryReportViewModel;
 import com.blockbuster.sakila.viewmodels.CategoryViewModel;
-import com.blockbuster.sakila.viewmodels.CityViewModel;
 import com.blockbuster.sakila.viewmodels.CustomerViewModel;
 import com.blockbuster.sakila.viewmodels.DateReportViewModel;
 import com.blockbuster.sakila.viewmodels.CustomerReportViewModel;
@@ -41,7 +36,7 @@ import com.blockbuster.sakila.viewmodels.StoreViewModel;
  * Table view for displaying reports  
  */
 
-
+@SuppressWarnings("serial")
 public class ReportListView extends JPanel {
 	
 	/**

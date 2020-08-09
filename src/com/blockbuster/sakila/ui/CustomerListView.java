@@ -20,6 +20,8 @@ import com.blockbuster.sakila.viewmodels.CustomerViewModel;
  *         customers in a JTable and contains buttons to add, update and delete a
  *         customer
  */
+
+@SuppressWarnings("serial")
 public class CustomerListView extends JPanel {
 	// CustomerListView members
 	private JTable customerTable;

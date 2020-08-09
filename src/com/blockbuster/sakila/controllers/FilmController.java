@@ -11,7 +11,6 @@ import com.blockbuster.sakila.ui.FilmListView;
 import com.blockbuster.sakila.ui.utils.TableViewModel;
 import com.blockbuster.sakila.viewmodels.ActorViewModel;
 import com.blockbuster.sakila.viewmodels.CategoryViewModel;
-import com.blockbuster.sakila.viewmodels.CustomerViewModel;
 import com.blockbuster.sakila.viewmodels.FilmViewModel;
 
 /**

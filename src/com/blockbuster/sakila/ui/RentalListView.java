@@ -3,7 +3,6 @@ package com.blockbuster.sakila.ui;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -12,7 +11,6 @@ import javax.swing.border.EmptyBorder;
 
 import com.blockbuster.sakila.controllers.RentalController;
 import com.blockbuster.sakila.ui.utils.TableViewModel;
-import com.blockbuster.sakila.viewmodels.CustomerViewModel;
 import com.blockbuster.sakila.viewmodels.RentalViewModel;
 
 /**
@@ -21,7 +19,7 @@ import com.blockbuster.sakila.viewmodels.RentalViewModel;
  *         Panel for viewing a list of all rentals in the database displays
  *         rentals in a JTable and contains buttons to add
  */
-
+@SuppressWarnings("serial")
 public class RentalListView extends JPanel {
 	// RentalListView members
 	private JTable rentalTable;

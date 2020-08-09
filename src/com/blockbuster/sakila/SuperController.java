@@ -10,6 +10,7 @@ import com.blockbuster.sakila.controllers.RentalController;
 import com.blockbuster.sakila.controllers.ReportController;
 import com.blockbuster.sakila.database.MySqlSakilaDatabase;
 
+@SuppressWarnings("serial")
 public class SuperController extends JFrame {
 
 	/**

@@ -1,8 +1,5 @@
 package com.blockbuster.sakila.ui.utils;
 
-import java.lang.reflect.Array;
-import java.util.List;
-
 /**
  * @author Saja Alhadeethi, Colin Manliclic, Dahye Min, Ben Plante
  *     

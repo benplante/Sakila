@@ -3,7 +3,6 @@ package com.blockbuster.sakila.ui;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -21,6 +20,8 @@ import com.blockbuster.sakila.viewmodels.ActorViewModel;
  *         actors in a JTable and contains buttons to add, update and delete an
  *         actor
  */
+
+@SuppressWarnings("serial")
 public class ActorListView extends JPanel {
 	// ActorListView members
 	private JTable tblActors;

@@ -17,6 +17,8 @@ import com.blockbuster.sakila.ui.utils.Checkable.SelectAll;
  *  
  *  @param <E> Type of object to be held in the model
  */
+
+@SuppressWarnings("serial")
 public class ComboCheckBoxModel<E> extends AbstractListModel<Checkable<E>> implements ComboBoxModel<Checkable<E>> {
 	
 	private List<Checkable<E>> items;

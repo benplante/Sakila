@@ -3,7 +3,6 @@ package com.blockbuster.sakila.ui;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -12,7 +11,6 @@ import javax.swing.border.EmptyBorder;
 
 import com.blockbuster.sakila.controllers.FilmController;
 import com.blockbuster.sakila.ui.utils.TableViewModel;
-import com.blockbuster.sakila.viewmodels.CustomerViewModel;
 import com.blockbuster.sakila.viewmodels.FilmViewModel;
 
 /**
@@ -23,6 +21,7 @@ import com.blockbuster.sakila.viewmodels.FilmViewModel;
  *         film
  */
 
+ @SuppressWarnings("serial")
 public class FilmListView extends JPanel {
 	// FilmListView members
 	private JTable filmTable;

@@ -26,6 +26,8 @@ import com.blockbuster.sakila.viewmodels.CustomerViewModel;
  *         Customer CRUD operation ,form in a JFrame contains text fields for a customers
  *         first and last name 
  */
+
+@SuppressWarnings("serial")
 public class CustomerForm extends JFrame {
 	// CustomerForm members
 	private JTextField txtFirstName, txtLastName, txtEmail, txtAddress, txtDistrict, txtPostalCode, txtPhone;

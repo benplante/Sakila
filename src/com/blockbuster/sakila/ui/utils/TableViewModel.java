@@ -15,6 +15,8 @@ import javax.swing.table.AbstractTableModel;
  *
  * @param <T> A view model type
  */
+
+@SuppressWarnings("serial")
 public class TableViewModel<T> extends AbstractTableModel {
 	private List<T> data;
 	private Class<T> type;

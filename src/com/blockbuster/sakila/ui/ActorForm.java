@@ -21,6 +21,8 @@ import com.blockbuster.sakila.viewmodels.ActorViewModel;
  *         Actor Add/Update form in a JFrame contains text fields for an actors
  *         first and last name fields of actor table
  */
+
+@SuppressWarnings("serial")
 public class ActorForm extends JFrame {
 	// ActorForm members
 	private JTextField txtFirstName, txtLastName;

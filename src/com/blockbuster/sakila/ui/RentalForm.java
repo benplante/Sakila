@@ -31,6 +31,7 @@ import com.blockbuster.sakila.viewmodels.RentalViewModel;
  *         film, customer, and payment amount
  */
 
+ @SuppressWarnings("serial")
 public class RentalForm extends JFrame {
 	// RentalForm members
 	private JTextField txtAmountPaid, txtRentalRate, txtRentalDuration;

@@ -21,7 +21,6 @@ import com.blockbuster.sakila.controllers.FilmController;
 import com.blockbuster.sakila.ui.utils.ComboCheckBox;
 import com.blockbuster.sakila.viewmodels.ActorViewModel;
 import com.blockbuster.sakila.viewmodels.CategoryViewModel;
-import com.blockbuster.sakila.viewmodels.CityViewModel;
 import com.blockbuster.sakila.viewmodels.FilmViewModel;
 
 /**
@@ -31,12 +30,12 @@ import com.blockbuster.sakila.viewmodels.FilmViewModel;
  *         Delete
  */
 
+@SuppressWarnings("serial")
 public class FilmForm extends JFrame {
 	// FilmForm members
 	private JTextField txtTitle, txtDescription, txtReleaseYear, txtReplacementCost, txtLength;
 	private JButton btnConfirm, btnCancel;
 	private ComboCheckBox<ActorViewModel> cmbActors;
-	private ActorViewModel[] actors;
 	private JComboBox<CategoryViewModel> cmbCategories;
 	private CategoryViewModel[] categories;
 	private JComboBox<Integer> cmbDurations;
@@ -229,9 +228,6 @@ public class FilmForm extends JFrame {
 	 * Returns: Nothing.
 	 */
 	public void setActors(List<ActorViewModel> actors) {
-		ActorViewModel[] arr = new ActorViewModel[actors.size()];
-		actors.toArray(arr);
-		this.actors = arr;
 		cmbActors.setItems(actors);
 	}
 
